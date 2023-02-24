@@ -6,7 +6,7 @@ const router = require("./router");
 
 const app = express();
 
-// use some application-level middlewares
+// utiliser certains middlewares au niveau de l'application
 app.use(
   cors({
     origin: process.env.FRONTEND_URL ?? "http://localhost:3000",
@@ -16,16 +16,16 @@ app.use(
 
 app.use(express.json());
 
-// Serve the public folder for public resources
+// Servir le dossier public pour les ressources publiques
 app.use(express.static(path.join(__dirname, "../public")));
 
-// Serve REACT APP
+// Servir l'application REACT APP
 app.use(express.static(path.join(__dirname, "..", "..", "frontend", "dist")));
 
 // API routes
 app.use(router);
 
-// Redirect all requests to the REACT app
+// Redirigez toutes les demandes vers l'application REACT
 const reactIndexFile = path.join(
   __dirname,
   "..",
@@ -41,5 +41,5 @@ if (fs.existsSync(reactIndexFile)) {
   });
 }
 
-// ready to export
+// Exporter app
 module.exports = app;
