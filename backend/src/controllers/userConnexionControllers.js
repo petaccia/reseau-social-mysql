@@ -22,7 +22,7 @@ const signUp = (req, res) => {
     };
     models.connexion
     .insert(user)
-    .then(([result]) => {
+    .then(() => {
       res.status(201).json({ message: 'Utilisateur enregistré avec succès' });    })
     .catch((err) => {
       console.error(err);
@@ -35,4 +35,19 @@ const signUp = (req, res) => {
   });
 };
 
-module.exports = {signUp}
+const loginUser = (req,res) => {
+  const { user } = req.body;
+  console.log(req.body);
+
+  models.connexion
+  .login(user)
+  .then(() => {
+    res.status(200).json({message : "utilisateur connecté"})
+  })
+  .catch((err) => {
+    console.error(err);
+    res.sendStatus(500);
+  });
+}
+
+module.exports = {signUp, loginUser}
