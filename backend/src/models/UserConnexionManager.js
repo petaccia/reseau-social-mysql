@@ -12,13 +12,16 @@ class UserConnexionManager extends AbstractManager {
     );
   }
 
-  login(email) {
+  findByEmail(email) {
+    // console.log(email);
     return this.connection.query(
       "select * from connexion where email = ?",
       [email]
     );
   }
 
+   
+  
  
 }
 
