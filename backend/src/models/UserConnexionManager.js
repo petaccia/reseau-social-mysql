@@ -6,6 +6,7 @@ class UserConnexionManager extends AbstractManager {
   }
 
   insert(connexion) {
+    // console.log(connexion);
     return this.connection.query(
       `insert into ${this.table} (email, password) values (?, ?)`,
       [connexion.email, connexion.password]
