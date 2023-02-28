@@ -5,6 +5,7 @@ const models = require("../models");
 
 
 const loginUser = async (req, res) => {
+  
   const emailCrypto = cryptojs
     .HmacSHA256(req.body.email, `${process.env.DB_KEY_SECRET}`)
     .toString();
@@ -14,13 +15,19 @@ const loginUser = async (req, res) => {
     if ( result == 0 ) {
       res.status(404).send({ message: "Utilisateur introuvable" });
     } else {
-      res.status(200).send({ message: "Utilisateur présent dans la base de données", result });
+      const passwordMatch = await bcrypt.compare(req.body.password, result[0].password);
+      if (passwordMatch) {
+        res.status(200).send({ message: "Utilisateur présent dans la base de données", result });
+      } else {
+        res.status(404).send({ message: "Mot de passe incorrect" });
+      }
     }
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
   }
 };
+
     
 // Enregistrer un nouvel utilisateur dans la base de donnée
 const signUp = async (req, res) => {
