@@ -19,6 +19,8 @@ class UserConnexionManager extends AbstractManager {
     );
   }
 
+   
+  
  
 }
 

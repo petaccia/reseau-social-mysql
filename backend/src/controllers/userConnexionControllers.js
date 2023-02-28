@@ -5,16 +5,12 @@ const models = require("../models");
 
 
 const loginUser = async (req, res) => {
-  
-
   const emailCrypto = cryptojs
     .HmacSHA256(req.body.email, `${process.env.DB_KEY_SECRET}`)
     .toString();
   
-
   try {
     const [result] = await models.connexion.findByEmail(emailCrypto);
-    
     if ( result == 0 ) {
       res.status(404).send({ message: "Utilisateur introuvable" });
     } else {
@@ -25,9 +21,8 @@ const loginUser = async (req, res) => {
     res.sendStatus(500);
   }
 };
-
     
-// // Enregistrer un nouvel utilisateur dans la base de donnée
+// Enregistrer un nouvel utilisateur dans la base de donnée
 const signUp = async (req, res) => {
   const {email , password} = req.body;
   const emailCryptos = cryptojs
