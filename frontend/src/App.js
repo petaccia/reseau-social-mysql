@@ -1,9 +1,9 @@
-
+import Header from "./compopnents/Header";
 
 function App() {
   return (
     <div className="App">
-      bonjours les amis
+      <Header />
     
     </div>
   );
