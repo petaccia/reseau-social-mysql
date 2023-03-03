@@ -1,0 +1,20 @@
+.modal-connexion{
+  height: 60vh;
+  width: 100vh;
+  background-color: aqua;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 10rem;
+  border-radius: 16px;
+  box-shadow:6px 2px 10px 5px cornsilk ;
+ 
+  @media only screen and (max-width: 820px) {
+    width: 100vh;
+    height: 100vh;
+    margin: 0;
+  }
+ 
+   
+  
+}

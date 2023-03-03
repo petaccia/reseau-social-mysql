@@ -1,10 +1,11 @@
-import Header from "./compopnents/Header";
+
+import ModalConnect from "./compopnents/modalConnect";
 
 
 function App() {
   return (
     <div className="App">
-      <Header />
+      <ModalConnect />
      
     </div>
   );
