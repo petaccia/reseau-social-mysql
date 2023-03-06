@@ -3,10 +3,9 @@ import AuthForm from './Auth/AuthForm'
 
 const ModalConnect = () => {
   return (
-    
-    <form className='modal-connexion'>
+    <section className='modal-connexion'>
               <AuthForm />
-    </form>
+    </section>
   )
 }
 

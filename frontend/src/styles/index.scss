@@ -1,4 +1,7 @@
-@import"./header";
 @import "./setting";
+@import "./mixins.scss";
+@import "./color.scss";
+@import"./header";
 @import "./authForm";
 @import "./modalConnect";
+@import "./buttons";

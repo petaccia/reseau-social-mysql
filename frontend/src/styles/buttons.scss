@@ -1,0 +1,14 @@
+@import "color";
+
+.button {
+  background-color: $primary-color;
+  color: $white-color;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $primary-color-hover;
+  }
+}
