@@ -2,9 +2,11 @@ import { useState } from "react";
 import axios from "axios";
 import Button from "../UI/Button";
 
+
 const AuthForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(''); 
 
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
@@ -59,6 +61,8 @@ return (
 
          <Button className='button' type={"submit"}  > Envoyer </Button>
         </form>
+        {error && <ErrorModal message={error} onClose={() => setError('')} />}
+       
       </section>
     </>
   );
