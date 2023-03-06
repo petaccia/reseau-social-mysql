@@ -6,29 +6,28 @@ const cookie = require("cookie-parser");
 const router = require("./router");
 
 const app = express();
-
 app.use(cookie());
-
-// utiliser certains middlewares au niveau de l'application
+// use some application-level middlewares
 app.use(
   cors({
     origin: process.env.FRONTEND_URL ?? "http://localhost:3000",
     optionsSuccessStatus: 200,
+    redentials: true,
   })
 );
 
 app.use(express.json());
 
-// Servir le dossier public pour les ressources publiques
+// Serve the public folder for public resources
 app.use(express.static(path.join(__dirname, "../public")));
 
-// Servir l'application REACT APP
+// Serve REACT APP
 app.use(express.static(path.join(__dirname, "..", "..", "frontend", "dist")));
 
 // API routes
 app.use(router);
 
-// Redirigez toutes les demandes vers l'application REACT
+// Redirect all requests to the REACT app
 const reactIndexFile = path.join(
   __dirname,
   "..",
@@ -44,5 +43,5 @@ if (fs.existsSync(reactIndexFile)) {
   });
 }
 
-// Exporter app
+// ready to export
 module.exports = app;

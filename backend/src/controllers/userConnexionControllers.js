@@ -1,7 +1,7 @@
 const cryptojs = require("crypto-js");
 const models = require("../models");
-const { comparePassword, hashPassword } = require("../services/bcrypt");
-const { generateToken } = require("../services/jsonWebToken");
+const { comparePassword, hashPassword } = require("../service/bcrypt");
+const { generateToken } = require("../service/jsonWebToken");
 
 
 
