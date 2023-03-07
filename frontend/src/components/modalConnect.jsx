@@ -5,7 +5,10 @@ const ModalConnect = () => {
   return (
     <section className='modal-connexion'>
               <AuthForm />
+              
+             
     </section>
+    
   )
 }
 
