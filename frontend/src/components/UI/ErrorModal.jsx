@@ -5,13 +5,13 @@ const ErrorModal = ({ message, onClose }) => {
   return (
       <div className="modal">
         <div className="modal-content">
-          <h3>Error</h3>
+          <h3>Erreur</h3>
         </div>
         <div className="message">
           <p>{ message }</p>
         </div>
-          <footer className="button-footer">
-          <button className="button" onClick={onClose}>close</button>
+          <footer className="footer">
+          <button className="footer-button" onClick={onClose}>Fermer</button>
           </footer>
       </div>
 
