@@ -58,6 +58,9 @@ const signUp = async (req, res) => {
     } else {
       const hashedPassword = await hashPassword(req.body.password);
       const newUser = await models.connexion.insert({
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        age: req.body.age,
         email: emailCrypto,
         password: hashedPassword,
       });

@@ -8,8 +8,14 @@ class UserConnexionManager extends AbstractManager {
   insert(connexion) {
     // console.log(connexion);
     return this.connection.query(
-      `insert into ${this.table} (email, password) values (?, ?)`,
-      [connexion.email, connexion.password]
+      `insert into ${this.table} (firstname, lastname, age, email, password) values (?, ?, ?, ?, ?)`,
+      [
+        connexion.firstname,
+        connexion.lastname,
+        connexion.age,
+        connexion.email,
+        connexion.password
+      ]
     );
   }
 
