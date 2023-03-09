@@ -20,8 +20,11 @@ $font-3: 'Roboto', sans-serif;
 }
 
 body{
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
   font-family: $font-3;
   background-color:rgb(15, 9, 48)
   

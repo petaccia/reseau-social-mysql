@@ -2,7 +2,8 @@
 @import "./mixins.scss";
 @import "./color.scss";
 @import"./header";
-@import "./authForm";
+@import "_authForm";
+@import "./_login";
 @import "./modalConnect";
 @import "./buttons";
 @import "./errorModal"
