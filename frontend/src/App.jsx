@@ -1,15 +1,16 @@
+import AuthForm from "@components/Auth/AuthForm";
 import React from "react";
-import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import ModalConnect from "./components/modalConnect";
+// import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <Router>
+      <AuthForm />
+      {/* <Router>
         <Routes>
-          <Route path="connexion" element={<ModalConnect />} />
+          <Route path="connexion" element={< />} />
         </Routes>
-      </Router>
+      </Router> */}
     </div>
   );
 }
