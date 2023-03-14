@@ -3,17 +3,30 @@ import axios from "axios";
 import Button from "../UI/Button";
 import ErrorModal from "@components/UI/ErrorModal";
 import AuthContext from "../../context/auth_context";
-
+import SuccesModal from "@components/UI/SuccesModal";
 
 const AuthForm = () => {
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [age, setAge] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [loginForm, setLoginForm] = useState ({
+    email: "",
+    password: "",
+    
+  });
+const [signUpForm, setSignUpForm] = useState ({
+  firstname: "",
+  lastname: "",
+  age: "",
+  email: "",
+  password: ""
+});
+
   const [errorMessage, setErrorMessage] = useState("");
   const [showErrorModal, setShowErrorModal] = useState(false);
+  const [succesMessage, setSuccesMessage] = useState("");
+  const [showSuccesModal, setShowSuccesModal] = useState(false)
   const [isLoginForm, setIsLoginForm] = useState(true);
+  const [isConnected, setIsConnected] = useState(false);
+  const [username, setUsername] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const authCtx = useContext(AuthContext);
     console.log("---------authCtx.token------------");
@@ -22,181 +35,246 @@ const AuthForm = () => {
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 
+const validateInputs = () => {
+  if (!emailRegex.test(isLoginForm ? loginForm.email : signUpForm.email)) {
+    setErrorMessage("Email non valide");
+    setShowErrorModal(true);
+    return false;
+  }
+  if (!passwordRegex.test(
+    isLoginForm ? loginForm.password : signUpForm.password
+  ) 
+  ) {
+    setErrorMessage(
+      "Le mot de passe doit contenir au moins 8 caractères avec au moins une lettre majuscule, une lettre minuscule et un chiffre"
+      );
+      setShowErrorModal(true);
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
-    if (!emailRegex.test(email)) {
-      setErrorMessage("Email non valide");
-      setShowErrorModal(true);
+    if (!validateInputs()) {
       return;
-    }
-    if (!passwordRegex.test(password)) {
-      setErrorMessage(
-        "Le mot de passe doit contenir au moins 8 caractères avec au moins une lettre majuscule, une lettre minuscule et un chiffre"
-        );
-        setShowErrorModal(true);
-        return;
-      }
-      
+  }
+      setIsLoading(true);
       try {
         const res = await axios.post("http://localhost:5000/login", {
-          email,
-          password,
+          email: loginForm.email,
+          password: loginForm.password,
 
         });
         authCtx.login( res.data.token,res.data.result[0].id,);
-        // closeModal();
+        setIsConnected(true);
+        setUsername(res.data.result[0].lastname);
+        setIsLoginForm({
+          email: "",
+          password: "",
+        });
+        setSuccesMessage(` Bienvenue ${res.data.result[0].firstname} vous êtes bien connecté`);
+        setShowSuccesModal(true);
         console.log(res.data.token)
         console.log(res.data.result[0].id);
+        console.log(res.data.result[0].lastname);
         
         
       } catch (err) {
         console.error(err);
         setErrorMessage("Une erreur est survenue lors de la connexion");
         setShowErrorModal(true);
+      } finally {
+        setIsLoading(false);
       }
-      console.log("Login button clicked"); // Ajout d'un console.log()
+     
     };
 
   const handleSubmitSignUp = async (e) => {
     e.preventDefault();
-    if (!emailRegex.test(email)) {
-      setErrorMessage("Email non valide");
-      setShowErrorModal(true);
+    if (!validateInputs()) {
       return;
     }
-    if (!passwordRegex.test(password)) {
-      setErrorMessage(
-        "Le mot de passe doit contenir au moins 8 caractères avec au moins une lettre majuscule, une lettre minuscule et un chiffre"
-      );
-      setShowErrorModal(true);
-      return;
-    }
+    setIsLoading(true);
 
     try {
       const res = await axios.post("http://localhost:5000/signUp", {
-        firstname,
-        lastname,
-        age,
-        email,
-        password,
+       ...signUpForm,
       });
-      console.log(res);
+      setIsLoginForm(true);
+     setSignUpForm({
+      firstname: "",
+      lastname: "",
+      age: "",
+      email: "",
+      password: "",
+     })
+      setSuccesMessage(` Bienvenue ${res.data.result[0].firstname} vous êtes bien enregisté`);
+      setShowSuccesModal(true);
+      
     } catch (err) {
       console.error(err);
-      setErrorMessage("Une erreur est survenue lors de la connexion");
+      if (err.response && err.response.status === 409) {
+        setErrorMessage("Un compte avec cette adresse e-mail existe déjà")
+      }else{
+        setErrorMessage("Une erreur est survenue lors de l'inscription");
+      }
       setShowErrorModal(true);
+    } finally{
+      setIsLoading(false);
     }
   };
 
-  const HandleModalClose = () => {
-    setEmail("");
-    setPassword("");
+
+  const handleInputChange = (e) => {
+    if (isLoginForm) {
+      setLoginForm({
+        ...loginForm,
+        [e.target.name]: e.target.value,
+      });
+    } else {
+      setSignUpForm({
+        ...signUpForm,
+        [e.target.name]: e.target.value,
+      });
+    }
+  };
+  const handleCloseErrorModal = () => {
     setShowErrorModal(false);
+    setErrorMessage("");
+  };
+
+  const handelCloseSuccesModal = () => {
+  setShowSuccesModal(false)
+  setSuccesMessage("");
   };
 
   return (
     <div className="modal-connexion">
       <section className="auth-container">
         <h1 className="titre">{isLoginForm ? "Se connecter" : "S'inscrire"}</h1>
-
+  
         {isLoginForm ? (
           <form className="form-container" onSubmit={handleSubmitLogin}>
-            {/* formulaire de connexion */}
-
+            <label htmlFor="email">Email</label>
             <input
               type="email"
-              placeholder="Email"
               id="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name="email"
+              value={loginForm.email}
+              onChange={handleInputChange}
             />
-
-            {/* structure Password  */}
+            <label htmlFor="password">Mot de passe</label>
             <input
               type="password"
-              placeholder="Mot de passe"
               id="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              value={loginForm.password}
+              onChange={handleInputChange}
             />
-             <Button type={"submit"}>
-            {" "}
-            Envoyer{" "}
-          </Button>
+  
+            {isLoading ? (
+              <Button isLoading={true}>Chargement...</Button>
+            ) : (
+              <Button type="submit">Se connecter</Button>
+            )}
           </form>
         ) : (
           <form className="form-container" onSubmit={handleSubmitSignUp}>
-            {/* formulaire d'inscription */}
-
-            {/* structure Email */}
+            <label htmlFor="firstname">Prénom</label>
             <input
               type="text"
-              placeholder="Nom"
-              id="name"
-              required
-              value={firstname}
-              onChange={(e) => setFirstname(e.target.value)}
+              id="firstname"
+              name="firstname"
+              value={signUpForm.firstname}
+              onChange={handleInputChange}
             />
+            <label htmlFor="lastname">Nom</label>
             <input
               type="text"
-              placeholder="Prénom"
               id="lastname"
-              required
-              value={lastname}
-              onChange={(e) => setLastname(e.target.value)}
+              name="lastname"
+              value={signUpForm.lastname}
+              onChange={handleInputChange}
             />
+            <label htmlFor="age">Âge</label>
             <input
               type="number"
-              placeholder="Age"
               id="age"
-              required
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
+              name="age"
+              min="18"
+              max="120"
+              value={signUpForm.age}
+              onChange={handleInputChange}
             />
+            <label  htmlFor="email">Email</label>
             <input
               type="email"
-              placeholder="Email"
               id="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name="email"
+              value={signUpForm.email}
+              onChange={handleInputChange}
             />
-
-            {/* structure Password  */}
+            <label className="label" htmlFor="password">Mot de passe</label>
             <input
               type="password"
-              placeholder="Mot de passe"
               id="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              value={signUpForm.password}
+              onChange={handleInputChange}
             />
-             <Button type={"submit"}>
-            {" "}
-            Envoyer{" "}
-          </Button>
+  
+            {isLoading ? (
+              <Button isLoading={true}>Chargement...</Button>
+            ) : (
+              <Button type="submit">S'inscrire</Button>
+            )}
           </form>
         )}
-
-        <div className="button-container">
-          {/* bouton pour changer le formulaire */}
-          <button className="btn-login" onClick={() => setIsLoginForm(!isLoginForm)}>
-            {isLoginForm ? "Pas encore inscrit?" : "Déjà inscrit?"}
-          </button>
-     
-       </div>
-        {showErrorModal && (
-          <ErrorModal
-            message={errorMessage}
-            onClose={() => setShowErrorModal(false)}
-            closeModal={HandleModalClose}
-          />
-        )}
+  
+        <p className="text">
+          {isLoginForm ? (
+            <>
+              Vous n'avez pas de compte ?
+              <button
+                className="button-toggle"
+                onClick={() => setIsLoginForm(false)}
+              >
+                S'inscrire
+              </button>
+            </>
+          ) : (
+            <>
+              Vous avez déjà un compte ?
+              <button
+                className="button-toggle"
+                onClick={() => setIsLoginForm(true)}
+              >
+                Se connecter
+              </button>
+            </>
+          )}
+        </p>
       </section>
+  
+      {showErrorModal && (
+        <ErrorModal
+          title={"Une erreur est survenue lors de la connexion"}
+          message={errorMessage}
+          onClose={ handleCloseErrorModal }
+        />
+      )}
+  
+      {showSuccesModal && (
+        <SuccesModal
+          message={succesMessage}
+          onClose={() => setShowSuccesModal(false)}
+          closeModal={handelCloseSuccesModal}
+        />
+      )}
     </div>
   );
-};
+  
+  };
 
-export default AuthForm;
+  export default AuthForm;
