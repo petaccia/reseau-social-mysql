@@ -1,13 +1,13 @@
 import React from "react";
-import "../../styles/_errorModal.scss";
+import "../../styles/_succesModal.scss";
 
-const ErrorModal = ({ message, onClose,}) => {
+const SuccesModal= ({ message, onClose,}) => {
   return (
     <>
    
     <div className="modal">
-      <div className="modal-content-error">
-        <h3>Erreur</h3>
+      <div className="modal-content-succes">
+        <h3>Connexion réussi</h3>
       </div>
       <div className="message">
         <p>{message}</p>
@@ -23,4 +23,4 @@ const ErrorModal = ({ message, onClose,}) => {
   );
 };
 
-export default ErrorModal;
+export default SuccesModal;
