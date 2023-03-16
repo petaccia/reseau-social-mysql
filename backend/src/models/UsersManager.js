@@ -5,9 +5,9 @@ class UsersManager extends AbstractManager {
     super({ table: "users" });
   }
 
-  find(id) {
-    return this.connection.query(`select * from  ${this.table} where id = ?`, [
-      id,
+  find(userId) {
+    return this.connection.query(`select * from  ${this.table} where connexion_id = ?`, [
+      userId,
     ]);
   }
 
@@ -27,20 +27,20 @@ class UsersManager extends AbstractManager {
     );
   }
 
-  update(users, id) {
+  update(users, userId) {
     return this.connection.query(
-      `update ${this.table} set ? where id = ?`,
+      `update ${this.table} set ? where userId = ?`,
     [
       users,
-      id
+      userId
     ]
     );
   }
 
-  delete(users, id) {
-    return this.connection.query(`delete from ${this.table} where id = ?`, [
+  delete(users, userId) {
+    return this.connection.query(`delete from ${this.table} where userId = ?`, [
       users,
-      id
+      userId
     ]);
   }
 
