@@ -29,13 +29,21 @@ const [signUpForm, setSignUpForm] = useState ({
   const [isLoading, setIsLoading] = useState(false);
 
   const authCtx = useContext(AuthContext);
-    console.log("---------authCtx.token------------");
-    console.log(authCtx)
+  console.log("------------>authCtx");
+  console.log(authCtx);
 
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 
 const validateInputs = () => {
+if (
+  (!loginForm.email && isLoginForm) || (!signUpForm.email && !isLoginForm) || (!loginForm.password && isLoginForm)|| (!signUpForm && isLoginForm) 
+){
+setErrorMessage("Veuillez remplir tous les champs.");
+setShowErrorModal(true);
+return false;
+}
+
   if (!emailRegex.test(isLoginForm ? loginForm.email : signUpForm.email)) {
     setErrorMessage("Email non valide");
     setShowErrorModal(true);
@@ -67,6 +75,7 @@ const validateInputs = () => {
 
         });
         authCtx.login( res.data.token,res.data.result[0].id,);
+        console.log(res.data);
         setIsConnected(true);
         setUsername(res.data.result[0].lastname);
         setIsLoginForm({
@@ -75,9 +84,7 @@ const validateInputs = () => {
         });
         setSuccesMessage(` Bienvenue ${res.data.result[0].firstname} vous êtes bien connecté`);
         setShowSuccesModal(true);
-        console.log(res.data.token)
-        console.log(res.data.result[0].id);
-        console.log(res.data.result[0].lastname);
+
         
         
       } catch (err) {

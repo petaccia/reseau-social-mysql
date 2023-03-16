@@ -14,8 +14,9 @@ const browse = (req, res) => {
 
 const read = (req, res) => {
   models.users
-    .find(req.params.id)
-    .then(([rows]) => {
+  .find(req.originalUrl.split("=")[1])
+  .then(([rows]) => {
+     
       if (rows[0] == null) {
         res.sendStatus(404);
       } else {

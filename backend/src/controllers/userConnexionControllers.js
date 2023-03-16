@@ -25,10 +25,13 @@ const loginUser = async (req, res) => {
         );
       
         if (passwordMatch) {
-        const token = generateToken(result);
+        const token = generateToken({id: result[0].id, email: result[0].email});
+        // console.log(token);
+        
         res
         .status(200)
         .send({ message: "Utilisateur présent dans la base de données", result, token });
+
       } else {
         res
         .status(404)
