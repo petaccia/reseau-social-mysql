@@ -1,25 +1,25 @@
 import React, { useContext } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import FicheUser from "./pages/FicheUser";
 import AuthContext from "./context/auth_context";
-import Home from "@pages/Home";
-import FicheUser from "@pages/FicheUser";
-import MainHeader from "@components/layout/MainHeader";
-// import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
+// import AuthForm from "./components/Auth/AuthForm";
 
 function App() {
-  const authCtx= useContext(AuthContext);
-  const isLoggedIn = authCtx.isLoggedIn;
+  const authCtx = useContext(AuthContext);
+  const { isLoggedIn } = authCtx;
   return (
     <div className="App">
-      <Home />
+  {/* {!isLoggedIn && <AuthForm />} */}
+      {/* <Home />
       <FicheUser />
-      <MainHeader />
-      {/* {!isLoggedIn && <AuthForm />}
-      <Test /> */}
-      {/* <Router>
+      <Sidebar /> */}
+      <Router>
         <Routes>
-          <Route path="connexion" element={< />} />
+          <Route path="/" element={<Home />} />
+          <Route path="user" element={<FicheUser />} />
         </Routes>
-      </Router> */}
+      </Router>
     </div>
   );
 }

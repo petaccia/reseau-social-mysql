@@ -1,0 +1,133 @@
+/* Container styles */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Sidebar styles */
+.sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #030453;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+
+  /* Sidebar collapsed styles */
+  &.collapsed {
+    width: 100px;
+  }
+
+  /* Logo styles */
+  .logo {
+    font-size: 3rem;
+    font-weight: 700;
+    padding: 1rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #fff;
+  }
+
+  /* Menu bars styles */
+  .menu-bars {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 1rem;
+  }
+
+  /* Navigation menu styles */
+  .nav-menu {
+    width: 100%;
+  }
+
+  /* Navigation menu items styles */
+  .nav-menu-items {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  /* Navigation menu item styles */
+  .nav-menu-items li {
+    transition: all 0.3s ease-in-out;
+
+    /* Navigation menu item hover styles */
+    &:hover {
+      background-color: #09837d;
+      color: #141414;
+    }
+
+    /* Navigation menu item link styles */
+    a {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      text-decoration: none;
+      padding: 2rem;
+      color: #fff;
+
+      /* Navigation menu item active link styles */
+      &.active {
+        background-color: #fff;
+        color: #141414;
+      }
+    }
+  }
+
+  /* Navigation menu item icon styles */
+  .icon {
+    font-size: 1.5rem;
+    margin-left: 0.5rem;
+  }
+
+  /* Navigation menu item link text styles */
+  .link-text {
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-left: 1rem;
+  }
+}
+
+/* Media query styles for screens with a maximum width of 768px */
+@media only screen and (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #030453;
+    color: #fff;
+    overflow-y: auto;
+    z-index: 999;
+    padding-top: 70px;
+  }
+
+  /* Navigation menu item link styles for smaller screens */
+  .nav-menu-items li {
+    a {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+  }
+
+  .nav-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .link-text {
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-left: rem;
+  
+}
+}

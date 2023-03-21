@@ -1,12 +1,13 @@
-import AuthForm from '@components/Auth/AuthForm'
-import React from 'react'
+import Sidebar from "@components/layout/Sidebar";
+import React from "react";
 
-const Home = () => {
+function Home() {
   return (
-   <section>
-    <AuthForm />
-   </section>
-  )
+    <section>
+     
+      <Sidebar />
+    </section>
+  );
 }
 
 export default Home;

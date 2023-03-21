@@ -1,10 +1,8 @@
 import React from "react";
 import "../../styles/_succesModal.scss";
 
-const SuccesModal= ({ message, onClose,}) => {
+function SuccesModal({ message, onClose }) {
   return (
-    <>
-   
     <div className="modal">
       <div className="modal-content-succes">
         <h3>Connexion réussi</h3>
@@ -13,14 +11,12 @@ const SuccesModal= ({ message, onClose,}) => {
         <p>{message}</p>
       </div>
       <footer className="footer">
-        <button className="footer-button" onClick={onClose}>
+        <button type="button" className="footer-button" onClick={onClose}>
           Fermer
         </button>
       </footer>
     </div>
-    
-    </>
   );
-};
+}
 
 export default SuccesModal;

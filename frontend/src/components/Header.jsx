@@ -1,14 +1,14 @@
-import React from 'react'
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import { faCar } from "@fortawesome/free-solid-svg-icons"
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 
-const Header = () => {
+function Header() {
   return (
-    <div className='header-container'>
+    <div className="header-container">
       <h1>Je suis le header</h1>
-      <FontAwesomeIcon icon={faCar} />
+      <FontAwesomeIcon icon={faHome} />
     </div>
-  )
+  );
 }
 
-export default Header
+export default Header;

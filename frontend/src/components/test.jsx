@@ -1,7 +1,4 @@
-
-const Test = () => {
- return(
-  <div></div>
- )
+function Test() {
+  return <div />;
 }
 export default Test;
