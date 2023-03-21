@@ -1,10 +1,8 @@
 import React from "react";
 import "../../styles/_errorModal.scss";
 
-const ErrorModal = ({ message, onClose,}) => {
+function ErrorModal({ message, onClose }) {
   return (
-    <>
-   
     <div className="modal">
       <div className="modal-content-error">
         <h3>Erreur</h3>
@@ -13,14 +11,12 @@ const ErrorModal = ({ message, onClose,}) => {
         <p>{message}</p>
       </div>
       <footer className="footer">
-        <button className="footer-button" onClick={onClose}>
+        <button type="button" className="footer-button" onClick={onClose}>
           Fermer
         </button>
       </footer>
     </div>
-    
-    </>
   );
-};
+}
 
 export default ErrorModal;

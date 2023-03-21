@@ -1,8 +1,11 @@
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
 @import "./setting";
 @import "./mixins.scss";
 @import "./color.scss";
-@import"./header";
+@import "./header";
 @import "_authForm";
 @import "./buttons";
 @import "./errorModal";
-@import "./succesModal"
+@import "./succesModal";
+@import "./mainHeader";

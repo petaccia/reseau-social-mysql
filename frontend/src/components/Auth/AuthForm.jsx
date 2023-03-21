@@ -4,7 +4,7 @@ import Button from "../UI/Button";
 import ErrorModal from "@components/UI/ErrorModal";
 import AuthContext from "../../context/auth_context";
 import SuccesModal from "@components/UI/SuccesModal";
-
+import "../../styles/_authForm.scss"
 const AuthForm = () => {
   const [loginForm, setLoginForm] = useState ({
     email: "",
@@ -157,7 +157,7 @@ return false;
   };
 
   return (
-    <div className="modal-connexion">
+    <div className="modal-connexion ">
       <section className="auth-container">
         <h1 className="titre">{isLoginForm ? "Se connecter" : "S'inscrire"}</h1>
   
