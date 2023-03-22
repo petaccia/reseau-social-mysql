@@ -3,6 +3,7 @@ import "../styles/_test.scss";
 import axios from "axios";
 import Button from "../components/UI/Button";
 import AuthContext from "../context/auth_context";
+import Sidebar from "@components/layout/Sidebar";
 
 function FicheUser() {
   const authCtx = useContext(AuthContext);
@@ -13,6 +14,7 @@ function FicheUser() {
 
   return (
     <div className="test">
+      <Sidebar />
       {isLoggedIn && <p>Ceci est un test</p>}
       {!isLoggedIn && <p>vous n'êtes pas connecté</p>}
       {isLoggedIn && <p>Bienvenue, vous êtes connecté</p>}
