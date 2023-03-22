@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import {  NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import SidebarData from "./SidebarData";
@@ -22,14 +22,14 @@ function Sidebar() {
           <ul className="nav-menu-items" onClick={toggleCollapse}>
             {SidebarData.map((item, index) => (
               <li key={index}>
-                <Link
+                <NavLink
                   to={item.path}
                   className={item.className}
                   activeClassName="active"
                 >
                   <div className="icon">{item.icon}</div>
                   <span className="link-text">{collapsed ? "" : item.title}</span>
-                </Link>
+                </NavLink>
               </li>
             ))}
           </ul>
