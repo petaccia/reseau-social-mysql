@@ -1,28 +1,35 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "../styles/_test.scss";
 import axios from "axios";
 import Button from "../components/UI/Button";
 import AuthContext from "../context/auth_context";
-import Sidebar from "@components/layout/Sidebar";
 
 function FicheUser() {
   const authCtx = useContext(AuthContext);
-  const { isLoggedIn } = authCtx;
+  const { isLoggedIn, user, token } = authCtx;
+  const [userData, setUserData] = useState(null);
 
-  const url = `http://localhost:5000/users/fiche/?userId=${authCtx.user}`;
-  axios.get(url, { headers: { Authorization: `Bearer ${authCtx.token}` } });
+  useEffect(() => {
+    if (isLoggedIn && user && token) {
+      const url = `http://localhost:5000/users/fiche/?userId=${user}`;
+      axios
+        .get(url, { headers: { Authorization: `Bearer ${token}` } })
+        .then((response) => setUserData(response.data))
+        .catch((error) => console.log(error));
+    }
+  }, [isLoggedIn, user, token]);
 
   return (
     <div className="test">
-      <Sidebar />
-      {isLoggedIn && <p>Ceci est un test</p>}
-      {!isLoggedIn && <p>vous n'êtes pas connecté</p>}
-      {isLoggedIn && <p>Bienvenue, vous êtes connecté</p>}
-      {isLoggedIn && <p>votre user :{authCtx.user}</p>}
-      {isLoggedIn && <p className="token">votre Token :{authCtx.token}</p>}
+      {/* <Sidebar /> */}
+      {isLoggedIn && userData && (
+        <p>Bienvenue {userData.name}, vous êtes connecté</p>
+      )}
+      {!isLoggedIn && <p>Vous n'êtes pas connecté</p>}
+      {isLoggedIn && <p>Votre user : {user}</p>}
+      {isLoggedIn && <p className="token">Votre Token : {token}</p>}
       {isLoggedIn && <Button onClick={authCtx.logout}>Se déconnecter</Button>}
     </div>
   );
 }
-
 export default FicheUser;
