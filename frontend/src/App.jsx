@@ -1,28 +1,26 @@
 import React, { useContext } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Group from "@pages/Group";
-import Home from "./pages/Home";
-import FicheUser from "./pages/FicheUser";
-import AuthForm from "@components/Auth/AuthForm";
-import AuthContext from "./context/auth_context";
-import Connexion from "@pages/Connexion";
-import Sidebar from "@components/layout/Sidebar";
+// import Group from "@pages/Group";
+// import Home from "./pages/Home";
+// import FicheUser from "./pages/FicheUser";
+// import AuthForm from "@components/Auth/AuthForm";
+// import AuthContext from "./context/auth_context";
+// import Connexion from "@pages/Connexion";
+// import Sidebar from "@components/layout/Sidebar";
+import Register from "@pages/register/Register";
+import Login from "@pages/login";
 
 function App() {
-  const authCtx = useContext(AuthContext);
-  const { isLoggedIn } = authCtx;
   return (
     <div className="App">
-      {/* {!isLoggedIn && <AuthForm />}  */}
       <Router>
-        <Sidebar />
         <Routes>
+            {/* <Route path="/" element={<Home />} /> */}
 
-          <Route path="/" element={<Home />} />
-          <Route path="user" element={<FicheUser />} />
-          <Route path="login" element={<Connexion />} /> 
+          {/* <Route path="/" element={<Login />} />  */}
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
 
-          <Route path="group" element={<Group />} />
         </Routes>
       </Router>
     </div>

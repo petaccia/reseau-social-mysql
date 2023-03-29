@@ -1,11 +1,13 @@
 import React, { createContext, useState, useEffect } from "react";
 
+
+
 const defaultValue = {
-token: "",
-user: null,
-userIsLoggedin: false,
-login: () => {},
-logout: () => {},
+  token: "",
+  user: null,
+  userIsLoggedin: false,
+  login: () => {},
+  logout: () => {},
 };
 
 const AuthContext = createContext(defaultValue);
@@ -41,7 +43,7 @@ const userIsLoggedin = !!token;
 
 const contextValue = {
 token,
-user,
+// user,
 isLoggedIn: userIsLoggedin,
 login: loginHandler,
 logout: logoutHandler,
