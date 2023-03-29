@@ -161,7 +161,6 @@ function AuthForm() {
     setShowSuccesModal(false);
     setSuccesMessage("");
   };
-
   return (
     <div className="modal-connexion ">
       <section className="auth-container">
@@ -292,3 +291,4 @@ function AuthForm() {
 }
 
 export default AuthForm;
+
