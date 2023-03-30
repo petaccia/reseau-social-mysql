@@ -114,8 +114,15 @@ e.preventDefault();
     <div className='register'>
       <div className='card'>
         <div className='left'>
-          <h1>Nom du site</h1>
-          <span>Vous n'avez pas de compte?</span>
+          <h1 className='titre'>Nom du site</h1>
+          <p>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eum veritatis sit 
+            veniam accusantium saepe magni numquam sed necessitatibus unde harum 
+            deserunt repellat illum voluptatum quidem atque, illo, minus nulla aliquam 
+            quis perferendis earum consequuntur. Distinctio repellat sint in deleniti 
+            officiis.
+          </p>
+          <span>Vous avez un compte?</span>
           <Link to="/login">
             <button className='btnLogin'>Login</button>
           </Link>
