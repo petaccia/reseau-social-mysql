@@ -39,3 +39,4 @@ créer la connection dans le fichier migrate et index.js.
 taper dans le terminal npm i express cors,
 importer express dans app et router.
 
+
