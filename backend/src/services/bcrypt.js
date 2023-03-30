@@ -1,9 +1,18 @@
 const bcrypt = require("bcrypt");
 
 const hashPassword = async (password) => {
-const saltRounds = 10;
-const hashedPassword = await bcrypt.hash(password, saltRounds);
-return hashedPassword
+  try {
+    if (typeof password === 'string') {
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+      return hashedPassword;
+    } else {
+      throw new Error('password must be a string');
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 const comparePassword = async (password, hashedPassword) => {
