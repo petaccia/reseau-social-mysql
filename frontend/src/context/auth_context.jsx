@@ -43,7 +43,7 @@ const userIsLoggedin = !!token;
 
 const contextValue = {
 token,
-// user,
+user,
 isLoggedIn: userIsLoggedin,
 login: loginHandler,
 logout: logoutHandler,
