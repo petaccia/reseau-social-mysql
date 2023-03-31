@@ -1,0 +1,58 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  border-bottom: 1px solid bisque;
+}
+.navbar .left {
+  margin-left: 10px;
+  display: flex;
+}
+.navbar .left :link {
+  text-decoration: none;
+}
+.navbar .left span {
+  font-weight: bold;
+  color: rgb(168, 56, 196);
+}
+.navbar .left .iconLeft {
+  color: bisque;
+  padding-left: 20px;
+}
+.navbar .left .iconLeft:hover {
+  color: rgb(168, 56, 196);
+}
+.navbar .left input {
+  width: 200px;
+  height: 10px;
+  margin-left: 5px;
+  font-size: 1rem;
+  border: solid 1px;
+  background-color: transparent;
+  color: bisque;
+}
+
+.right {
+  display: flex;
+  margin-right: 10px;
+}
+.right .iconRight {
+  color: bisque;
+  padding-left: 20px;
+}
+.right .iconRight:hover {
+  color: rgb(168, 56, 196);
+}
+.right .user {
+  color: bisque;
+  padding-left: 20px;
+}
+.right .user .iconRightUser {
+  height: 1rem;
+  color: rgb(168, 56, 196);
+  text-decoration: none;
+}
+.right .user span {
+  padding-left: 5px;
+  color: rgb(168, 56, 196);
+}/*# sourceMappingURL=navBar.css.map */
