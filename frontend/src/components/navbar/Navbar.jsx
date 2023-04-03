@@ -20,21 +20,19 @@ const Navbar = () => {
       <div className="left">
         <Link to="/">
           <span>Logo</span>
-          <FontAwesomeIcon icon={faHome} className='iconLeft' />
-          <FontAwesomeIcon icon={faMoon}  className='iconLeft'/>
-          <FontAwesomeIcon icon={faBorderAll}  className='iconLeft'/>
-            <FontAwesomeIcon icon={faMagnifyingGlass}  className='iconLeft'/>
-            <input type="text" placeholder="search..." className="search"/>
+          <FontAwesomeIcon icon={faHome} className="iconLeft" />
+          <FontAwesomeIcon icon={faMoon} className="iconLeft" />
+          <FontAwesomeIcon icon={faBorderAll} className="iconLeft" />
+          <FontAwesomeIcon icon={faMagnifyingGlass} className="iconLeftGlass" />
+          <input type="text" placeholder="search..." className="search" />
         </Link>
       </div>
       <div className="right">
-        <FontAwesomeIcon icon={faUser} className='iconRight' />
-        <FontAwesomeIcon icon={faEnvelope} className='iconRight'/>
-        <FontAwesomeIcon icon={faBell} className='iconRight'/>
-        <div className="user">
-          <FontAwesomeIcon icon={faCircleUser} className='iconRightUser'/>
+        <FontAwesomeIcon icon={faUser} className="iconRight" />
+        <FontAwesomeIcon icon={faEnvelope} className="iconRight" />
+        <FontAwesomeIcon icon={faBell} className="iconRight" />
+          <FontAwesomeIcon icon={faCircleUser} className="iconRightUser" />
           <span>John doe</span>
-        </div>
       </div>
     </div>
   );

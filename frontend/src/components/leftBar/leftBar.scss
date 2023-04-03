@@ -1,0 +1,53 @@
+.leftbar {
+  flex:2;
+  .container {
+    padding: 10px 20px ;
+    margin-top: 5rem;
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9px;
+
+      span {
+        color: bisque;
+        padding-top: 1rem;
+      }
+      .user {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .icon {
+          color: rgb(168, 56, 196);
+          height: 1.5rem;
+        }
+        span {
+          color: rgb(168, 56, 196);
+        }
+      }
+      .items {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        &:hover {
+          background-color: rgb(168, 56, 196);
+        }
+        img {
+          width: 1.5rem;
+          height: 1.5rem;
+        }
+        span {
+          color: bisque;
+          font-size: 0.8rem;
+        }
+      }
+    }
+    hr {
+      margin-top: 2rem;
+      height: 1px;
+      border: none;
+      background-color: salmon;
+    }
+  }
+}

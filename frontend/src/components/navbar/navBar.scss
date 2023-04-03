@@ -1,13 +1,16 @@
 .navbar{
+  width: 100%;
   display: flex;
-  // align-items: center;
   justify-content: space-between;
   margin-top: 15px;
   border-bottom: 1px solid bisque;
 
+  position: fixed;
+ 
   .left{
     margin-left:10px;
     display: flex;
+   
    :link{
     text-decoration: none;
   }
@@ -23,14 +26,19 @@
       color:rgb(168, 56, 196)
     }
   }
+  .iconLeftGlass{
+    color:bisque;
+    margin-left: 8rem;
+  }
     
       
       input{
         width: 200px;
-        height: 10px;
+        height: 20px;
         margin-left: 5px;
         font-size: 1rem;
         border: solid 1px ;
+        border-radius: 5px;
         background-color: transparent;
         color:bisque
 
@@ -38,7 +46,6 @@
     }
   }
   .right{
-   display: flex;
    margin-right: 10px;
 
    .iconRight{
@@ -51,19 +58,19 @@
    }
   
 
-    .user{
-      color: bisque;
-      padding-left: 20px;
+  
       .iconRightUser{
-        height: 1rem;
+       
+        height: 16px;
+        padding-left: 30px;
         color: rgb(168, 56, 196);
         text-decoration: none;
       }
       span{
-        padding-left: 5px;
+        padding-left: 2px;
         color: rgb(168, 56, 196);
       }
     }
-  }
+  
 // }
 
