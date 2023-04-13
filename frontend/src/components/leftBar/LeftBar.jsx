@@ -3,18 +3,18 @@ import "./leftBar.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
-import friends from "@assets/friends.png";
-import group from "@assets/group.png";
-import market from "@assets/market.png";
-import media from "@assets/media.jpg";
-import memo from "@assets/memories.png";
-import event from "@assets/calendar.png";
-import gaming from "@assets/gaming.png";
-import gallery from "@assets/gallery.png";
-import video from "@assets/video.jpg";
-import message from "@assets/message.jpg";
-import contact from "@assets/contact.jpg";
-import connect from "@assets/connect.jpg";
+import friends from "@assets/icon/friends.png";
+import group from "@assets/icon/group.png";
+import market from "@assets/icon/market.png";
+import media from "@assets/icon/media.jpg";
+import memo from "@assets/icon/memories.png";
+import event from "@assets/icon/calendar.png";
+import gaming from "@assets/icon/gaming.png";
+import gallery from "@assets/icon/gallery.png";
+import video from "@assets/icon/video.jpg";
+import message from "@assets/icon/message.jpg";
+import contact from "@assets/icon/contact.jpg";
+import connect from "@assets/icon/connect.jpg";
 const LeftBar = () => {
   return (
     <div className="leftbar">

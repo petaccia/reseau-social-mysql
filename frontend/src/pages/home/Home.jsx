@@ -1,64 +1,16 @@
 import React from "react";
+import Posts from "@components/posts/Posts";
+import Stories from "@components/stories/Stories";
 
 function Home() {
   return (
     <section>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
-     <h1>Home</h1>
+      <div className="stories">
+        <Stories />
+      </div>
+      <div className="posts">
+        <Posts />
+      </div>
     </section>
   );
 }
