@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ErrorModal from "@components/UI/ErrorModal";
 import SuccesModal from "@components/UI/SuccesModal";
@@ -17,6 +17,8 @@ const Login = () => {
   const [succesMessage, setSuccesMessage] = useState("");
   const [showSuccesModal, setShowSuccesModal] = useState(false);
   const [login, setLogin] = useState(true);
+
+  const navigate = useNavigate();
 
   const authCtx = useContext(AuthContext);
   console.log("-----------authCtx");
@@ -57,7 +59,7 @@ const Login = () => {
     if (!validateInputs()) {
       return;
     }
-
+    navigate("/", { replace: true });
     try {
       const res = await axios.post("http://localhost:5000/login", {
        ...loginForm,

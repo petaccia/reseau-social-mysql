@@ -1,0 +1,48 @@
+.stories{
+  display: flex;
+  
+ margin:40px 10px 0px;
+
+  gap: 10px;
+ 
+
+  .story{
+   background-color: #0f0930;
+   border-top: 1px solid #060413;
+   border-left: 1px solid #060413;
+   border-radius: 15px ;
+  box-shadow:  5px 5px 0px #060413,
+  15px 15px 6px #231372; ;
+   padding: 10px;
+   
+    .storyImg{
+      overflow: hidden;
+      border-radius: 15px;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .spane{
+      display: flex;
+      justify-content: space-between;
+      span{
+        color:  #2054e0;
+      }
+      button{
+        border-radius: 50%;
+        border:none;
+        width: 20px;
+        height: 20px;
+        color:#2054e0;
+        cursor: pointer;
+
+        &:hover{
+          background-color:#2054e0;
+          color:bisque
+
+      }
+    }
+  }
+}
+}
