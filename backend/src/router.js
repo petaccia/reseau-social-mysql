@@ -4,17 +4,19 @@ const express= require("express")
 const router = express.Router();
 
 const connexionController = require("./controllers/ConnexionControllers");
-// const userController = require("./controllers/UsersControllers");
+const userController = require("./controllers/UsersControllers");
 // const postController = require("./controllers/PostsControllers.js");
-// const commentController = require("./controllers/CommentsControllers");
+const commentController = require("./controllers/CommentsControllers");
 // const likeController = require("./controllers/LikesControllers");
+const verificationInfo = require("./controllers/VerificationController");
+
 
 // // routes User
-// router.get("/user", userController.browse);
-// router.get("/find/:userId", userController.read);
-// router.post("/user", userController.add);
-// router.put("/user/:id", userController.edit);
-// router.delete("/user/:id", userController.destroy);
+router.get("/user", userController.browse);
+router.get("/user/:id", userController.read);
+router.post("/user", userController.add);
+router.put("/user/:id", userController.edit);
+router.delete("/user/:id", userController.destroy);
 
 // // routes posts
 // router.get("/post", postController.browse);
@@ -24,11 +26,11 @@ const connexionController = require("./controllers/ConnexionControllers");
 // router.delete("/post/:id", postController.destroy);
 
 // // routes comments
-// router.get("/comment",commentController.browse);
-// router.get("/find/:commentId", commentController.read);
-// router.post("/comment", commentController.add);
-// router.put("/comment/:id", commentController.edit);
-// router.delete("/comment/:id", commentController.destroy);
+router.get("/comment", commentController.getCommentAll);
+router.get("/comment/:id", commentController.getComment);
+router.post("/comment", commentController.createComment);
+router.put("/comment/:id", commentController.updateComment);
+router.delete("/comment/:id", commentController.deleteComment);
 
 // // routes likes
 // router.get("/like", likeController.browse);
@@ -41,4 +43,14 @@ const connexionController = require("./controllers/ConnexionControllers");
 router.post("/register", connexionController.register);
 router.post("/login", connexionController.login)
 router.post("/logout", connexionController.login)
+
+// routes de verifications d'information
+router.get("/verifInfo/:id", verificationInfo.getVerificationInfoById);
+router.post("/verifInfo", verificationInfo.createVerificationInfo);
+router.put("/verifInfo/:id", verificationInfo.updateVerificationInfoById);
+
+
+
 module.exports = router;
+
+
