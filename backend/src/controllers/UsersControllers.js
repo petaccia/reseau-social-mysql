@@ -45,6 +45,11 @@ const edit = async (req, res) => {
 const add = async (req, res) => {
   try {
     const user = req.body;
+    // Vérifier si l'utilisateur existe déja
+    const [existingUser]= await models.users.getByUsername(user.username);
+    if (existingUser.length > 0) {
+      return res.status(409).json({ message: "Cet utilisateur existe déjà"})
+    }
     const [result] = await models.users.insert(user);
     res.location(`/user/${result.insertId}`).sendStatus(201);
   } catch (err) {

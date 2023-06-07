@@ -1,6 +1,6 @@
 const AbstractManager = require("./AbstractManager");
 
-class CommentManager extends AbstractManager {
+class PostManager extends AbstractManager {
   constructor() {
     super({ table: "posts" });
   }
@@ -25,4 +25,4 @@ class CommentManager extends AbstractManager {
   }
 }
 
-module.exports = CommentManager;
+module.exports = PostManager;
