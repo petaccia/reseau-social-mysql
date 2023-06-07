@@ -7,7 +7,7 @@ const connexionController = require("./controllers/ConnexionControllers");
 const userController = require("./controllers/UsersControllers");
 const postController = require("./controllers/PostsControllers.js");
 const commentController = require("./controllers/CommentsControllers");
-// const likeController = require("./controllers/LikesControllers");
+const likeController = require("./controllers/LikesControllers");
 const verificationInfo = require("./controllers/VerificationController");
 
 
@@ -33,11 +33,11 @@ router.put("/comment/:id", commentController.updateComment);
 router.delete("/comment/:id", commentController.deleteComment);
 
 // // routes likes
-// router.get("/like", likeController.browse);
-// router.get("/find/:likeId", likeController.read);
-// router.post("/like", likeController.add);
-// router.put("/like/:id", likeController.edit);
-// router.delete("/like/:id", likeController.destroy);
+router.get("/like", likeController.getLikeAll);
+router.get("/like/:id", likeController.getLike);
+router.post("/like", likeController.createLike);
+router.put("/like/:id", likeController.updateLike);
+router.delete("/like/:id", likeController.deleteLike);
 
 // routes connexion
 router.post("/register", connexionController.register);
