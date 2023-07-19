@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
 const cookie = require("cookie-parser");
-const router = require("./routes/route");
+const router = require("./routes/admin");
 
 const Db = require("../databaseSequelize");
 
