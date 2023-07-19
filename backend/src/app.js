@@ -7,7 +7,7 @@ const cookie = require("cookie-parser");
 //importer mes routes du dossier routes
 const AdminRoute = require("./routes/admin.js");
 const AdminFamilyRoute = require("./routes/adminFamily.js");
-const CommentRoute = require("./routes/comment.js");
+const CommentRoute = require("./routes/comments.js");
 const ConnectionRoute = require("./routes/connection.js");
 const ContactRoute = require("./routes/contact.js");
 const CreatorRoute = require("./routes/creator.js");

@@ -1,10 +1,10 @@
 const {DataTypes} = require("sequelize");
-const db = require("../databaseSequelize");
+const db = require("../../databaseSequelize");
 
 const User = require("./User");
 const Family = require("./Family");
 const Admin = require("./Admin");
-const Role = require("./Role");
+const Role = require("./Roles");
 
 
 const Connection = db.define("connections", {
