@@ -1,8 +1,8 @@
 const {DataTypes} = require("sequelize");
-const db = require("../databaseSequelize");
+const db = require("../../databaseSequelize");
 
 const Family = require("./Family");
-const Role = require("./Role");
+const Role = require("./Roles");
 
 const User = db.define("users", {
   id: {
@@ -19,7 +19,7 @@ const User = db.define("users", {
   password: {
     type: DataTypes.STRING,
     allowNull: false,
-  };
+  },
   firstname: {
     type: DataTypes.STRING,
     allowNull: false,
