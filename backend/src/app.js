@@ -3,7 +3,16 @@ const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
 const cookie = require("cookie-parser");
-const router = require("./router");
+const router = require("./routes/route");
+
+const Db = require("../databaseSequelize");
+
+Db.sync({ force: true })
+  .then(console.log("Connexion à la base de données"))
+  .catch((err) => 
+    console.log(err));
+    
+
 
 const app = express();
 app.use(cookie());
