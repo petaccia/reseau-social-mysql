@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const connectionController = require('../controllers/connectionController');
-const LoginLimiter = require('../middleware/loginLimiter');
+const LoginLimiter = require('../middleware/LoginLimiter');
 
 router.post('/register', connectionController.register);
 router.post('/login', LoginLimiter, connectionController.login);

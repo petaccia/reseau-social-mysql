@@ -5,6 +5,7 @@ const User = require("./User");
 const Family = require("./Family");
 const Admin = require("./Admin");
 const Role = require("./Roles");
+const Creator = require("./Creator");
 
 
 const Connection = db.define("connections", {

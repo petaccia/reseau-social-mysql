@@ -1,5 +1,5 @@
 const {DataTypes} = require("sequelize");
-const db = require("../databaseSequelize");
+const db = require("../../databaseSequelize");
 
 const Creator = db.define("creators", {
   id: {
@@ -27,6 +27,3 @@ const Creator = db.define("creators", {
 });
 
 module.exports = Creator;
-
-  
-})

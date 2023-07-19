@@ -8,7 +8,7 @@ const likeController = require('../controllers/LikeController.js');
 router.get('/', likeController.getAllLike);
 router.get('/:id', likeController.getOneLike);
 router.post('/', likeController.createLike);
-router.put('/:id', likeController.modifyLike);
+router.put('/:id', likeController.updateLike);
 router.delete('/:id', likeController.deleteLike);
 
 module.exports = router;

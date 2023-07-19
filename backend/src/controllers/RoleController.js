@@ -1,6 +1,6 @@
-const Role = require("../models/Role");
+const Role = require("../models/Roles");
 
-const getAllRole = async (req, res) => {
+const getAllRoles = async (req, res) => {
   try {
     const role = await Role.findAll();
     res.status(200).json(role);
@@ -68,7 +68,7 @@ const deleteRole = async (req, res) => {
 };
 
 module.exports = {
-  getAllRole,
+  getAllRoles,
   getOneRole,
   createRole,
   updateRole,
