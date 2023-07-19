@@ -1,5 +1,5 @@
 const {DataTypes} = require("sequelize");
-const db = require("../databaseSequelize");
+const db = require("../../databaseSequelize");
 const Admin = require("./Admin");
 const Family = require("./Family");
 
@@ -21,7 +21,7 @@ const AdminFamily = db.define("families", {
 
 });
 
-AdminFamily.belongsTo(Admin{foreignKey: "adminid"});
-AdminFamily.belongsTo(Family{foreignKey: "familyId"});
+AdminFamily.belongsTo(Admin,{foreignKey: "adminId"});
+AdminFamily.belongsTo(Family,{foreignKey: "familyId"});
 
 module.exports = AdminFamily;
