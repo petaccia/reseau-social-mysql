@@ -74,5 +74,5 @@ module.exports = {
   getOneContact,
   createContact,
   updateContact,
-  deleteContact,
+  deleteContact
 }

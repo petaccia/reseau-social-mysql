@@ -72,5 +72,5 @@ module.exports = {
   getOneLike,
   createLike,
   updateLike,
-  deleteLike,
+  deleteLike
 }

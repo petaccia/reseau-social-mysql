@@ -74,5 +74,5 @@ module.exports = {
   createAdmin,
   updateAdmin,
   deleteAdmin
-  
+
 };

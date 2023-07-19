@@ -1,5 +1,5 @@
 const {DataTypes} = require("sequelize");
-const db = require("../databaseSequelize");
+const db = require("../../databaseSequelize");
 
 const Family = db.define("families", {
   id: {

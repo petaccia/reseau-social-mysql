@@ -72,5 +72,5 @@ module.exports = {
   getOneRole,
   createRole,
   updateRole,
-  deleteRole,
+  deleteRole
 }

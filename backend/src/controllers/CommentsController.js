@@ -73,5 +73,5 @@ module.exports = {
   getOneComment,
   createComment,
   updateComment,
-  deleteComment,
+  deleteComment
 }

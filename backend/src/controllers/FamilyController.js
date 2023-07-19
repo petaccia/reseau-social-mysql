@@ -72,5 +72,5 @@ module.exports = {
   getOneFamily,
   createFamily,
   updateFamily,
-  deleteFamily,
+  deleteFamily
 }
