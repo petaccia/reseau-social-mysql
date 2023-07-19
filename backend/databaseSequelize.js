@@ -19,6 +19,4 @@ sequelize.authenticate().then(() => {
 });
 
 
-module.exports = {
-  
-}
+module.exports = sequelize
