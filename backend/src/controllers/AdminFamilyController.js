@@ -67,5 +67,11 @@ const deleteAdminFamily = async (req, res) => {
   }
 };
 
-module.exports = 
-{getAllAdminFamily, getOneAdminFamily, createAdminFamily, updateAdminFamily, deleteAdminFamily};
+module.exports = {
+  getAllAdminFamily,
+  getOneAdminFamily,
+  createAdminFamily,
+  updateAdminFamily,
+  deleteAdminFamily
+}
+

@@ -17,7 +17,6 @@ const PostRoute = require("./routes/post.js");
 const RoleRoute = require("./routes/role.js");
 const UserRoute = require("./routes/user.js");
 
-
 const Db = require("../databaseSequelize");
 
 Db.sync({ force: true })

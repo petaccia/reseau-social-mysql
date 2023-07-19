@@ -47,5 +47,7 @@ const updateCreator = async (req, res) => {
 
 
 module.exports = {
-  
+  getOneCreator,
+  createCreator,
+  updateCreator
 }
