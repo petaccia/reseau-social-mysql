@@ -9,7 +9,7 @@ const getAllUser = async (req, res) => {
   }
 };
 
-const getUser = async (req, res) => {
+const getOneUser = async (req, res) => {
   try {
     const user = await User.findOne({ where: { id: req.params.id} });
     if (user) {
@@ -69,7 +69,7 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
   getAllUser,
-  getUser,
+  getOneUser,
   createUser,
   updateUser,
   deleteUser,

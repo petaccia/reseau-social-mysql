@@ -14,7 +14,7 @@ const AdminFamily = db.define("families", {
     type: DataTypes.INTEGER,
     allowNull: false,
  },
- adminid: {
+ adminId: {
   type: DataTypes.INTEGER,
   allowNull: false
  }

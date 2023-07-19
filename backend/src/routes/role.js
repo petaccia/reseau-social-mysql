@@ -7,7 +7,7 @@ const roleController = require('../controllers/RoleController');
 router.get('/', roleController.getAllRoles);
 router.get('/:id', roleController.getOneRole);
 router.post('/', roleController.createRole);
-router.put('/:id', roleController.modifyRole);
+router.put('/:id', roleController.updateRole);
 router.delete('/:id', roleController.deleteRole);
 
 module.exports = router;
