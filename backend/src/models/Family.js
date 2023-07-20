@@ -1,7 +1,7 @@
 const {DataTypes} = require("sequelize");
 const db = require("../../databaseSequelize");
 
-const Family = db.define("families", {
+const Family = db.define("family", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -15,7 +15,7 @@ const Family = db.define("families", {
   },
   familypicture: {
     type: DataTypes.STRING,
-    allowNull: false, 
+    allowNull: true, 
   },
 
 });

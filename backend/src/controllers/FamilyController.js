@@ -1,4 +1,5 @@
 const Family = require("../models/Family");
+const FamilyValidation= require("../services/validation/familyValidation");
 
 const getAllFamily = async (req, res) => {
   try {
@@ -24,7 +25,7 @@ const getOneFamily = async (req, res) => {
 
 const createFamily = async (req, res) => {
   const {body} = req;
-  const {error} = familyValidation(body);
+  const {error} = FamilyValidation(body);
   if (error) {
     return res.status(400).json(error.details[0].message);
   }
@@ -38,7 +39,7 @@ const createFamily = async (req, res) => {
 
 const updateFamily = async (req, res) => {
   const {body} = req;
-  const {error} = familyValidation(body);
+  const {error} = FamilyValidation(body);
   if (error) {
     return res.status(400).json(error.details[0].message);
   }

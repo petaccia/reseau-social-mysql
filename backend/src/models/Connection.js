@@ -50,7 +50,7 @@ const Connection = db.define("connections", {
 });
 
 Connection.belongsTo(User, {foreignKey: "userId"});
-Connection.belongsTo(User, {foreignKey: "creatorId"});
+Connection.belongsTo(Creator, {foreignKey: "creatorId"});
 Connection.belongsTo(Family, {foreignKey: "familyId"});
 Connection.belongsTo(Admin, {foreignKey: "adminId"});
 Connection.belongsTo(Role, {foreignKey: "roleId"});

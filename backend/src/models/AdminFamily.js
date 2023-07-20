@@ -3,7 +3,7 @@ const db = require("../../databaseSequelize");
 const Admin = require("./Admin");
 const Family = require("./Family");
 
-const AdminFamily = db.define("families", {
+const AdminFamily = db.define("adminFamily", {
   id : {
     type: DataTypes.INTEGER,
     primaryKey: true,
