@@ -1,30 +1,17 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Register from "@pages/register/Register";
-import Login from "@pages/login/Login";
-import Public from "@pages/layout/Public";
-import Home from "@pages/home/Home";
-import Profil from "@pages/Profil";
-
-
-
-  
-  
+import Home from "./pages/Home/Home";
+import Profil from "./pages/Profil/Profil";
+import Contact from "./pages/Contact/Contact";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          
-          <Route path="/" element={<Public />} >
-            <Route path="/home" element={<Home />} />
-            <Route path="/profil/:id" element={<Profil />} />
-          </Route >
-        
+          <Route path="/home" element={<Home />} />
+          <Route path="/profil" element={<Profil />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </Router>
     </div>
