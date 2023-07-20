@@ -1,4 +1,11 @@
 const multer = require("multer");
+const fs = require("fs");
+
+// Créer le dossier uploads s'il n'existe pas
+if (!fs.existsSync("./uploads")) {
+  fs.mkdirSync("./uploads");
+}
+
 
 const MIME_TYPES = {
   "image/jpg": "jpg",

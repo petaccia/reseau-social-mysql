@@ -2,7 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
-const adminFamilyController = require("../controllers/adminFamilyController");
+const adminFamilyController = require("../controllers/AdminFamilyController");
 
 router.get("/", adminFamilyController.getAllAdminFamily);
 router.get("/:id", adminFamilyController.getOneAdminFamily);

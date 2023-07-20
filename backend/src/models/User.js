@@ -26,15 +26,15 @@ const User = db.define("users", {
   },
   lastname: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   dateOfBirth: {
     type: DataTypes.DATEONLY,
-    allowNull: false,
+    allowNull: true,
   },
   profilePicture: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   familyId: {
     type: DataTypes.INTEGER,

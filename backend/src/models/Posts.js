@@ -18,13 +18,13 @@ const Post = db.define("posts", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  userid: {
+  userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
 
 });
 
-Post.belongsTo(User, { foreignKey: "userid" });
+Post.belongsTo(User, { foreignKey: "userId" });
 
 module.exports = Post;
