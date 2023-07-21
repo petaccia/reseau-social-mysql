@@ -1,0 +1,76 @@
+.cardComment {
+  width: 300px;
+  height: 110px;
+  border: 5px solid #666565;
+  border-radius: 10px;
+  margin: 45px;
+  display: flex;
+  flex-direction: column;
+
+  .containerImage {
+    height: 40px;
+    border-bottom: 1px solid #666565;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+
+    .img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .containerLike {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #2aa6ff;
+
+      .icon {
+        font-size: 15px;
+        margin: 0px 10px 0px 10px;
+      }
+    }
+    .user {
+      font-size: 12px;
+      font-weight: 500;
+      color: #ff2afb;
+    }
+  }
+  .containerButton {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+    .button {
+      width: 5rem;
+      display: flex;
+      justify-content: flex-end;
+      margin-right: 10px;
+      margin-top: 10px;
+      font-size: 10px;
+      border: 1px solid #666565;
+      border-radius: 5px;
+      background-color: #10131e;
+      color: #ff2afb;
+
+      &:hover {
+        background-color: #ff2afb;
+        color: #10131e;
+      }
+    }
+  }
+  // .containerContent{
+  //   width: 100%;
+  //   border: 5px solid #666565;
+
+  .content {
+    width: 100%;
+    color: #2aa6ff;
+    font-size: 12px;
+    overflow-wrap: break-word;
+  }
+}

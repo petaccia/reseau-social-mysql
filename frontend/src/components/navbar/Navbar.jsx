@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import styles from "./Navbar.module.scss";
-
 import { FcSearch } from "react-icons/fc";
 import { BiLogIn } from "react-icons/bi";
-const Navbar = ({ famille }) => {
+import styles from "./Navbar.module.scss";
+
+function Navbar({ famille }) {
   const [searchText, setSearchText] = useState("");
 
   const handleSearch = (e) => {
@@ -45,6 +45,6 @@ const Navbar = ({ famille }) => {
       </div>
     </div>
   );
-};
+}
 
 export default Navbar;
