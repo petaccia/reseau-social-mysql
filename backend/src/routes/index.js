@@ -14,18 +14,17 @@ const PostRoute = require("./post.js");
 const RoleRoute = require("./role.js");
 const UserRoute = require("./user.js");
 
-
 // Routes
-router.use ("/admin", AdminRoute);
-router.use ("/adminFamily", AdminFamilyRoute);
-router.use ("/comment", CommentRoute);
-router.use ("/connection", ConnectionRoute);
-router.use ("/contact", ContactRoute);
-router.use ("/creator", CreatorRoute);
-router.use ("/family", FamilyRoute);
-router.use ("/like", LikeRoute);
-router.use ("/post", PostRoute);
-router.use ("/role", RoleRoute);
-router.use ("/user", UserRoute);
+router.use("/admin", AdminRoute);
+router.use("/adminFamily", AdminFamilyRoute);
+router.use("/comment", CommentRoute);
+router.use("/connection", ConnectionRoute);
+router.use("/contact", ContactRoute);
+router.use("/creator", CreatorRoute);
+router.use("/family", FamilyRoute);
+router.use("/like", LikeRoute);
+router.use("/post", PostRoute);
+router.use("/role", RoleRoute);
+router.use("/user", UserRoute);
 
-module.exports  = router;
+module.exports = router;

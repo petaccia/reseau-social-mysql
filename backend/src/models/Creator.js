@@ -1,4 +1,4 @@
-const {DataTypes} = require("sequelize");
+const { DataTypes } = require("sequelize");
 const db = require("../../databaseSequelize");
 
 const Creator = db.define("creators", {
@@ -23,7 +23,7 @@ const Creator = db.define("creators", {
   isSuperAdmin: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
-  } ,
+  },
 });
 
 module.exports = Creator;

@@ -1,6 +1,5 @@
 const Comments = require("../models/Comments");
 
-
 const getAllComments = async (req, res) => {
   try {
     const comments = await Comments.findAll();
@@ -12,10 +11,10 @@ const getAllComments = async (req, res) => {
 
 const getOneComment = async (req, res) => {
   try {
-    const comment = await Comments.findOne({ where: { id: req.params.id} });
+    const comment = await Comments.findOne({ where: { id: req.params.id } });
     if (comment) {
       res.status(200).json(comment);
-    }else {
+    } else {
       res.status(404).json("Comment non enregistré");
     }
   } catch (error) {
@@ -24,8 +23,8 @@ const getOneComment = async (req, res) => {
 };
 
 const createComment = async (req, res) => {
-  const {body} = req;
-  const {error} = commentsValidation(body);
+  const { body } = req;
+  const { error } = commentsValidation(body);
   if (error) {
     return res.status(400).json(error.details[0].message);
   }
@@ -38,16 +37,18 @@ const createComment = async (req, res) => {
 };
 
 const updateComment = async (req, res) => {
-  const {body} = req;
-  const {error} = commentsValidation(body);
+  const { body } = req;
+  const { error } = commentsValidation(body);
   if (error) {
     return res.status(400).json(error.details[0].message);
   }
   try {
-    const comment = await Comments.update(body, {where: {id: req.params.id}});
+    const comment = await Comments.update(body, {
+      where: { id: req.params.id },
+    });
     if (comment) {
       res.status(200).json("Comment modifié");
-    }else {
+    } else {
       res.status(404).json("Comment non enregistré");
     }
   } catch (error) {
@@ -57,10 +58,10 @@ const updateComment = async (req, res) => {
 
 const deleteComment = async (req, res) => {
   try {
-    const comment = await Comments.destroy({where: {id: req.params.id}});
+    const comment = await Comments.destroy({ where: { id: req.params.id } });
     if (comment) {
       res.status(200).json("Comment supprimé");
-    }else {
+    } else {
       res.status(404).json("Comment non enregistré");
     }
   } catch (error) {
@@ -73,5 +74,5 @@ module.exports = {
   getOneComment,
   createComment,
   updateComment,
-  deleteComment
-}
+  deleteComment,
+};

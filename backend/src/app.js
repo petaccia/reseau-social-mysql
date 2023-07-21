@@ -4,18 +4,15 @@ const path = require("path");
 const cors = require("cors");
 const cookie = require("cookie-parser");
 
-//importer mes routes du dossier routes
+// importer mes routes du dossier routes
 
-const router= require("./routes");
+const router = require("./routes");
 
 const Db = require("../databaseSequelize");
 
 Db.sync({ force: true })
-  .then(console.log("Connexion à la base de données"))
-  .catch((err) => 
-    console.log(err));
-    
-
+  .then(console.error("Connexion à la base de données"))
+  .catch((err) => console.error(err));
 
 const app = express();
 app.use(cookie());
@@ -29,7 +26,6 @@ app.use(
 );
 
 app.use(express.json());
-
 
 // Serve the public folder for public resources
 app.use(express.static(path.join(__dirname, "../public")));

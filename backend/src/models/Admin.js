@@ -1,4 +1,4 @@
-const {DataTypes} = require("sequelize");
+const { DataTypes } = require("sequelize");
 const db = require("../../databaseSequelize");
 
 const Admin = db.define("admin", {
@@ -20,7 +20,6 @@ const Admin = db.define("admin", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-
 });
 
 module.exports = Admin;

@@ -31,7 +31,10 @@ const createUser = async (req, res) => {
     return res.status(400).json(error.details[0].message);
   }
   try {
-    const user = await User.create({...body, image: req.file ? req.file.path : null});
+    const user = await User.create({
+      ...body,
+      image: req.file ? req.file.path : null,
+    });
     res.status(201).json(user);
   } catch (error) {
     res.status(500).json({ error });
@@ -45,7 +48,10 @@ const updateUser = async (req, res) => {
     return res.status(400).json(error.details[0].message);
   }
   try {
-    await User.update({...body, image: req.file ? req.file.path : null}, { where: { id: req.params.id } });
+    await User.update(
+      { ...body, image: req.file ? req.file.path : null },
+      { where: { id: req.params.id } }
+    );
     const user = await User.findOne(body, { where: { id: req.params.id } });
     if (user) {
       res.status(200).json(user);

@@ -1,4 +1,4 @@
-const {DataTypes} = require("sequelize");
+const { DataTypes } = require("sequelize");
 const db = require("../../databaseSequelize");
 
 const User = require("./User");
@@ -7,9 +7,8 @@ const Admin = require("./Admin");
 const Role = require("./Roles");
 const Creator = require("./Creator");
 
-
 const Connection = db.define("connections", {
-  id : {
+  id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
@@ -22,7 +21,7 @@ const Connection = db.define("connections", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  email : {
+  email: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
@@ -38,7 +37,7 @@ const Connection = db.define("connections", {
   familyId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-  } ,
+  },
   adminId: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -49,9 +48,9 @@ const Connection = db.define("connections", {
   },
 });
 
-Connection.belongsTo(User, {foreignKey: "userId"});
-Connection.belongsTo(Creator, {foreignKey: "creatorId"});
-Connection.belongsTo(Family, {foreignKey: "familyId"});
-Connection.belongsTo(Admin, {foreignKey: "adminId"});
-Connection.belongsTo(Role, {foreignKey: "roleId"});
+Connection.belongsTo(User, { foreignKey: "userId" });
+Connection.belongsTo(Creator, { foreignKey: "creatorId" });
+Connection.belongsTo(Family, { foreignKey: "familyId" });
+Connection.belongsTo(Admin, { foreignKey: "adminId" });
+Connection.belongsTo(Role, { foreignKey: "roleId" });
 module.exports = Connection;
