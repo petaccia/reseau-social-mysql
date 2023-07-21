@@ -1,123 +1,121 @@
-@import '../../style/variables.scss';
+@import "../../style/variables.scss";
 
 .navbar {
-    // width: 100%;
+  // width: 100%;
+  height: 5rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #594848;
+  top: 0;
+  color: $primary-color;
+  z-index: 1000;
+
+  .container {
+    width: 100%;
     height: 5rem;
-    margin: 0;
     display: flex;
+    justify-content: space-around;
     align-items: center;
-    border-bottom: 1px solid #594848;
-    top: 0;
-    color: $primary-color;
-    z-index: 1000;
-    
-  
-    .container {
-      width: 100%;
+    margin-left: 10rem;
+    margin-right: 5rem;
+    color: #10131e;
+
+    .familyContainer {
+      width: 30rem;
       height: 5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .familyName {
+        color: #fff;
+        font-size: 4rem;
+        background: linear-gradient(
+          to right,
+          rgb(10, 54, 248),
+          rgb(9, 234, 174)
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin: 0;
+        text-align: center;
+      }
+    }
+
+    .rightContainer {
       display: flex;
       justify-content: space-around;
       align-items: center;
-      margin-left: 10rem;
-      margin-right: 5rem;
-      color: #10131E;
-    
-  
-      .familyContainer {
-        width: 30rem;
-        height: 5rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-  
-        .familyName {
-          color: #fff;
-          font-size: 4rem;
-          background: linear-gradient(to right, rgb(10, 54, 248), rgb(9, 234, 174), );
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin: 0;
-            text-align: center;
-           
+      width: 45rem;
+      margin-left: 5rem;
+    }
 
+    .searchContainer {
+      display: flex;
+      align-items: center;
+      border: 1px solid #594848;
+      border-radius: 15px;
+      margin: 1rem;
+      padding: 0.5rem;
 
+      .searchIcon {
+        font-size: 1.5rem;
+        padding-left: 0.5rem;
+      }
+
+      .searchInput {
+        width: 20rem;
+        margin-left: 1rem;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        color: #2aa6ff;
+
+        &::placeholder {
+          color: #2aa6ff;
         }
       }
-  
-      .rightContainer {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        width: 45rem ;
-        margin-left: 5rem;
-      }
-  
-      .searchContainer {
-        display: flex;
-        align-items: center;
-        border: 1px solid #594848;
-        border-radius: 15px;
-        margin: 1rem;
-        padding: 0.5rem;
-  
-        .searchIcon {
-          font-size: 1.5rem;
-          padding-left: 0.5rem;
-        }
-  
-        .searchInput {
-          width: 20rem;
-          margin-left: 1rem;
-          background-color: transparent;
-          border: none;
-          outline: none;
-            color: #2aa6ff;
-  
-          &::placeholder {
-            color: #2aa6ff;
-          }
-        }
-      }
-      .connectContainer {
+    }
+    .connectContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .link {
         display: flex;
         flex-direction: column;
+        justify-content: center;
         align-items: center;
-  
-        .link {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          text-decoration: none;
-  
-          &:hover {
-            color: #430f2f;
-          }
+        text-decoration: none;
+
+        &:hover {
+          color: #430f2f;
         }
-  
-        .textContainer {
-          // border: 1px solid #594848;
-          width: 12rem;
-          display: flex;
-          justify-content: center;
-          margin-bottom: 0.5rem;
-          .text {
-            color: #2aa6ff;
-            &:hover {
-              color:$secondary-color ;
-            }
-          }
-        }
-        .icon {
-          font-size: 2rem;
+      }
+
+      .textContainer {
+        // border: 1px solid #594848;
+        width: 12rem;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 0.5rem;
+        .text {
           color: #2aa6ff;
-  
           &:hover {
             color: $secondary-color;
           }
         }
       }
+      .icon {
+        font-size: 2rem;
+        color: #2aa6ff;
+
+        &:hover {
+          color: $secondary-color;
+        }
+      }
     }
   }
-  
+}

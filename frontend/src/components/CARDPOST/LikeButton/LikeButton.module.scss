@@ -1,0 +1,19 @@
+@import "../../../style/variables";
+
+.containerHeart {
+  color: $primary-color;
+  width: 5rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  .icon {
+    padding-left: 0.5rem;
+    cursor: pointer;
+  }
+
+  .likes {
+    margin-left: 0.5rem;
+    color: $primary-color;
+  }
+}
