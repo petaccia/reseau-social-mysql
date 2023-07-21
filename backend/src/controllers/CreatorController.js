@@ -1,11 +1,11 @@
-const Creator = require('../models/Creator');
+const Creator = require("../models/Creator");
 
 const getOneCreator = async (req, res) => {
   try {
-    const creator = await Creator.findOne({ where: { id: req.params.id} });
+    const creator = await Creator.findOne({ where: { id: req.params.id } });
     if (creator) {
       res.status(200).json(creator);
-    }else {
+    } else {
       res.status(404).json("Creator non enregistré");
     }
   } catch (error) {
@@ -14,8 +14,8 @@ const getOneCreator = async (req, res) => {
 };
 
 const createCreator = async (req, res) => {
-  const {body} = req;
-  const {error} = creatorValidation(body);
+  const { body } = req;
+  const { error } = creatorValidation(body);
   if (error) {
     return res.status(400).json(error.details[0].message);
   }
@@ -28,16 +28,18 @@ const createCreator = async (req, res) => {
 };
 
 const updateCreator = async (req, res) => {
-  const {body} = req;
-  const {error} = creatorValidation(body);
+  const { body } = req;
+  const { error } = creatorValidation(body);
   if (error) {
     return res.status(400).json(error.details[0].message);
   }
   try {
-    const creator = await Creator.update(body, {where: {id: req.params.id}});
+    const creator = await Creator.update(body, {
+      where: { id: req.params.id },
+    });
     if (creator) {
       res.status(200).json("Créateur modifié");
-    }else {
+    } else {
       res.status(404).json("Créateur non enregistré");
     }
   } catch (error) {
@@ -45,9 +47,8 @@ const updateCreator = async (req, res) => {
   }
 };
 
-
 module.exports = {
   getOneCreator,
   createCreator,
-  updateCreator
-}
+  updateCreator,
+};

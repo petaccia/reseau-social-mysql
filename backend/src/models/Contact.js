@@ -1,4 +1,4 @@
-const {DataTypes} = require("sequelize");
+const { DataTypes } = require("sequelize");
 const db = require("../../databaseSequelize");
 
 const Contact = db.define("contacts", {
@@ -19,7 +19,7 @@ const Contact = db.define("contacts", {
   message: {
     type: DataTypes.STRING,
     allowNull: false,
-  }
+  },
 });
 
 module.exports = Contact;

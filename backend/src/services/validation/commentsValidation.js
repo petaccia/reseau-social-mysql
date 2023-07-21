@@ -7,7 +7,6 @@ const commentsValidation = (data) => {
     postId: Joi.number().integer().min(1).presence("required"),
   });
   return commentSchema.validate(data, { abortEarly: false }).error;
-
 };
 
 module.exports = commentsValidation;

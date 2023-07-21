@@ -1,14 +1,14 @@
-const {DataTypes} = require("sequelize");
+const { DataTypes } = require("sequelize");
 const db = require("../../databaseSequelize");
 
 const User = require("./User");
 
 const Post = db.define("posts", {
-  id : {
+  id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
-    allowNull: false
+    allowNull: false,
   },
   content: {
     type: DataTypes.STRING,
@@ -22,7 +22,6 @@ const Post = db.define("posts", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-
 });
 
 Post.belongsTo(User, { foreignKey: "userId" });

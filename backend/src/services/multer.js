@@ -6,7 +6,6 @@ if (!fs.existsSync("./uploads")) {
   fs.mkdirSync("./uploads");
 }
 
-
 const MIME_TYPES = {
   "image/jpg": "jpg",
   "image/jpeg": "jpg",
@@ -23,7 +22,7 @@ const storage = multer.diskStorage({
   filename: (req, file, callback) => {
     const name = file.originalname.split(" ").join("_");
     const extension = MIME_TYPES[file.mimetype];
-    callback(null, name + Date.now() + "." + extension);
+    callback(null, `${name + Date.now()}.${extension}`);
   },
 });
 
@@ -36,9 +35,9 @@ const fileFilter = (req, file, callback) => {
 };
 
 const upload = multer({
-  storage: storage,
+  storage,
   limits: { fileSize: 1024 * 1024 * 5 },
-  fileFilter: fileFilter,
+  fileFilter,
 });
 
 module.exports = upload;

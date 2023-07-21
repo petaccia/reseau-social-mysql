@@ -1,8 +1,8 @@
-const Connection = require("../models/Connection");
-
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto-js");
+const Connection = require("../models/Connection");
+const connectionValidation = require("../services/validation/ConnectionValidation");
 
 const register = async (req, res) => {
   try {
@@ -12,29 +12,27 @@ const register = async (req, res) => {
       return res.status(400).json(error.details[0].message);
     }
 
-    //Définir un regex pour valider l'email
+    // Définir un regex pour valider l'email
     const regex =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     // Définir un regex pour valider le mot de passe
     const regexPassword =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
 
-    //Vérifier si l'email est valide
+    // Vérifier si l'email est valide
     if (!regex.test(email)) {
       return res
         .status(400)
         .json({ error: "L'email doit contenir un format valide" });
     }
 
-    //Vérifier si le mot de passe est valide
+    // Vérifier si le mot de passe est valide
     if (!regexPassword.test(password)) {
-      return res
-        .status(400)
-        .json({
-          error:
-            "Le mot de passe doit contenir au moins 8 caractères, dont au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial",
-        });
+      return res.status(400).json({
+        error:
+          "Le mot de passe doit contenir au moins 8 caractères, dont au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial",
+      });
     }
     // Crypter l'email
     const cryptedEmail = crypto
@@ -48,34 +46,32 @@ const register = async (req, res) => {
     const emailExist = await Connection.findOne({
       where: { email: cryptedEmail },
     });
-    if (await Connection.findOne({ where: { email: email } })) {
+    if (emailExist) {
       return res.status(409).json("L'email existe déjà");
-    } else {
-      const connection = await Connection.create({
-        username: username,
-        email: cryptedEmail,
-        password: hashedPassword,
-
-        // Pour le moment, on met le status à "pending" par défault pour que l'admin puisse le valider
-        status: "pending",
-      });
-      res.status(201).json(connection);
-
-      // Créer un token
-      const token = jwt.sign(
-        { id: connection.id, email: connection.email },
-        process.env.DB_ACCESS_TOKEN_SECRET,
-        {
-          expiresIn: "24h",
-        }
-      );
-      res.status(200).json({ user: connection, token });
     }
+    const connection = await Connection.create({
+      username,
+      email: cryptedEmail,
+      password: hashedPassword,
+
+      // Pour le moment, on met le status à "pending" par défault pour que l'admin puisse le valider
+      status: "pending",
+    });
+    res.status(201).json(connection);
+
+    // Créer un token
+    const token = jwt.sign(
+      { id: connection.id, email: connection.email },
+      process.env.DB_ACCESS_TOKEN_SECRET,
+      {
+        expiresIn: "24h",
+      }
+    );
+    res.status(200).json({ user: connection, token });
   } catch (error) {
     res.status(500).json(error);
   }
 };
-
 
 const login = async (req, res) => {
   try {
@@ -125,17 +121,14 @@ const approveConnection = async (req, res) => {
 
     // Rechercher l'utilisateur par son id
     const connection = await Connection.findOne({
-      where: { id: id },
+      where: { id },
     });
     if (!connection) {
       return res.status(404).json("L'utilisateur n'existe pas");
     }
 
     // Modifier le status de l'utilisateur
-    await Connection.update(
-      { status: "accepted" },
-      { where: { id: id }
-    });
+    await Connection.update({ status: "accepted" }, { where: { id } });
     res.status(200).json("Utilisateur approuvé");
   } catch (error) {
     res.status(500).json({ message: "Une erreur est survenue" });
@@ -146,4 +139,4 @@ module.exports = {
   register,
   login,
   approveConnection,
-}
+};

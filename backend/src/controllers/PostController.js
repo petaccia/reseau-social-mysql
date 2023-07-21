@@ -11,10 +11,10 @@ const getAllPost = async (req, res) => {
 
 const getOnePost = async (req, res) => {
   try {
-    const post = await Post.findOne({ where: { id: req.params.id} });
+    const post = await Post.findOne({ where: { id: req.params.id } });
     if (post) {
       res.status(200).json(post);
-    }else {
+    } else {
       res.status(404).json("Post non enregistré");
     }
   } catch (error) {
@@ -23,8 +23,8 @@ const getOnePost = async (req, res) => {
 };
 
 const createPost = async (req, res) => {
-  const {body} = req;
-  const {error} = postValidation(body);
+  const { body } = req;
+  const { error } = postValidation(body);
   if (error) {
     return res.status(400).json(error.details[0].message);
   }
@@ -37,16 +37,16 @@ const createPost = async (req, res) => {
 };
 
 const updatePost = async (req, res) => {
-  const {body} = req;
-  const {error} = postValidation(body);
+  const { body } = req;
+  const { error } = postValidation(body);
   if (error) {
     return res.status(400).json(error.details[0].message);
   }
   try {
-    const post = await Post.update(body, {where: {id: req.params.id}});
+    const post = await Post.update(body, { where: { id: req.params.id } });
     if (post) {
       res.status(200).json("Post modifié");
-    }else {
+    } else {
       res.status(404).json("Post non enregistré");
     }
   } catch (error) {
@@ -56,10 +56,10 @@ const updatePost = async (req, res) => {
 
 const deletePost = async (req, res) => {
   try {
-    const post = await Post.destroy({where: {id: req.params.id}});
+    const post = await Post.destroy({ where: { id: req.params.id } });
     if (post) {
       res.status(200).json("Post supprimé");
-    }else {
+    } else {
       res.status(404).json("Post non enregistré");
     }
   } catch (error) {
@@ -72,5 +72,5 @@ module.exports = {
   getOnePost,
   createPost,
   updatePost,
-  deletePost
-}
+  deletePost,
+};

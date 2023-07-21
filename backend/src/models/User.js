@@ -1,4 +1,4 @@
-const {DataTypes} = require("sequelize");
+const { DataTypes } = require("sequelize");
 const db = require("../../databaseSequelize");
 
 const Family = require("./Family");
@@ -44,7 +44,6 @@ const User = db.define("users", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  
 });
 
 User.belongsTo(Family, { foreignKey: "familyId" });
