@@ -1,0 +1,53 @@
+.containerCard{
+    display: flex;
+    justify-content: center;
+   align-items: center;
+    margin-top:5rem;
+    
+    .card{
+       background-color: #10131e;
+       border :1px solid #594848;
+       width: 30rem;
+       height: 30rem;
+
+       .containerContact{
+           .title{
+               color: #2aa6ff;
+               text-align: center;
+           }
+           .form{
+               .formGroup{
+                   margin: 1rem;
+                   .label{
+                       color :#2aa6ff;
+                   }
+                   .input{
+                       background-color: transparent;
+                       &::placeholder{
+                           color: #594848;
+                       }
+                       color: #b9adad;
+                   }
+               }
+
+           }
+           .buttonContainer{
+               display: flex;
+               justify-content: flex-end;
+               align-items: center;
+               margin: 3rem 2rem; 
+               .button{
+                   background-color: transparent;
+                   color: #2aa6ff;
+                   padding: 0.5rem 1rem;
+                   border-radius: 0.5rem;
+                   cursor: pointer;
+                   &:hover{
+                       background-color: #594848;
+                       color: #10131e;
+                   }
+               }
+           }
+       }
+    }
+}
