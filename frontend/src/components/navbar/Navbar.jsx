@@ -30,7 +30,7 @@ function Navbar({ famille }) {
             />
           </div>
           <div className={styles.connectContainer}>
-            <Link to="/login" className={styles.link}>
+            <Link to="/connexion" className={styles.link}>
               <div className={styles.textContainer}>
                 <span className={styles.text}>S'inscrire</span>
                 <span className={styles.text}>/Se connecter</span>

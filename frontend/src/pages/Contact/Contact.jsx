@@ -30,7 +30,7 @@ const Contact = () => {
         setToastMessage("Votre message a bien été envoyé");
         setVariant("success");
 
-        setSentMessage(response.message)
+        setSentMessage(formData.message)
 
       } else {
         setToastMessage("Votre message n'a pas pu être envoyé");
