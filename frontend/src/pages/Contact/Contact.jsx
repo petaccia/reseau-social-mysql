@@ -130,7 +130,6 @@ const Contact = () => {
           <div className={styles.buttonContainer}>
 
             <button type="submit" className={styles.button} disuabled={formData.message === sentMessage}>
-=
               Envoyer
             </button>
           </div>
