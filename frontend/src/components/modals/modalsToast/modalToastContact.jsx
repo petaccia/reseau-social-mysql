@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Styles from "./modalToastContact.module.scss";
+import ProgressBar from "@components/UI/progressBar/ProgressBar";
 
 // Définir les couleurs de fond en fonction du variant
 // const SUCCESS_COLOR = "#006400";
@@ -10,7 +11,7 @@ const duration = 5000;
 const ModalToast = ({ show, handleClose, message, variant, timeleft }) => {
   // Déterminer la couleur de fond et de texte en fonction du variant
   // const bgColor = variant === "success" ? SUCCESS_COLOR : DANGER_COLOR;
-  const textColor = variant === "success" ? "#006400" : "#8B0000";
+  const textColor = variant === "success" ? "green" : "red";
 
   // Rendre le modal avec le style et la classe définis
   return (
@@ -22,17 +23,8 @@ const ModalToast = ({ show, handleClose, message, variant, timeleft }) => {
       {/* Afficher le message passé en props */}
       <p className={Styles.message}>{message}</p>
       {/* Afficher une barre de progression en fonction du temps restant passé en props */}
-      <div className={Styles.progress_bar}>
-        <div
-          className={Styles.progress}
-          style={{
-            width: `${(timeleft / 5) * 100}%`,
-            animation: `progress ${duration}ms linear`,
-            backgroundColor: variant === "success" ? "#006400" : "#8B0000",
-          }}
-        ></div>
+      <ProgressBar duration={duration} success ={variant === "success"}/>
       </div>
-    </div>
   );
 };
 
