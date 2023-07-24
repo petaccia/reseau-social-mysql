@@ -28,8 +28,10 @@ const Contact = () => {
       if (response.status === 201) {
         setToastMessage("Votre message a bien été envoyé");
         setVariant("success");
+
         setSentMessage(formData.message);
         setShowToast(true);
+
       } else {
         setToastMessage("Votre message n'a pas pu être envoyé");
         setVariant("danger");

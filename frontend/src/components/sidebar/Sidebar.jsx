@@ -9,7 +9,7 @@ const Sidebar = ({ children }) => {
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
     {
-      path: "/",
+      path: "/home",
       name: "home",
       icon: <FcHome />,
     },
