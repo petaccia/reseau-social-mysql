@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Form, Button, Card } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
 import apiConnect from "../../services/API/apiConnection";
 import styles from "./Contact.module.scss";
+import ModalToast from "@components/modals/modalsToast/modalToastContact";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -10,78 +10,135 @@ const Contact = () => {
     message: "",
   });
 
+  // Fonction pour récupérer les modals
+  const [showToast, setShowToast] = useState(true);
+  // fonction pour les messages de toast
+  const [toastMessage, setToastMessage] = useState("");
+  const [variant, setVariant] = useState("");
+
+  const [timeleft, setTimeleft] = useState(5);
+
   // Envoyer les données du formulaire dans l'API
   const formSubmit = async () => {
     try {
       const response = await apiConnect.post("/contact", formData);
-      console.info(response);
+      if (response.status === 201) {
+        setToastMessage("Votre message a bien été envoyé");
+        setVariant("success");
+      } else {
+        setToastMessage("Votre message n'a pas pu être envoyé");
+        setVariant("danger");
+      }
     } catch (error) {
-      console.info(error);
+      setToastMessage("Votre message n'a pas pu être envoyé");
+      setVariant("danger");
     }
   };
+
+  // Fermer le toast automatiquement après 3 secondes et manuellement
+  let timer;
+
   const handleSumbit = (e) => {
     e.preventDefault();
     formSubmit();
-    console.info(formData);
+    if (!showToast) {
+      setShowToast(true);
+      setTimeleft(5);
+    }
+ };
+
+  const handleCloseToast = () => {
+    clearTimeout(timer);
+    setShowToast(false);
   };
 
+  useEffect(() => {
+    let timer;
+    if (showToast) {
+      timer = setInterval(() => {
+        setTimeleft((prev) => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            setShowToast(false);
+            return 5;
+          } else {
+          return prev - 1;
+        }
+      })
+    }, 1000);
+    
+    } 
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [showToast]);
+    
+
   return (
+    <div className={styles.container}>
     <div className={`${styles.containerCard}`}>
-      je vais
-      <Card className={`${styles.card} `}>
-        <div className={styles.containerContact}>
-          <h1 className={styles.title}>Contact</h1>
-          <Form onSubmit={handleSumbit} className={styles.form}>
-            <Form.Group className={styles.formGroup} controlId="formBasicEmail">
-              <Form.Label className={styles.label}>Nom</Form.Label>
-              <Form.Control
-                className={styles.input}
-                type="text"
-                placeholder="Entrez votre nom"
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-              />
-            </Form.Group>
+      <div className={styles.containerContact}>
+        <h1 className={styles.title}>Contact</h1>
+        <form onSubmit={handleSumbit} className={styles.form}>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Nom</label>
+            <input
+              className={styles.input}
+              type="text"
+              placeholder="Entrez votre nom"
+              value={formData.name}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
+            />
+          </div>
 
-            <Form.Group className={styles.formGroup} controlId="formBasicEmail">
-              <Form.Label className={styles.label}>Email</Form.Label>
-              <Form.Control
-                className={styles.input}
-                type="email"
-                placeholder="Entrez votre email"
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-              />
-            </Form.Group>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Email</label>
+            <input
+              className={styles.input}
+              type="email"
+              placeholder="Entrez votre email"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+            />
+          </div>
 
-            <Form.Group className={styles.formGroup} controlId="message">
-              <Form.Label className={styles.label}>Message</Form.Label>
-              <Form.Control
-                className={styles.input}
-                type="text"
-                placeholder="Entrez votre message"
-                as="textarea"
-                rows={3}
-                value={formData.message}
-                onChange={(e) =>
-                  setFormData({ ...formData, message: e.target.value })
-                }
-              />
-            </Form.Group>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Message</label>
+            <textarea
+              className={styles.input}
+              type="text"
+              placeholder="Entrez votre message"
+              rows={3}
+              value={formData.message}
+              onChange={(e) =>
+                setFormData({ ...formData, message: e.target.value })
+              }
+            />
+          </div>
 
-            <div className={styles.buttonContainer}>
-              <Button type="submit" className={styles.button}>
-                Envoyer
-              </Button>
-            </div>
-          </Form>
-        </div>
-      </Card>
+          <div className={styles.buttonContainer}>
+            <button type="submit" className={styles.button}>
+              Envoyer
+            </button>
+          </div>
+        </form>
+      </div>
+      {/* Afficher le composant ModalToast si showToast est vrai */}
+      {showToast && (
+        <ModalToast
+          show={showToast}
+          handleClose={handleCloseToast}
+          message={toastMessage}
+          variant={variant}
+          timeleft={timeleft}
+        />
+      )}
     </div>
+  </div>
   );
 };
 

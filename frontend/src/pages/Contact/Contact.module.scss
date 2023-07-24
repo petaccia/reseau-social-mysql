@@ -1,53 +1,72 @@
-.containerCard{
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5rem;
+
+  .containerCard {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-   align-items: center;
-    margin-top:5rem;
-    
-    .card{
-       background-color: #10131e;
-       border :1px solid #594848;
-       width: 30rem;
-       height: 30rem;
+    width: 40rem;
+    height: 30rem;
 
-       .containerContact{
-           .title{
-               color: #2aa6ff;
-               text-align: center;
-           }
-           .form{
-               .formGroup{
-                   margin: 1rem;
-                   .label{
-                       color :#2aa6ff;
-                   }
-                   .input{
-                       background-color: transparent;
-                       &::placeholder{
-                           color: #594848;
-                       }
-                       color: #b9adad;
-                   }
-               }
+    .containerContact {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border: 3px solid #594848;
+      .title {
+        color: #2aa6ff;
+        text-align: center;
+      }
+      .form {
+        display: flex;
+        flex-direction: column; 
+        justify-content: center;
+        padding-left: 10rem;
 
-           }
-           .buttonContainer{
-               display: flex;
-               justify-content: flex-end;
-               align-items: center;
-               margin: 3rem 2rem; 
-               .button{
-                   background-color: transparent;
-                   color: #2aa6ff;
-                   padding: 0.5rem 1rem;
-                   border-radius: 0.5rem;
-                   cursor: pointer;
-                   &:hover{
-                       background-color: #594848;
-                       color: #10131e;
-                   }
-               }
-           }
-       }
+        .formGroup {
+          margin: 1rem;
+            display: flex;
+            flex-direction: column;
+                        
+          .label {
+            color: #2aa6ff;
+          }
+          .input {
+            width: 60%;
+            background-color: transparent;
+            outline: none;
+            border-radius: 0.5rem;
+            border: 1px solid #594848;
+            padding: 0.5rem;
+            margin: 0.5rem;
+
+            &::placeholder {
+              color: #594848;
+            }
+            color: #b9adad;
+          }
+        }
+      }
+      .buttonContainer {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin: 3rem 2rem;
+        .button {
+          background-color: transparent;
+          color: #2aa6ff;
+          padding: 0.5rem 1rem;
+          border-radius: 0.5rem;
+          cursor: pointer;
+          &:hover {
+            background-color: #594848;
+            color: #10131e;
+          }
+        }
+      }
     }
+  }
 }
