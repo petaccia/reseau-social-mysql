@@ -44,6 +44,16 @@ const Contact = () => {
 
   const handleSumbit = (e) => {
     e.preventDefault();
+    // Vérifier si le message actuel est le même que celui envoyé
+    if (formData.message === sentMessage) {
+      setToastMessage("Vous ne pouvez pas envoyer de message même");
+      setVariant("danger");
+      setShowToast(true);
+      setTimeleft(5);
+
+      return;
+    }
+
     formSubmit();
     if (!showToast) {
       setShowToast(true);
@@ -94,6 +104,7 @@ const Contact = () => {
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
               }
+              required
             />
           </div>
 
@@ -107,6 +118,7 @@ const Contact = () => {
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
+              required
             />
           </div>
 
@@ -121,11 +133,12 @@ const Contact = () => {
               onChange={(e) =>
                 setFormData({ ...formData, message: e.target.value })
               }
+              required
             />
           </div>
 
           <div className={styles.buttonContainer}>
-            <button type="submit" className={styles.button} disuabled={formData.message === sentMessage}>
+            <button type="submit" className={styles.button} disabled={formData.message === sentMessage}>
               Envoyer
             </button>
           </div>
