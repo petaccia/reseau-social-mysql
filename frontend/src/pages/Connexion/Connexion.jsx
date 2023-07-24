@@ -2,25 +2,37 @@ import React, { useState } from "react";
 import styles from "./Connexion.module.scss";
 import  famille  from "/src/assets/illustration/famili.png";
 import family  from "/src/assets/illustration/famille.jpg";
+import  apiConnect from "../../services/API/apiConnection";
 
 const Connexion = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
   });
 
-  // const auth = async () => {
-  //   try {
-  //     const response = await apiConnect.post("/", {
-  //       email,
-  //       password,
-  //     });
-  //     console.log(response);
-  // }
+  const auth = async () => {
+    let response ;
+    try {
+      if (isLogin) {
+    response = await apiConnect.post("/login", {
+        email: formData.email,
+        password: formData.password,
+      });
+      } else {
+        response = await apiConnect.post("/signup", {
+          username: formData.name,
+          email: formData.email,
+          password: formData.password,
+        });
+      }
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
 
   const switchMode = () => {
     setIsLogin(!isLogin);
@@ -32,6 +44,7 @@ const Connexion = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    auth();
     if (isLogin) {
       console.log("Logging in with", formData.email, formData.password);
     } else {
@@ -70,10 +83,10 @@ const Connexion = () => {
             {!isLogin && (
               <input
                 type="text"
-                name="name"
-                placeholder="Name"
+                name="username"
+                placeholder="Nom"
                 onChange={handleChange}
-                value={formData.name}
+                value={formData.username}
                 className={styles.input}
               />
             )}
@@ -88,13 +101,13 @@ const Connexion = () => {
             <input
               type="password"
               name="password"
-              placeholder="Password"
+              placeholder="Mot de passe"
               onChange={handleChange}
               value={formData.password}
               className={styles.input}
             />
             <button type="submit" className={styles.button}>
-              {!isLogin ? "Sign Up" : "Login"}
+              {!isLogin ? "Inscrivez-vous"   : "Connectez-vous"}
             </button>
           </form>
         </div>

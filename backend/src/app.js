@@ -4,7 +4,6 @@ const path = require("path");
 const cors = require("cors");
 const cookie = require("cookie-parser");
 
-// importer mes routes du dossier routes
 
 const router = require("./routes");
 
