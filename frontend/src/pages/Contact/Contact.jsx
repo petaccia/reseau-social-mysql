@@ -10,6 +10,7 @@ const Contact = () => {
     message: "",
   });
 
+
   // Etat pour stocker les messages envoyés
   const [sentMessage, setSentMessage] = useState("");
 
@@ -28,7 +29,9 @@ const Contact = () => {
       if (response.status === 201) {
         setToastMessage("Votre message a bien été envoyé");
         setVariant("success");
+
         setSentMessage(response.message)
+
       } else {
         setToastMessage("Votre message n'a pas pu être envoyé");
         setVariant("danger");
@@ -125,7 +128,9 @@ const Contact = () => {
           </div>
 
           <div className={styles.buttonContainer}>
+
             <button type="submit" className={styles.button} disuabled={formData.message === sentMessage}>
+=
               Envoyer
             </button>
           </div>
