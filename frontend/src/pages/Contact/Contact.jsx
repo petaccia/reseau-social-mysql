@@ -14,7 +14,7 @@ const Contact = () => {
   const [sentMessage, setSentMessage] = useState(null);
 
   // Fonction pour récupérer les modals
-  const [showToast, setShowToast] = useState(true);
+  const [showToast, setShowToast] = useState(false);
   // fonction pour les messages de toast
   const [toastMessage, setToastMessage] = useState("");
   const [variant, setVariant] = useState("");
