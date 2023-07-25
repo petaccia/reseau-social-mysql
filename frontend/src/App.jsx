@@ -18,7 +18,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/profil" element={<Profil />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/connexion" element={<Connexion />} />
+          <Route path="/connexion/:mode" element={<Connexion />} />
 
         </Routes>
       </Router>

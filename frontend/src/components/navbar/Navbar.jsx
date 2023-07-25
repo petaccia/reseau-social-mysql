@@ -30,15 +30,19 @@ function Navbar({ famille }) {
             />
           </div>
           <div className={styles.connectContainer}>
-            <Link to="/connexion" className={styles.link}>
-              <div className={styles.textContainer}>
+            <div className={styles.textContainer}>
+              <Link to="/connexion/signup" className={styles.link}>
                 <span className={styles.text}>S'inscrire</span>
+              </Link>
+              <Link to="/connexion/login" className={styles.link}>
                 <span className={styles.text}>/Se connecter</span>
-              </div>
-              <BiLogIn
-                alt="icon de connexion ou d'inscription"
-                className={styles.icon}
-              />
+              </Link>
+            </div>
+            <Link to="/connexion/login" className={styles.link}>
+            <BiLogIn
+              alt="icon de connexion ou d'inscription"
+              className={styles.icon}
+            />
             </Link>
           </div>
         </div>

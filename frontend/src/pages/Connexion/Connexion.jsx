@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Connexion.module.scss";
 import  famille  from "/src/assets/illustration/famili.png";
 import family  from "/src/assets/illustration/famille.jpg";
 import  apiConnect from "../../services/API/apiConnection";
+import { useLocation, useParams } from "react-router-dom";
 
 const Connexion = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const {mode} = useParams();
+  const location = useLocation();
+
+  const [isLogin, setIsLogin] = useState(mode === "login");
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    setIsLogin(mode === "login");
+  }, [mode, location]);
 
   const auth = async () => {
     let response ;
