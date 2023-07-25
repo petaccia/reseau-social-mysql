@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import apiConnect from "../../services/API/apiConnection";
 import styles from "./Contact.module.scss";
-import ModalToast from "@components/modals/modalsToast/modalToastContact";
+import ModalToast from "@components/modals/ModalToast";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -14,7 +14,7 @@ const Contact = () => {
   const [sentMessage, setSentMessage] = useState(null);
 
   // Fonction pour récupérer les modals
-  const [showToast, setShowToast] = useState(false);
+  const [showToast, setShowToast] = useState(true);
   // fonction pour les messages de toast
   const [toastMessage, setToastMessage] = useState("");
   const [variant, setVariant] = useState("");
@@ -61,25 +61,6 @@ const Contact = () => {
     setShowToast(false);
   };
 
-  useEffect(() => {
-    let timer;
-    if (showToast) {
-      timer = setInterval(() => {
-        setTimeleft((prev) => {
-          if (prev <= 1) {
-            clearInterval(timer);
-            setShowToast(false);
-            return 5;
-          } else {
-            return prev - 1;
-          }
-        });
-      }, 1000);
-    }
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [showToast]);
 
   return (
     <div className={styles.container}>
@@ -143,8 +124,8 @@ const Contact = () => {
             show={showToast}
             handleClose={handleCloseToast}
             message={toastMessage}
-            variant={variant}
-            timeleft={timeleft}
+            type={variant}
+            duration={5000}
           />
         )}
       </div>
