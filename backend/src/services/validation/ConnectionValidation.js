@@ -17,4 +17,12 @@ const LoginValidation = (data) => {
   return schema.validate(data, { abortEarly: false });
 };
 
+const testData = {
+  username: "testuser",
+  email: "test@example.com",
+  password: "Test1234!"
+}
+
+console.log(RegisterValidation(testData));
+
 module.exports = { RegisterValidation, LoginValidation };

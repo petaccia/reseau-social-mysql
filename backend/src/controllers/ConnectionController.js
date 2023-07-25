@@ -2,12 +2,15 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto-js");
 const Connection = require("../models/Connection");
-const connectionValidation = require("../services/validation/ConnectionValidation");
+const {RegisterValidation, LoginValidation} = require("../services/validation/ConnectionValidation");
 
 const register = async (req, res) => {
+  console.log("data" , req.body);
   try {
     const { username, email, password } = req.body;
-    const { error } = connectionValidation(req.body);
+    // console.log(req.body);
+    const { error } = RegisterValidation(req.body);
+    console.log("validation", error); 
     if (error) {
       return res.status(400).json(error.details[0].message);
     }
@@ -22,6 +25,7 @@ const register = async (req, res) => {
 
     // Vérifier si l'email est valide
     if (!regex.test(email)) {
+      console.log("invalid email");
       return res
         .status(400)
         .json({ error: "L'email doit contenir un format valide" });
@@ -29,6 +33,7 @@ const register = async (req, res) => {
 
     // Vérifier si le mot de passe est valide
     if (!regexPassword.test(password)) {
+      console.log("invalid password");
       return res.status(400).json({
         error:
           "Le mot de passe doit contenir au moins 8 caractères, dont au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial",
@@ -38,26 +43,34 @@ const register = async (req, res) => {
     const cryptedEmail = crypto
       .HmacSHA256(email, process.env.DB_CRYPTOJS_SECRET_KEY)
       .toString();
+      console.log("---------------cryptedEmail",cryptedEmail);
 
     // Hacher le mot de passe
     const hashedPassword = await bcrypt.hash(password, 10);
+    console.log("---------------hashedPassword",hashedPassword);
 
     // Vérifier si l'email existe dans la base de données
+    console.log("Creating user with data", {
+      username: username,
+      email: cryptedEmail,
+      password: hashedPassword,
+    });
     const emailExist = await Connection.findOne({
       where: { email: cryptedEmail },
     });
+    console.log("------------------------emailExist", emailExist);
     if (emailExist) {
       return res.status(409).json("L'email existe déjà");
     }
+
     const connection = await Connection.create({
       username,
       email: cryptedEmail,
       password: hashedPassword,
-
       // Pour le moment, on met le status à "pending" par défault pour que l'admin puisse le valider
       status: "pending",
     });
-    res.status(201).json(connection);
+    console.log("user created", connection);
 
     // Créer un token
     const token = jwt.sign(
@@ -67,8 +80,10 @@ const register = async (req, res) => {
         expiresIn: "24h",
       }
     );
+    console.log("---------->>token", token);
     res.status(200).json({ user: connection, token });
   } catch (error) {
+    console.log("------------------->error catch", error);
     res.status(500).json(error);
   }
 };
@@ -76,7 +91,7 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const { error } = connectionValidation(req.body);
+    const { error } = LoginValidation(req.body);
     if (error) {
       return res.status(400).json(error.details[0].message);
     }

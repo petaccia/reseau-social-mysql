@@ -28,23 +28,23 @@ const Connection = db.define("connections", {
   },
   userId: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
   creatorId: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
   familyId: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
   adminId: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
   roleId: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
 });
 
