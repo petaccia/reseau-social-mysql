@@ -22,7 +22,7 @@ const Connexion = () => {
       });
       } else {
         response = await apiConnect.post("/signup", {
-          username: formData.name,
+          username: formData.username,
           email: formData.email,
           password: formData.password,
         });
@@ -50,7 +50,7 @@ const Connexion = () => {
     } else {
       console.log(
         "Sign Up with",
-        formData.name,
+        formData.username,
         formData.email,
         formData.password
       );
