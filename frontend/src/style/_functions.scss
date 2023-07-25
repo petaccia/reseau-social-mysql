@@ -1,0 +1,7 @@
+@function getColor($type) {
+  @if $type == "success" {
+    @return green;
+  } @else if $type == "error" {
+    @return red;
+  }
+}
