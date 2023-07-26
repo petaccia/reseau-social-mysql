@@ -22,21 +22,22 @@
       }
       .form {
         display: flex;
-        flex-direction: column; 
+        flex-direction: column;
         justify-content: center;
         padding-left: 10rem;
 
         .formGroup {
           margin: 1rem;
-            display: flex;
-            flex-direction: column;
-                        
+          display: flex;
+          flex-direction: column;
+
           .label {
             color: #2aa6ff;
           }
           .input {
             width: 60%;
             background-color: transparent;
+            background-clip: padding-box;
             outline: none;
             border-radius: 0.5rem;
             border: 1px solid #594848;
@@ -47,6 +48,8 @@
               color: #594848;
             }
             color: #b9adad;
+            
+          }
           }
         }
       }
@@ -69,4 +72,4 @@
       }
     }
   }
-}
+
