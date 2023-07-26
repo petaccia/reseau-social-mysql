@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Connexion.module.scss";
-import  famille  from "/src/assets/illustration/famili.png";
-import family  from "/src/assets/illustration/famille.jpg";
-import  apiConnect from "../../services/API/apiConnection";
+import famille from "/src/assets/illustration/famili.png";
+import family from "/src/assets/illustration/famille.jpg";
+import apiConnect from "../../services/API/apiConnection";
 import { useLocation, useParams } from "react-router-dom";
+import { toast , ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Connexion = () => {
-  const {mode} = useParams();
+  const { mode } = useParams();
   const location = useLocation();
 
   const [isLogin, setIsLogin] = useState(mode === "login");
@@ -21,13 +23,13 @@ const Connexion = () => {
   }, [mode, location]);
 
   const auth = async () => {
-    let response ;
+    let response;
     try {
       if (isLogin) {
-    response = await apiConnect.post("/login", {
-        email: formData.email,
-        password: formData.password,
-      });
+        response = await apiConnect.post("/login", {
+          email: formData.email,
+          password: formData.password,
+        });
       } else {
         response = await apiConnect.post("/signup", {
           username: formData.username,
@@ -35,13 +37,36 @@ const Connexion = () => {
           password: formData.password,
         });
       }
-      console.log(response);
+      if (response && (response.status === 200 || response.status === 201)) {
+        toast.success(`Bienvenue ${formData.username} ! Vous êtes ${
+            isLogin ? "connecté" : "inscrit"
+          } ! 👋`, { className: styles.toastSuccess, 
+          style:{ top: "100px", right: "100px", 
+        boxShadow: "5px 5px 10px green",
+        backgroundColor:"#10131e", color: "green"} });
+      }
     } catch (error) {
-      console.log(error);
+      console.log("chercher l'error", error);
+      if (error.response) {
+        if (error.response.status === 409) {
+          toast.error("Votre email existe déjà 😡", { className: styles.toastError , 
+            style:{ top: "100px", right: "100px", boxShadow: "5px 5px 10px red", backgroundColor: "#10131e", color: "red"} });
+        } else if (error.response.status === 400) {
+          toast.error("Votre mot de passe n'est pas correct ou aucun champs n'est remplis 😡", { className: styles.toastError , 
+            style:{ top: "100px", right: "100px", boxShadow: "5px 5px 10px red", backgroundColor: "#10131e", color: "red"} });
+        } else if (error.response.status === 401) {
+          toast.error("Votre email n'est pas correct 😡", { className: styles.toastError, 
+            style:{ top: "100px", right: "100px", boxShadow: "5px 5px 10px red", backgroundColor: "#10131e", color: "red"} });
+        } else if (error.response.status === 500) {
+          toast.error("Une erreur est survenue 😡", { className: styles.toastError , 
+            style:{ top: "100px", right: "100px", boxShadow: "5px 5px 10px red", backgroundColor: "#10131e", color: "red"} });
+        } else {
+          toast.error("Votre inscription ou votre connexion n'a pas pu être effectué 😡", { className: styles.toastError ,
+            style:{ top: "100px", right: "100px", boxShadow: "5px 5px 10px red", backgroundColor: "#10131e", color: "red"} });
+        }
+      }
     }
   }
-  
-
   const switchMode = () => {
     setIsLogin(!isLogin);
   };
@@ -64,6 +89,7 @@ const Connexion = () => {
       );
     }
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.imageContainer}>
@@ -115,11 +141,22 @@ const Connexion = () => {
               className={styles.input}
             />
             <button type="submit" className={styles.button}>
-              {!isLogin ? "Inscrivez-vous"   : "Connectez-vous"}
+              {!isLogin ? "Inscrivez-vous" : "Connectez-vous"}
             </button>
           </form>
         </div>
       </div>
+      <ToastContainer
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        toastStyle={{ backgroundColor: "#10131e" }}
+      />
     </div>
   );
 };
