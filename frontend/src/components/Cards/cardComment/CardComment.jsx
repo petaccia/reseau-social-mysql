@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BsFillHeartFill } from "react-icons/bs";
-import ModalComment from "../modal/modalComments/ModaleComment.jsx";
+import ModalComment from "../../modals/modalComments/ModaleComment.jsx";
 
 import Styles from "./CardComment.module.scss";
 
@@ -23,7 +23,6 @@ const CardComment = ({ user, likes = 0, liked, commentList = [] }) => {
     }
     setCommentLiked(!commentLiked);
   };
-
 
   const handleShowModal = () => {
     setShowModal(true);
@@ -72,6 +71,5 @@ const CardComment = ({ user, likes = 0, liked, commentList = [] }) => {
     </div>
   );
 };
-
 
 export default CardComment;

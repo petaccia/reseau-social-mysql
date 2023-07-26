@@ -1,0 +1,14 @@
+@import "../../style/variables";
+
+.home{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .title{
+    font-size: 2rem;
+    font-weight: 500;
+    color: $primary-color;
+    margin: 2rem;
+
+  }
+}
