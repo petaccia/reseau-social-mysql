@@ -3,9 +3,9 @@ import { BiComment } from "react-icons/bi";
 import { RiSendPlaneFill } from "react-icons/ri";
 import styles from "./CardPost.module.scss";
 
-import LikeButton from "../LikeButton/LikeButton.jsx";
-import CommentList from "../commentList/CommentList.jsx";
-import CommentInput from "../commentInput/CommentInput.jsx";
+import LikeButton from "../../CARDPOST/LikeButton/LikeButton.jsx";
+import CommentList from "../../CARDPOST/commentList/CommentList.jsx";
+import CommentInput from "../../CARDPOST/commentInput/CommentInput.jsx";
 
 import oceane from "../../../assets/users/oceane.jpg";
 

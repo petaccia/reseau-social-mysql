@@ -1,10 +1,9 @@
-@import "../../../../style/variables";
+@import "../../../style/variables";
 
 .modal {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
   width: 300px;
   background-color: $background-fond;
   border: 1px solid #0b12db;
