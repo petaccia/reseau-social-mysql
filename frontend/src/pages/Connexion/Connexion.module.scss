@@ -1,3 +1,6 @@
+@import "../../style/functions";
+@import "../../style/variables";
+
 .container {
   display: flex;
   align-items: center;
@@ -53,57 +56,59 @@
     border: 1px solid #594848;
     margin-top: 5rem;
   }
-    .title {
-      color: #2aa6ff;
-      text-align: center;
-    }
-    .containerContact {
+  .title {
+    color: #2aa6ff;
+    text-align: center;
+  }
+  .containerContact {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // border: 3px solid #594848;
+    // margin-top: 1rem;
+    width: 100%;
+
+    .form {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      // border: 3px solid #594848;
-      // margin-top: 1rem;
-      width: 100%;
+      width: 80%;
+      height: 20rem;
+      margin-left: 4rem;
 
-      .form {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 80%;
-        height: 20rem;
-        margin-left: 4rem;
+      .input {
+        width: 60%;
+        background-color: transparent;
+        outline: none;
+        border-radius: 0.5rem;
+        border: 1px solid #594848;
+        padding: 0.5rem;
+        margin: 0.5rem;
 
-        .input {
-          width: 60%;
-          background-color: transparent;
-          outline: none;
-          border-radius: 0.5rem;
-          border: 1px solid #594848;
-          padding: 0.5rem;
-          margin: 0.5rem;
-
-          &::placeholder {
-            color: #594848;
-          }
-          color: #b9adad;
+        &::placeholder {
+          color: #594848;
         }
-        .button {
-          background-color: transparent;
-          color: #2aa6ff;
-          border: 1px solid #594848;
-          border-radius: 0.5rem;
-          padding: 0.5rem;
-          margin: 0.5rem;
-          width: 10rem;
-          margin-left: 20rem;
-          &:hover {
-            background-color: #594848;
-            color: #430f2f;
-          }
+        color: #b9adad;
+      }
+      .button {
+        background-color: transparent;
+        color: #2aa6ff;
+        border: 1px solid #594848;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        margin: 0.5rem;
+        width: 10rem;
+        margin-left: 20rem;
+        &:hover {
+          background-color: #594848;
+          color: #430f2f;
         }
       }
     }
- 
-  
+  }
+}
+
+.toastSuccess {
+  background-color: #2aa6ff
   }
 

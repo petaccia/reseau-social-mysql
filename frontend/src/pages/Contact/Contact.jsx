@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import apiConnect from "../../services/API/apiConnection";
 import styles from "./Contact.module.scss";
-import ModalToast from "@components/modals/ModalToast";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
