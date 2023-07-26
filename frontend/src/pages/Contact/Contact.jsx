@@ -2,44 +2,44 @@ import React, { useEffect, useState } from "react";
 import apiConnect from "../../services/API/apiConnection";
 import styles from "./Contact.module.scss";
 
+import { toast , ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 const Contact = () => {
+const [sentMessage, setSentMessage] = useState("");
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
 
-  // Etat pour stocker les messages envoyés
-  const [sentMessage, setSentMessage] = useState(null);
-
-  // Fonction pour récupérer les modals
-  const [showToast, setShowToast] = useState(false);
-  // fonction pour les messages de toast
-  const [toastMessage, setToastMessage] = useState("");
-  const [variant, setVariant] = useState("");
-
-  const [timeleft, setTimeleft] = useState(5);
-
   // Envoyer les données du formulaire dans l'API
   const formSubmit = async () => {
     try {
       const response = await apiConnect.post("/contact", formData);
       if (response.status === 201) {
-        setToastMessage("Votre message a bien été envoyé");
-        setVariant("success");
-
+        toast.success("Votre message a bien été envoyé",  { className: styles.toastSuccess, 
+          style:{ top: "100px", right: "100px", 
+        boxShadow: "5px 5px 10px green",
+        backgroundColor:"#10131e", color: "green"}});
         setSentMessage(formData.message);
-        setShowToast(true);
+       
 
       } else {
-        setToastMessage("Votre message n'a pas pu être envoyé");
-        setVariant("danger");
-        setShowToast(true);
+        toast.error("Votre message n'a pas pu être envoyé",  { className: styles.toastSuccess, 
+          style:{ top: "100px", right: "100px", 
+        boxShadow: "5px 5px 10px red",
+        backgroundColor:"#10131e", color: "red"}});
+       
       }
     } catch (error) {
-      setToastMessage("Votre message n'a pas pu être envoyé");
-      setVariant("danger");
-      setShowToast(true);
+      toast.error("Votre message n'a pas pu être envoyé",  { className: styles.toastSuccess, 
+        style:{ top: "100px", right: "100px", 
+      boxShadow: "5px 5px 10px red",
+      backgroundColor:"#10131e", color: "red"}} );
+     
     }
   };
 
@@ -47,18 +47,15 @@ const Contact = () => {
     e.preventDefault();
     // Vérifier si le message actuel est le même que celui envoyé
     if (formData.message === sentMessage) {
-      setToastMessage("Vous ne pouvez pas envoyer le même message");
-      setVariant("danger");
-      setShowToast(true);
-      setTimeleft(5);
+      toast.error("Vous ne pouvez pas envoyer le même message" , { className: styles.toastSuccess, 
+        style:{ top: "100px", right: "100px", 
+      boxShadow: "5px 5px 10px red",
+      backgroundColor:"#10131e", color: "red"} });
     } else {
       formSubmit();
     }
   };
 
-  const handleCloseToast = () => {
-    setShowToast(false);
-  };
 
 
   return (
@@ -92,6 +89,7 @@ const Contact = () => {
                   setFormData({ ...formData, email: e.target.value })
                 }
                 required
+                autoComplete="nope" 
               />
             </div>
 
@@ -117,17 +115,18 @@ const Contact = () => {
             </div>
           </form>
         </div>
-        {/* Afficher le composant ModalToast si showToast est vrai */}
-        {showToast && (
-          <ModalToast
-            show={showToast}
-            handleClose={handleCloseToast}
-            message={toastMessage}
-            type={variant}
-            duration={5000}
-          />
-        )}
-      </div>
+        
+      </div> <ToastContainer
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        toastStyle={{ backgroundColor: "#10131e" }}
+      />
     </div>
   );
 };
