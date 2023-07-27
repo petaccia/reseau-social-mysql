@@ -1,7 +1,7 @@
 import React from "react";
 import { FaChevronLeft } from "react-icons/fa";
 
-const CustomLeftArrow = ({ onClick, ...rest }) => {
+const CustomLeftArrowComment = ({ onClick, ...rest }) => {
   return (
     <FaChevronLeft
       {...rest}
@@ -20,4 +20,4 @@ const CustomLeftArrow = ({ onClick, ...rest }) => {
   );
 };
 
-export default CustomLeftArrow;
+export default CustomLeftArrowComment;

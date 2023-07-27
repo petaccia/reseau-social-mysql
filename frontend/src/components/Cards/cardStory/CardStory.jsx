@@ -4,7 +4,7 @@ import oceane from "../../../assets/users/oceane.jpg";
 
 // Fonction pour ecrire la 1ère lettre d'un nom en majuscule
 const capitalizeFirstLetter = (str) => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }
 const CardStory = ({ image, date, author }) => {
   return (

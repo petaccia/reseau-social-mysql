@@ -5,7 +5,7 @@ import cheval from "../../assets/post/cheval.jpg";
 import requin from "../../assets/post/requin.jpg";
 import maldive from "../../assets/post/maldives.jpg";
 import noel from "../../assets/post/noel.jpg";
-import CardStory from "@components/Cards/cardStory/CardStory";
+import CarouselHomeStory from "@components/carousel/CarouselHomeStory/CarouselHomeStory";
 
 const Home = () => {
   const posts = [
@@ -18,11 +18,9 @@ const Home = () => {
   return (
     <div className={styles.home}>
       <h1 className={styles.title}>Story</h1>
-      <CardStory 
-      image="https://picsum.photos/200/300"
-      date="12/12/2022"
-      author="Oceane"
-      />
+      <div className={styles.carousel}>
+      <CarouselHomeStory />
+      </div>
       {posts.map((post) => (
         <CardPost
           key={post.id}
