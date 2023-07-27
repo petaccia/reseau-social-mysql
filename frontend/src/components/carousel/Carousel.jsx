@@ -2,19 +2,17 @@ import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import styles from "./carousel.module.scss";
-import CustomRightArrow from "./customCarousel/arrowRight//CustomRightArrow";
-import CustomLeftArrow from "./customCarousel/arrowLeft/CustomLeftArrow";
 
-const CustomCarousel = ({ children }) => {
+const CustomCarousel = ({ children, customRightArrow, customLeftArrow }) => {
 
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
-      items: 2,
+      items: 3,
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 2,
+      items: 3,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
@@ -29,8 +27,8 @@ const CustomCarousel = ({ children }) => {
     <Carousel
       responsive={responsive}
       className={styles.carousel}
-      customRightArrow={<CustomRightArrow />}
-      customLeftArrow={<CustomLeftArrow />}
+      customRightArrow={customRightArrow}
+      customLeftArrow={customLeftArrow}
     >
       {children}
     </Carousel>
