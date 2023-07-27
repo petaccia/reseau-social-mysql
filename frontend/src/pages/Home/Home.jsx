@@ -6,7 +6,7 @@ import requin from "../../assets/post/requin.jpg";
 import maldive from "../../assets/post/maldives.jpg";
 import noel from "../../assets/post/noel.jpg";
 import CarouselHomeStory from "@components/carousel/CarouselHomeStory/CarouselHomeStory";
-import CardUser from "@components/Cards/cardUser/CardUser";
+import ListUser from "@components/Lists/listUser/ListUser";
 
 const Home = () => {
   const posts = [
@@ -16,21 +16,83 @@ const Home = () => {
     { id: 4, title: "Post 4", content: "Content 4", image: noel },
   ];
 
+  const users = [
+    {
+      id: 1,
+      name: "Oceane",
+      image: "https://picsum.photos/200/300",
+    },
+    {
+      id: 2,
+      name: "Oceane",
+      image: "https://picsum.photos/200/300",
+    },
+    {
+      id: 3,
+      name: "Oceane",
+      image: "https://picsum.photos/200/300",
+    },
+    {
+      id: 4,
+      name: "Oceane",
+      image: "https://picsum.photos/200/300",
+    },
+    {
+      id: 5,
+      name: "Oceane",
+      image: "https://picsum.photos/200/300",
+    },
+    {
+      id: 6,
+      name: "Oceane",
+      image: "https://picsum.photos/200/300",
+    },
+    {
+      id: 7,
+      name: "Oceane",
+      image: "https://picsum.photos/200/300",
+    },
+    {
+      id: 8,
+      name: "Oceane",
+      image: "https://picsum.photos/200/300",
+    },
+    {
+      id: 9,
+      name: "Oceane",
+      image: "https://picsum.photos/200/300",
+    },
+    {
+      id: 10,
+      name: "Oceane",
+      image: "https://picsum.photos/200/300",
+    },
+    {
+      id: 11,
+      name: "Oceane",
+      image: "https://picsum.photos/200/300",
+    },
+  ];
+
   return (
     <div className={styles.home}>
-      <CardUser />
-      <h1 className={styles.title}>Story</h1>
-      <div className={styles.carousel}>
-      <CarouselHomeStory />
+      <div className={styles.posts}>
+        <h1 className={styles.title}>Story</h1>
+        <div className={styles.carousel}>
+          <CarouselHomeStory />
+        </div>
+        {posts.map((post) => (
+          <CardPost
+            key={post.id}
+            title={post.title}
+            content={post.content}
+            image={post.image}
+          />
+        ))}
       </div>
-      {posts.map((post) => (
-        <CardPost
-          key={post.id}
-          title={post.title}
-          content={post.content}
-          image={post.image}
-        />
-      ))}
+      <div className={styles.userList}>
+        <ListUser users={users} />
+      </div>
     </div>
   );
 };
