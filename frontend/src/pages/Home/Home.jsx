@@ -6,6 +6,7 @@ import requin from "../../assets/post/requin.jpg";
 import maldive from "../../assets/post/maldives.jpg";
 import noel from "../../assets/post/noel.jpg";
 import CarouselHomeStory from "@components/carousel/CarouselHomeStory/CarouselHomeStory";
+import CardUser from "@components/Cards/cardUser/CardUser";
 
 const Home = () => {
   const posts = [
@@ -17,6 +18,7 @@ const Home = () => {
 
   return (
     <div className={styles.home}>
+      <CardUser />
       <h1 className={styles.title}>Story</h1>
       <div className={styles.carousel}>
       <CarouselHomeStory />
