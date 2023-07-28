@@ -13,6 +13,7 @@ const likeController = require("./controllers/LikeController");
 const postController = require("./controllers/PostController");
 const roleController = require("./controllers/RoleController");
 const usersController = require("./controllers/UserController");
+const eventController = require("./controllers/EventController");
 
 const LoginLimiter = require("./middleware/LoginLimiter");
 const upload = require("./services/multer");
@@ -93,6 +94,18 @@ router.get("/user/:id", usersController.getOneUser);
 router.post("/user", upload.single("image"), usersController.createUser);
 router.put("/user/:id", upload.single("image"), usersController.updateUser);
 router.delete("/user/:id", usersController.deleteUser);
+
+// Routes de statFamily
+router.get("/stat/FamilyMemberCount/:id", usersController.getFamilyMemberCount);
+router.get("/stat/recentPostCount/:id", postController.getRecentPostCount);
+router.get("/stat/upcomingEventCount/:id", postController.getUpcomingEventCount);
+
+// Routes d'évênements
+router.get("/event", eventController.getAllEvents);
+router.get("/event/:id", eventController.getOneEvent);
+router.post("/event", eventController.createEvent);
+router.put("/event/:id", eventController.updateEvent);
+router.delete("/event/:id", eventController.deleteEvent);
 
 
 module.exports = router;
