@@ -46,7 +46,8 @@ const register = async (req, res) => {
       console.log("---------------cryptedEmail",cryptedEmail);
 
     // Hacher le mot de passe
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
     console.log("---------------hashedPassword",hashedPassword);
 
     // Vérifier si l'email existe dans la base de données
