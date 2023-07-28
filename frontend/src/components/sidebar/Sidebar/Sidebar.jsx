@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FcHome, FcPortraitMode, FcFeedback, FcMenu } from "react-icons/fc";
 import { NavLink, useLocation, Link } from "react-router-dom";
 import Styles from "./Sidebar.module.scss";
-import logo from "../../assets/Logo/logo_noir.png";
+import logo from "../../../assets/Logo/logo_noir.png";
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
