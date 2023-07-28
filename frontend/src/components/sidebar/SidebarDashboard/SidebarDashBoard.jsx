@@ -4,7 +4,7 @@ import { NavLink, useLocation, Link } from "react-router-dom";
 import Styles from "./SidebarDashboard.module.scss";
 import logo from "../../../assets/Logo/logo_noir.png";
 
-const Sidebar = ({ children }) => {
+const SidebarDashBoard = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
@@ -14,7 +14,7 @@ const Sidebar = ({ children }) => {
       icon: <FcHome />,
     },
     {
-      path: "/profileAdmin",
+      path: "/profilAdmin",
       name: "Profile",
       icon: <FcManager />,
     },
@@ -62,7 +62,7 @@ const Sidebar = ({ children }) => {
             {menuItem.map((item, index) => (
               <NavLink
                 to={item.path}
-                key={index.path}
+                key={index}
                 className={`${Styles.link} ${
                   location.pathname === item.path ? Styles.active : ""
                 }`}
@@ -84,4 +84,4 @@ const Sidebar = ({ children }) => {
   );
 };
 
-export default Sidebar;
+export default SidebarDashBoard;

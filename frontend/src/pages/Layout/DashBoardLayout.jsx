@@ -2,10 +2,11 @@ import React from 'react'
 
 import SidebarDashBoard from '@components/sidebar/SidebarDashboard/SidebarDashBoard'
 
-const DashBoardLayout = () => {
+const DashBoardLayout = ({ children }) => {
   return (
     <div>
       <SidebarDashBoard />
+      {children}
       </div>
   )
 }
