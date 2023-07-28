@@ -14,7 +14,7 @@ const Sidebar = ({ children }) => {
       icon: <FcHome />,
     },
     {
-      path: "/profile",
+      path: "/profil",
       name: "Profile",
       icon: <FcPortraitMode />,
     },
