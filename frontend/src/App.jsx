@@ -27,9 +27,7 @@ function App() {
             <Route
               path="/connexion/:mode"
               element={
-                <MainLayout>
                   <Connexion />
-                </MainLayout>
               }
             />
             <Route element={<PrivateRoute />}>
