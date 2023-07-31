@@ -14,7 +14,7 @@ const authReducer = (state, action) => {
     default:
       return state;
   }
-}
+};
 
 const initialState = {
   isAuthenticated: false,
@@ -26,21 +26,26 @@ const AuthProvider = ({ children }) => {
 
   const login = () => {
     dispatch({ type: LOGIN });
+    console.info("Logging in");
     navigate("/home"); // Redirige vers la page de home  .
-  }
+    localStorage.setItem("isAuthenticated", "true");
+  };
 
   const logout = () => {
     dispatch({ type: LOGOUT });
+    console.info("Logging out");
     navigate("/login"); // Redirige vers la page de connexion après la déconnexion
-  }
+    localStorage.setItem("isAuthenticated", "false");
+  };
 
   useEffect(() => {
     const storedAuth = localStorage.getItem("isAuthenticated");
-    if (storedAuth) {
+    if (storedAuth === "true") {
       dispatch({ type: LOGIN });
+    } else if (storedAuth === "false") {
+      dispatch({ type: LOGOUT });
     }
-    localStorage.setItem("isAuthenticated", state.isAuthenticated);
-  }, [state.isAuthenticated]);
+  }, []);
 
   const value = { ...state, login, logout };
 

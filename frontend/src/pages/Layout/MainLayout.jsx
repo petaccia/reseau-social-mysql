@@ -1,15 +1,17 @@
-import React from 'react'
-import Navbar from '@components/navbar/Navbar'
-import Sidebar from '@components/sidebar/Sidebar/Sidebar'
+import React, { useContext } from "react";
+import Navbar from "../../components/navbar/Navbar.jsx";
+import Sidebar from "../../components/sidebar/Sidebar/Sidebar.jsx";
+import AuthContext from "../../contexts/AuthContext.jsx";
 
 const MainLayout = ({ children }) => {
+  const { isAuthenticated } = useContext(AuthContext);
   return (
     <>
-      <Navbar />
-      <Sidebar />
+      {isAuthenticated && <Navbar />}
+      {isAuthenticated && <Sidebar />}
       {children}
     </>
-  )
-}
+  );
+};
 
-export default MainLayout
+export default MainLayout;
