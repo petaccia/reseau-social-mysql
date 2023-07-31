@@ -9,6 +9,7 @@ import AuthContext from "../../../contexts/AuthContext.jsx";
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { logout } = useContext(AuthContext);
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
     {
@@ -31,6 +32,11 @@ const Sidebar = ({ children }) => {
     path: "/connexion/logout",
     name: "Déconnexion",
     icon: <IoLogOutOutline />,
+  };
+
+  const handleLogout = () => {
+    logout();
+    console.log("-------------------->Logout");
   };
 
   return (
@@ -84,6 +90,7 @@ const Sidebar = ({ children }) => {
           className={`${Styles.link_Logout}${
             location.pathname === logoutItem.path ? Styles.active : ""
           }`}
+          onClick={handleLogout}
         >
           <div
             className={Styles.ContainerIconLogout}
