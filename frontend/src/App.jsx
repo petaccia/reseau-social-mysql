@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute.jsx";
 import HomeAdmin from "./pages/Backoffice/homeAdmin/HomeAdmin.jsx";
 import ProfilAdmin from "./pages/Backoffice/ProfilAdmin.jsx";
@@ -85,6 +90,7 @@ function App() {
                 }
               />
             </Route>
+            <Route path="*" element={<Navigate to="/connexion/login" />} />
           </Routes>
         </AuthProvider>
       </Router>

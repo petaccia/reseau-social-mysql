@@ -1,6 +1,6 @@
-import React from 'react'
-import Navbar from '@components/navbar/Navbar'
-import Sidebar from '@components/sidebar/Sidebar/Sidebar'
+import React from "react";
+import Navbar from "../../components/navbar/Navbar.jsx";
+import Sidebar from "../../components/sidebar/Sidebar/Sidebar.jsx";
 
 const MainLayout = ({ children }) => {
   return (
@@ -9,7 +9,7 @@ const MainLayout = ({ children }) => {
       <Sidebar />
       {children}
     </>
-  )
-}
+  );
+};
 
-export default MainLayout
+export default MainLayout;
