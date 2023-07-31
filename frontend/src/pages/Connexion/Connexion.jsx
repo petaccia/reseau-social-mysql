@@ -63,7 +63,7 @@ const Connexion = () => {
         );
       }
     } catch (error) {
-      console.log("chercher l'error", error);
+      console.info("chercher l'error", error);
       if (error.response) {
         if (error.response.status === 409) {
           toast.error("Votre email existe déjà 😡", {
