@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
-import styles from "./Connexion.module.scss";
-import famille from "/src/assets/illustration/famili.png";
-import family from "/src/assets/illustration/famille.jpg";
-import apiConnect from "../../services/API/apiConnection";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { toast , ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import styles from "./Connexion.module.scss";
+import famille from "../../assets/illustration/famille.jpg";
+import family from "../../assets/illustration/family.jpg";
+import apiConnect from "../../services/API/apiConnection.jsx";
 import "react-toastify/dist/ReactToastify.css";
+import AuthContext from "../../contexts/AuthContext.jsx";
 
 const Connexion = () => {
   const { mode } = useParams();
   const location = useLocation();
+  const { login } = useContext(AuthContext);
 
   const [isLogin, setIsLogin] = useState(mode === "login");
   const [formData, setFormData] = useState({
@@ -30,43 +32,104 @@ const Connexion = () => {
           email: formData.email,
           password: formData.password,
         });
+        if (response.status === 200) {
+          login();
+        }
       } else {
         response = await apiConnect.post("/signup", {
           username: formData.username,
           email: formData.email,
           password: formData.password,
         });
+        if (response.status === 201) {
+          login();
+        }
       }
       if (response && (response.status === 200 || response.status === 201)) {
-        toast.success(`Bienvenue ${formData.username} ! Vous êtes ${
+        toast.success(
+          `Bienvenue ${formData.username} ! Vous êtes ${
             isLogin ? "connecté" : "inscrit"
-          } ! 👋`, { className: styles.toastSuccess, 
-          style:{ top: "100px", right: "100px", 
-        boxShadow: "5px 5px 10px green",
-        backgroundColor:"#10131e", color: "green"} });
+          } ! 👋`,
+          {
+            className: styles.toastSuccess,
+            style: {
+              top: "100px",
+              right: "100px",
+              boxShadow: "5px 5px 10px green",
+              backgroundColor: "#10131e",
+              color: "green",
+            },
+          }
+        );
       }
     } catch (error) {
       console.log("chercher l'error", error);
       if (error.response) {
         if (error.response.status === 409) {
-          toast.error("Votre email existe déjà 😡", { className: styles.toastError , 
-            style:{ top: "100px", right: "100px", boxShadow: "5px 5px 10px red", backgroundColor: "#10131e", color: "red"} });
+          toast.error("Votre email existe déjà 😡", {
+            className: styles.toastError,
+            style: {
+              top: "100px",
+              right: "100px",
+              boxShadow: "5px 5px 10px red",
+              backgroundColor: "#10131e",
+              color: "red",
+            },
+          });
         } else if (error.response.status === 400) {
-          toast.error("Votre mot de passe n'est pas correct ou aucun champs n'est remplis 😡", { className: styles.toastError , 
-            style:{ top: "100px", right: "100px", boxShadow: "5px 5px 10px red", backgroundColor: "#10131e", color: "red"} });
+          toast.error(
+            "Votre mot de passe n'est pas correct ou aucun champs n'est remplis 😡",
+            {
+              className: styles.toastError,
+              style: {
+                top: "100px",
+                right: "100px",
+                boxShadow: "5px 5px 10px red",
+                backgroundColor: "#10131e",
+                color: "red",
+              },
+            }
+          );
         } else if (error.response.status === 401) {
-          toast.error("Votre email n'est pas correct 😡", { className: styles.toastError, 
-            style:{ top: "100px", right: "100px", boxShadow: "5px 5px 10px red", backgroundColor: "#10131e", color: "red"} });
+          toast.error("Votre email n'est pas correct 😡", {
+            className: styles.toastError,
+            style: {
+              top: "100px",
+              right: "100px",
+              boxShadow: "5px 5px 10px red",
+              backgroundColor: "#10131e",
+              color: "red",
+            },
+          });
         } else if (error.response.status === 500) {
-          toast.error("Une erreur est survenue 😡", { className: styles.toastError , 
-            style:{ top: "100px", right: "100px", boxShadow: "5px 5px 10px red", backgroundColor: "#10131e", color: "red"} });
+          toast.error("Une erreur est survenue 😡", {
+            className: styles.toastError,
+            style: {
+              top: "100px",
+              right: "100px",
+              boxShadow: "5px 5px 10px red",
+              backgroundColor: "#10131e",
+              color: "red",
+            },
+          });
         } else {
-          toast.error("Votre inscription ou votre connexion n'a pas pu être effectué 😡", { className: styles.toastError ,
-            style:{ top: "100px", right: "100px", boxShadow: "5px 5px 10px red", backgroundColor: "#10131e", color: "red"} });
+          toast.error(
+            "Votre inscription ou votre connexion n'a pas pu être effectué 😡",
+            {
+              className: styles.toastError,
+              style: {
+                top: "100px",
+                right: "100px",
+                boxShadow: "5px 5px 10px red",
+                backgroundColor: "#10131e",
+                color: "red",
+              },
+            }
+          );
         }
       }
     }
-  }
+  };
   const switchMode = () => {
     setIsLogin(!isLogin);
   };
@@ -79,9 +142,9 @@ const Connexion = () => {
     e.preventDefault();
     auth();
     if (isLogin) {
-      console.log("Logging in with", formData.email, formData.password);
+      console.info("Logging in with", formData.email, formData.password);
     } else {
-      console.log(
+      console.info(
         "Sign Up with",
         formData.username,
         formData.email,

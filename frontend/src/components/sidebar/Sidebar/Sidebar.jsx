@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FcHome, FcPortraitMode, FcFeedback, FcMenu } from "react-icons/fc";
 import { NavLink, useLocation, Link } from "react-router-dom";
 import Styles from "./Sidebar.module.scss";
 import logo from "../../../assets/Logo/logo_noir.png";
+import AuthContext from "../../../contexts/AuthContext.jsx";
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
     {
@@ -24,7 +26,6 @@ const Sidebar = ({ children }) => {
       icon: <FcFeedback />,
     },
   ];
-  const location = useLocation();
 
   return (
     <div className={Styles.container}>
@@ -53,7 +54,7 @@ const Sidebar = ({ children }) => {
             {menuItem.map((item, index) => (
               <NavLink
                 to={item.path}
-                key={index.path}
+                key={index}
                 className={`${Styles.link} ${
                   location.pathname === item.path ? Styles.active : ""
                 }`}
@@ -72,7 +73,7 @@ const Sidebar = ({ children }) => {
       </div>
       <main>{children}</main>
     </div>
-  );
+  )
 };
 
 export default Sidebar;

@@ -5,7 +5,7 @@ import { FcSearch } from "react-icons/fc";
 import { BiLogIn } from "react-icons/bi";
 import styles from "./Navbar.module.scss";
 
-function Navbar({ famille }) {
+const Navbar = ({ famille }) => {
   const [searchText, setSearchText] = useState("");
 
   const handleSearch = (e) => {
@@ -39,16 +39,16 @@ function Navbar({ famille }) {
               </Link>
             </div>
             <Link to="/connexion/login" className={styles.link}>
-            <BiLogIn
-              alt="icon de connexion ou d'inscription"
-              className={styles.icon}
-            />
+              <BiLogIn
+                alt="icon de connexion ou d'inscription"
+                className={styles.icon}
+              />
             </Link>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Navbar;
