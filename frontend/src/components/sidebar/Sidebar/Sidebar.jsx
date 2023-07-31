@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { FcHome, FcPortraitMode, FcFeedback, FcMenu } from "react-icons/fc";
+import { IoLogOutOutline } from "react-icons/io5";
 import { NavLink, useLocation, Link } from "react-router-dom";
 import Styles from "./Sidebar.module.scss";
 import logo from "../../../assets/Logo/logo_noir.png";
@@ -26,11 +27,19 @@ const Sidebar = ({ children }) => {
       icon: <FcFeedback />,
     },
   ];
+  const logoutItem = {
+    path: "/connexion/logout",
+    name: "Déconnexion",
+    icon: <IoLogOutOutline />,
+  };
 
   return (
     <div className={Styles.container}>
       <div
-        style={{ width: isOpen ? "13rem" : "4rem" }}
+        style={{
+          width: isOpen ? "13rem" : "4rem",
+          position: isOpen ? "fixed" : "",
+        }}
         className={Styles.sidebar}
       >
         <div className={Styles.top_section}>
@@ -70,10 +79,43 @@ const Sidebar = ({ children }) => {
             ))}
           </div>
         </div>
+        <NavLink
+          to={logoutItem.path}
+          className={`${Styles.link_Logout}${
+            location.pathname === logoutItem.path ? Styles.active : ""
+          }`}
+        >
+          <div
+            className={Styles.ContainerIconLogout}
+            style={{
+              display: isOpen ? "flex" : "flex",
+              flexDirection: isOpen ? "column" : "",
+              alignItems: isOpen ? "center" : "center",
+              position: isOpen ? "absolute" : "absolute",
+              bottom: isOpen ? "20px" : "20px",
+              width: isOpen ? "100%" : "100%",
+            }}
+          >
+            <div
+              className={Styles.iconLogout}
+              style={{ display: isOpen ? "30px" : "20px" }}
+            >
+              {logoutItem.icon}
+            </div>
+            <div
+              style={{
+                display: isOpen ? "block" : "none",
+              }}
+              className={Styles.link_text_Logout}
+            >
+              {logoutItem.name}
+            </div>
+          </div>
+        </NavLink>
       </div>
       <main>{children}</main>
     </div>
-  )
+  );
 };
 
 export default Sidebar;
