@@ -6,7 +6,7 @@ import famille from "../../assets/illustration/famille.jpg";
 import family from "../../assets/illustration/family.jpg";
 import apiConnect from "../../services/API/apiConnection.jsx";
 import "react-toastify/dist/ReactToastify.css";
-import AuthContext from "../../contexts/AuthContext.jsx";
+import AuthContext from "../../contexts/AuthContext/AuthContext.jsx";
 
 const Connexion = () => {
   const { mode } = useParams();

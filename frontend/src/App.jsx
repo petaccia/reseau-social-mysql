@@ -14,7 +14,7 @@ import Connexion from "./pages/Connexion/Connexion.jsx";
 import MainLayout from "./pages/Layout/MainLayout.jsx";
 import DashBoardLayout from "./pages/Layout/DashBoardLayout.jsx";
 import Home from "./pages/Home/Home.jsx";
-import AuthProvider from "./contexts/AuthProvider.jsx";
+import AuthProvider from "./contexts/AuthContext/AuthProvider.jsx";
 import Contact from "./pages/Contact/Contact.jsx";
 import Profil from "./pages/Profil/Profil.jsx";
 import UserProvider from "./contexts/UserContext/UserProvider.jsx";
