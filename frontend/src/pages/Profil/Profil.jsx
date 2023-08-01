@@ -1,7 +1,7 @@
 import React from "react";
+import ListUser from "../../components/Lists/listUser/ListUser.jsx";
 import styles from "./Profil.module.scss";
 import CardPost from "../../components/Cards/cardPost/CardPost.jsx";
-import ListUser from "@components/Lists/listUser/ListUser";
 
 import cheval from "../../assets/post/cheval.jpg";
 import requin from "../../assets/post/requin.jpg";
