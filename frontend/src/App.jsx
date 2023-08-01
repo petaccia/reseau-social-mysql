@@ -17,78 +17,81 @@ import Home from "./pages/Home/Home.jsx";
 import AuthProvider from "./contexts/AuthProvider.jsx";
 import Contact from "./pages/Contact/Contact.jsx";
 import Profil from "./pages/Profil/Profil.jsx";
+import UserProvider from "./contexts/UserContext/UserProvider.jsx";
 
 const App = () => {
   return (
     <div className="App">
       <Router>
         <AuthProvider>
-          <Routes>
-            <Route path="/connexion/:mode" element={<Connexion />} />
-            <Route element={<PrivateRoute />}>
-              <Route
-                path="/homeAdmin"
-                element={
-                  <DashBoardLayout>
-                    <HomeAdmin />
-                  </DashBoardLayout>
-                }
-              />
-              <Route
-                path="/profilAdmin"
-                element={
-                  <DashBoardLayout>
-                    <ProfilAdmin />
-                  </DashBoardLayout>
-                }
-              />
-              <Route
-                path="/contactAdmin"
-                element={
-                  <DashBoardLayout>
-                    <ContactAdmin />
-                  </DashBoardLayout>
-                }
-              />
-              <Route
-                path="/settings"
-                element={
-                  <DashBoardLayout>
-                    <Settings />
-                  </DashBoardLayout>
-                }
-              />
-              <Route
-                path="/home"
-                element={
-                  <MainLayout>
-                    <Home />
-                  </MainLayout>
-                }
-              />
-              <Route
-                path="/profil"
-                element={
-                  <MainLayout>
-                    <Profil />
-                  </MainLayout>
-                }
-              />
-              <Route
-                path="/contact"
-                element={
-                  <MainLayout>
-                    <Contact />
-                  </MainLayout>
-                }
-              />
-            </Route>
-            <Route path="*" element={<Navigate to="/connexion/login" />} />
-          </Routes>
+          <UserProvider>
+            <Routes>
+              <Route path="/connexion/:mode" element={<Connexion />} />
+              <Route element={<PrivateRoute />}>
+                <Route
+                  path="/homeAdmin"
+                  element={
+                    <DashBoardLayout>
+                      <HomeAdmin />
+                    </DashBoardLayout>
+                  }
+                />
+                <Route
+                  path="/profilAdmin"
+                  element={
+                    <DashBoardLayout>
+                      <ProfilAdmin />
+                    </DashBoardLayout>
+                  }
+                />
+                <Route
+                  path="/contactAdmin"
+                  element={
+                    <DashBoardLayout>
+                      <ContactAdmin />
+                    </DashBoardLayout>
+                  }
+                />
+                <Route
+                  path="/settings"
+                  element={
+                    <DashBoardLayout>
+                      <Settings />
+                    </DashBoardLayout>
+                  }
+                />
+                <Route
+                  path="/home"
+                  element={
+                    <MainLayout>
+                      <Home />
+                    </MainLayout>
+                  }
+                />
+                <Route
+                  path="/profil"
+                  element={
+                    <MainLayout>
+                      <Profil />
+                    </MainLayout>
+                  }
+                />
+                <Route
+                  path="/contact"
+                  element={
+                    <MainLayout>
+                      <Contact />
+                    </MainLayout>
+                  }
+                />
+              </Route>
+              <Route path="*" element={<Navigate to="/connexion/login" />} />
+            </Routes>
+          </UserProvider>
         </AuthProvider>
       </Router>
     </div>
   );
-}
+};
 
 export default App;
