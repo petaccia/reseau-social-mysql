@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import apiConnect from "../../services/API/apiConnection";
+import { toast, ToastContainer } from "react-toastify";
+import apiConnect from "../../services/API/apiConnection.jsx";
 import styles from "./Contact.module.scss";
 
-import { toast , ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 const Contact = () => {
-const [sentMessage, setSentMessage] = useState("");
+  const [sentMessage, setSentMessage] = useState("");
 
   const [formData, setFormData] = useState({
     name: "",
@@ -20,26 +19,40 @@ const [sentMessage, setSentMessage] = useState("");
     try {
       const response = await apiConnect.post("/contact", formData);
       if (response.status === 201) {
-        toast.success("Votre message a bien été envoyé",  { className: styles.toastSuccess, 
-          style:{ top: "100px", right: "100px", 
-        boxShadow: "5px 5px 10px green",
-        backgroundColor:"#10131e", color: "green"}});
+        toast.success("Votre message a bien été envoyé", {
+          className: styles.toastSuccess,
+          style: {
+            top: "100px",
+            right: "100px",
+            boxShadow: "5px 5px 10px green",
+            backgroundColor: "#10131e",
+            color: "green",
+          },
+        });
         setSentMessage(formData.message);
-       
-
       } else {
-        toast.error("Votre message n'a pas pu être envoyé",  { className: styles.toastSuccess, 
-          style:{ top: "100px", right: "100px", 
-        boxShadow: "5px 5px 10px red",
-        backgroundColor:"#10131e", color: "red"}});
-       
+        toast.error("Votre message n'a pas pu être envoyé", {
+          className: styles.toastSuccess,
+          style: {
+            top: "100px",
+            right: "100px",
+            boxShadow: "5px 5px 10px red",
+            backgroundColor: "#10131e",
+            color: "red",
+          },
+        });
       }
     } catch (error) {
-      toast.error("Votre message n'a pas pu être envoyé",  { className: styles.toastSuccess, 
-        style:{ top: "100px", right: "100px", 
-      boxShadow: "5px 5px 10px red",
-      backgroundColor:"#10131e", color: "red"}} );
-     
+      toast.error("Votre message n'a pas pu être envoyé", {
+        className: styles.toastSuccess,
+        style: {
+          top: "100px",
+          right: "100px",
+          boxShadow: "5px 5px 10px red",
+          backgroundColor: "#10131e",
+          color: "red",
+        },
+      });
     }
   };
 
@@ -47,16 +60,20 @@ const [sentMessage, setSentMessage] = useState("");
     e.preventDefault();
     // Vérifier si le message actuel est le même que celui envoyé
     if (formData.message === sentMessage) {
-      toast.error("Vous ne pouvez pas envoyer le même message" , { className: styles.toastSuccess, 
-        style:{ top: "100px", right: "100px", 
-      boxShadow: "5px 5px 10px red",
-      backgroundColor:"#10131e", color: "red"} });
+      toast.error("Vous ne pouvez pas envoyer le même message", {
+        className: styles.toastSuccess,
+        style: {
+          top: "100px",
+          right: "100px",
+          boxShadow: "5px 5px 10px red",
+          backgroundColor: "#10131e",
+          color: "red",
+        },
+      });
     } else {
       formSubmit();
     }
   };
-
-
 
   return (
     <div className={styles.container}>
@@ -89,7 +106,7 @@ const [sentMessage, setSentMessage] = useState("");
                   setFormData({ ...formData, email: e.target.value })
                 }
                 required
-                autoComplete="nope" 
+                autoComplete="nope"
               />
             </div>
 
@@ -115,8 +132,8 @@ const [sentMessage, setSentMessage] = useState("");
             </div>
           </form>
         </div>
-        
-      </div> <ToastContainer
+      </div>{" "}
+      <ToastContainer
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
