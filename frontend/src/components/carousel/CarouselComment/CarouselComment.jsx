@@ -1,9 +1,9 @@
 import React from "react";
 import "react-multi-carousel/lib/styles.css";
-import CardComment from "@components/Cards/cardComment/CardComment";
-import CustomCarousel from "../Carousel";
-import CustomLeftArrowComment from "@components/CustomCarousel/CustomCarouselComment/CustomLeftArrowComment";
-import CustomRightArrowComment from "@components/CustomCarousel/CustomCarouselComment/CustomRightArrowComment";
+import CustomLeftArrowComment from "../../CustomCarousel/CustomCarouselComment/CustomLeftArrowComment.jsx";
+import CustomRightArrowComment from "../../CustomCarousel/CustomCarouselComment/CustomRightArrowComment.jsx";
+import CardComment from "../../Cards/cardComment/CardComment.jsx";
+import CustomCarousel from "../Carousel.jsx";
 
 const CarouselComment = ({ comments }) => {
   // Créer un tableau unique des utilisateurs
@@ -13,12 +13,10 @@ const CarouselComment = ({ comments }) => {
       : [...unique, comment.user];
   }, []);
 
-  console.log("-------------->users", users);
-
   return (
     <CustomCarousel
-    customLeftArrow={<CustomLeftArrowComment />}
-    customRightArrow={<CustomRightArrowComment />}
+      customLeftArrow={<CustomLeftArrowComment />}
+      customRightArrow={<CustomRightArrowComment />}
     >
       {users.map((user, index) => {
         const userComments = comments.filter(
