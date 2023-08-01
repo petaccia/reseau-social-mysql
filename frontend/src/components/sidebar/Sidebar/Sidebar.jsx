@@ -36,7 +36,6 @@ const Sidebar = ({ children }) => {
 
   const handleLogout = () => {
     logout();
-    console.log("-------------------->Logout");
   };
 
   return (
