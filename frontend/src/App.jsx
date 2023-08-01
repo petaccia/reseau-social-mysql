@@ -18,18 +18,13 @@ import AuthProvider from "./contexts/AuthProvider.jsx";
 import Contact from "./pages/Contact/Contact.jsx";
 import Profil from "./pages/Profil/Profil.jsx";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <Router>
         <AuthProvider>
           <Routes>
-            <Route
-              path="/connexion/:mode"
-              element={
-                  <Connexion />
-              }
-            />
+            <Route path="/connexion/:mode" element={<Connexion />} />
             <Route element={<PrivateRoute />}>
               <Route
                 path="/homeAdmin"
