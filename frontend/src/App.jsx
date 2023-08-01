@@ -18,6 +18,8 @@ import AuthProvider from "./contexts/AuthContext/AuthProvider.jsx";
 import Contact from "./pages/Contact/Contact.jsx";
 import Profil from "./pages/Profil/Profil.jsx";
 import UserProvider from "./contexts/UserContext/UserProvider.jsx";
+import NotificationProvider from "./contexts/NotificationContext/NotificationProvider.jsx";
+import Notification from "./pages/Notification/Notification.jsx";
 
 const App = () => {
   return (
@@ -25,68 +27,78 @@ const App = () => {
       <Router>
         <AuthProvider>
           <UserProvider>
-            <Routes>
-              <Route path="/connexion/:mode" element={<Connexion />} />
-              <Route element={<PrivateRoute />}>
-                <Route
-                  path="/homeAdmin"
-                  element={
-                    <DashBoardLayout>
-                      <HomeAdmin />
-                    </DashBoardLayout>
-                  }
-                />
-                <Route
-                  path="/profilAdmin"
-                  element={
-                    <DashBoardLayout>
-                      <ProfilAdmin />
-                    </DashBoardLayout>
-                  }
-                />
-                <Route
-                  path="/contactAdmin"
-                  element={
-                    <DashBoardLayout>
-                      <ContactAdmin />
-                    </DashBoardLayout>
-                  }
-                />
-                <Route
-                  path="/settings"
-                  element={
-                    <DashBoardLayout>
-                      <Settings />
-                    </DashBoardLayout>
-                  }
-                />
-                <Route
-                  path="/home"
-                  element={
-                    <MainLayout>
-                      <Home />
-                    </MainLayout>
-                  }
-                />
-                <Route
-                  path="/profil"
-                  element={
-                    <MainLayout>
-                      <Profil />
-                    </MainLayout>
-                  }
-                />
-                <Route
-                  path="/contact"
-                  element={
-                    <MainLayout>
-                      <Contact />
-                    </MainLayout>
-                  }
-                />
-              </Route>
-              <Route path="*" element={<Navigate to="/connexion/login" />} />
-            </Routes>
+            <NotificationProvider>
+              <Routes>
+                <Route path="/connexion/:mode" element={<Connexion />} />
+                <Route element={<PrivateRoute />}>
+                  <Route
+                    path="/homeAdmin"
+                    element={
+                      <DashBoardLayout>
+                        <HomeAdmin />
+                      </DashBoardLayout>
+                    }
+                  />
+                  <Route
+                    path="/profilAdmin"
+                    element={
+                      <DashBoardLayout>
+                        <ProfilAdmin />
+                      </DashBoardLayout>
+                    }
+                  />
+                  <Route
+                    path="/contactAdmin"
+                    element={
+                      <DashBoardLayout>
+                        <ContactAdmin />
+                      </DashBoardLayout>
+                    }
+                  />
+                  <Route
+                    path="/settings"
+                    element={
+                      <DashBoardLayout>
+                        <Settings />
+                      </DashBoardLayout>
+                    }
+                  />
+                  <Route
+                    path="/home"
+                    element={
+                      <MainLayout>
+                        <Home />
+                      </MainLayout>
+                    }
+                  />
+                  <Route
+                    path="/profil"
+                    element={
+                      <MainLayout>
+                        <Profil />
+                      </MainLayout>
+                    }
+                  />
+                  <Route
+                    path="/contact"
+                    element={
+                      <MainLayout>
+                        <Contact />
+                      </MainLayout>
+                    }
+                  />
+                  <Route
+                    path="/notification"
+                    element={
+                      <MainLayout>
+                        <Notification />
+                      </MainLayout>
+                    }
+                  />
+                </Route>
+                <Route path="*" element={<Navigate to="/connexion/login" />} />
+              </Routes>
+            </NotificationProvider>
           </UserProvider>
         </AuthProvider>
       </Router>
