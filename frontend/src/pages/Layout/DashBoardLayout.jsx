@@ -1,14 +1,14 @@
-import React from 'react'
+import React from "react";
 
-import SidebarDashBoard from '@components/sidebar/SidebarDashboard/SidebarDashBoard'
+import SidebarDashBoard from "../../components/sidebar/SidebarDashboard/SidebarDashBoard.jsx";
 
 const DashBoardLayout = ({ children }) => {
   return (
     <div>
       <SidebarDashBoard />
       {children}
-      </div>
-  )
-}
+    </div>
+  );
+};
 
-export default DashBoardLayout
+export default DashBoardLayout;
