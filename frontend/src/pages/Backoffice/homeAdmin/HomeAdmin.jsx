@@ -1,46 +1,46 @@
 import React, { useEffect, useState } from "react";
+import apiConnect from "../../../services/API/apiConnection.jsx";
 import styles from "./HomeAdmin.module.scss";
-import apiConnect from "@services/API/apiConnection"; 
 
 const HomeAdmin = () => {
-const [familyMembers, setFamilyMembers] = useState([]);
-const [recentPosts, setRecentPosts] = useState([]);
-const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [familyMembers, setFamilyMembers] = useState([]);
+  const [recentPosts, setRecentPosts] = useState([]);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
 
-useEffect(() => {
-  // récupérer les membres de la famille
-  const getFamilyMembers = async () => {
-    try {
-      const response = await apiConnect.get("/familymembers");
-      setFamilyMembers(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  
-  // récupérer les publications récentes
-  const getRecentPosts = async () => {
-    try {
-      const response = await apiConnect.get("/posts");
-      setRecentPosts(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  useEffect(() => {
+    // récupérer les membres de la famille
+    const getFamilyMembers = async () => {
+      try {
+        const response = await apiConnect.get("/familymembers");
+        setFamilyMembers(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  // récupérer les événements à venir
-  const getUpcomingEvents = async () => {
-    try {
-      const response = await apiConnect.get("/events");
-      setUpcomingEvents(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    // récupérer les publications récentes
+    const getRecentPosts = async () => {
+      try {
+        const response = await apiConnect.get("/posts");
+        setRecentPosts(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  getFamilyMembers();
-  getRecentPosts();
-  getUpcomingEvents();
+    // récupérer les événements à venir
+    const getUpcomingEvents = async () => {
+      try {
+        const response = await apiConnect.get("/events");
+        setUpcomingEvents(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getFamilyMembers();
+    getRecentPosts();
+    getUpcomingEvents();
   }, []);
 
   return (
