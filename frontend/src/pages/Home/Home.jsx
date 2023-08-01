@@ -1,12 +1,12 @@
 import React from "react";
+import CarouselHomeStory from "../../components/carousel/CarouselHomeStory/CarouselHomeStory.jsx";
+import ListUser from "../../components/Lists/listUser/ListUser.jsx";
 import styles from "./Home.module.scss";
 import CardPost from "../../components/Cards/cardPost/CardPost.jsx";
 import cheval from "../../assets/post/cheval.jpg";
 import requin from "../../assets/post/requin.jpg";
 import maldive from "../../assets/post/maldives.jpg";
 import noel from "../../assets/post/noel.jpg";
-import CarouselHomeStory from "@components/carousel/CarouselHomeStory/CarouselHomeStory";
-import ListUser from "@components/Lists/listUser/ListUser";
 
 const Home = () => {
   const posts = [
