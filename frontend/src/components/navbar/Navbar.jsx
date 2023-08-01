@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { FcSearch } from "react-icons/fc";
-import { BiLogIn } from "react-icons/bi";
+import { IoMdNotificationsOutline } from "react-icons/io";
 import styles from "./Navbar.module.scss";
+import userImage from "../../assets/users/laure.jpg";
 
 const Navbar = ({ famille }) => {
   const [searchText, setSearchText] = useState("");
@@ -30,20 +31,17 @@ const Navbar = ({ famille }) => {
             />
           </div>
           <div className={styles.connectContainer}>
-            <div className={styles.textContainer}>
-              <Link to="/connexion/signup" className={styles.link}>
-                <span className={styles.text}>S'inscrire</span>
+            <div className={styles.iconContainer}>
+              <Link to="/notification" className={styles.link}>
+                <IoMdNotificationsOutline
+                  alt="icon de notification"
+                  className={styles.icon}
+                />
               </Link>
-              <Link to="/connexion/login" className={styles.link}>
-                <span className={styles.text}>/Se connecter</span>
-              </Link>
+              <div>
+                <img src={userImage} alt="avatar" className={styles.imgUser} />
+              </div>
             </div>
-            <Link to="/connexion/login" className={styles.link}>
-              <BiLogIn
-                alt="icon de connexion ou d'inscription"
-                className={styles.icon}
-              />
-            </Link>
           </div>
         </div>
       </div>
