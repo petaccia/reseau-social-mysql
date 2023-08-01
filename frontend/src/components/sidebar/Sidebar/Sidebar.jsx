@@ -4,7 +4,7 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { NavLink, useLocation, Link } from "react-router-dom";
 import Styles from "./Sidebar.module.scss";
 import logo from "../../../assets/Logo/logo_noir.png";
-import AuthContext from "../../../contexts/AuthContext.jsx";
+import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
