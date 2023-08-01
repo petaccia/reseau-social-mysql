@@ -1,5 +1,5 @@
 import React from "react";
-import CarouselComment from "@components/carousel/CarouselComment/CarouselComment";
+import CarouselComment from "../../carousel/CarouselComment/CarouselComment.jsx";
 import styles from "./CommentList.module.scss";
 
 const CommentList = ({ comments }) => {
