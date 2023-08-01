@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import { FcSearch } from "react-icons/fc";
 import { IoMdNotificationsOutline } from "react-icons/io";
+import { BsFillEnvelopeFill } from "react-icons/bs";
 import styles from "./Navbar.module.scss";
 import userImage from "../../assets/users/laure.jpg";
 
@@ -37,6 +38,9 @@ const Navbar = ({ famille }) => {
                   alt="icon de notification"
                   className={styles.icon}
                 />
+              </Link>
+              <Link to="/message" className={styles.link}>
+                <BsFillEnvelopeFill className={styles.icon} />
               </Link>
               <div>
                 <img src={userImage} alt="avatar" className={styles.imgUser} />
