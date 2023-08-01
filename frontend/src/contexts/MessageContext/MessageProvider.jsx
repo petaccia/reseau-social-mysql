@@ -7,17 +7,17 @@ const MessageProvider = ({ children }) => {
 
   // ajouter des messages
   const addMessage = (messages) => {
-    setMessage(messages);
+    setMessage((prevMessages) => [...prevMessages, messages]);
   };
 
   // supprimer un message
   const deleteMessage = (index) => {
-    setMessage("");
+    setMessage((prevMessages) =>  prevMessages.filter((_, i) => i !== index));
   };
 
   // envoie des messsges
   const sendMessage = (messages) => {
-    setMessage(messages);
+    setMessage((prevMessages) => [...prevMessages, messages]);
   };
 
   return (
