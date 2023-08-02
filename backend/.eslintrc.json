@@ -9,6 +9,12 @@
     "sourceType": "module"
   },
   "rules": {
+    "prettier/prettier": ["error", {
+      "endOfLine": "auto"
+    }],
+    "no-enderscores": "off",
+    "no-unused-vars": "off",
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "no-console": "off",
     "func-style": ["error", "expression"],
     "no-restricted-syntax": [
@@ -24,3 +30,4 @@
     ]
   }
 }
+
