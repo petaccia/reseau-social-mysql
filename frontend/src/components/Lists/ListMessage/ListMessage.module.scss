@@ -1,64 +1,72 @@
+@import "../../../style/variables";
+
 .containerList {
-  padding: 1em;
-  overflow-x: auto;
-  max-width: 100%;
-}
+  width: 90%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $border-color;
+  background-color: $background-fond;
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
-  overflow: hidden;
+  .table {
+    width: 100%;
+    border: 1px solid #0b12db;
+    margin-left: 15rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
 
-  th,
-  td {
-    padding: 0.75em;
-    border: 1px solid #ddd;
-    text-align: left;
-  }
-
-  th {
-    background-color: #344955; // change this to your preferred color
-    color: white;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-  }
-
-  tr {
-    &:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-
-    &:hover {
-      background-color: #ddd;
-      transition: background-color 0.3s ease;
-    }
-  }
-
-  @media screen and (max-width: 600px) {
-    tr {
-      display: block;
-      margin-bottom: 10px;
-    }
-
-    th,
-    td {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    th::before {
-      content: "";
-    }
-
-    td::before {
-      content: attr(data-label);
-      flex-basis: 50%;
-      text-transform: uppercase;
+    .thead {
+      width: 100%;
+      border-bottom: 1px solid #0b12db;
+      border-radius: 10px 10px 0 0;
+      color: $border-color;
       font-weight: bold;
+      font-size: 1.2em;
+
+      .tr {
+        width: 100%;
+        text-align: center;
+        th {
+          border-right: 1px solid #0b12db;
+          text-align: center;
+        }
+      }
+    }
+    .tbody {
+      width: 100%;
+
+      // border: 1px solid #0b12db;
+      border-radius: 0 0 10px 10px;
+
+      tr {
+        width: 100%;
+        // border: 1px solid #0b12db;
+
+        td {
+          padding: 1rem;
+          text-align: center;
+        }
+      }
+    }
+    .buttonContainer {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 1rem;
+
+      .button{
+        background-color: transparent;
+        border: 1px solid $border-color;
+        color: $primary-color;
+        border-radius: 10px;
+        cursor: pointer;
+        &:hover{
+          background-color: $primary-color;
+          color: $background-fond;
+        }
+      }
     }
   }
 }
