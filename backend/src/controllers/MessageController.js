@@ -29,34 +29,37 @@ const getMessage = async (req, res) => {
 const createMessage = async (req, res) => {
   const { body } = req;
   const { error } = messageValidation(body);
+
   if (error) {
     return res.status(400).json(error.details[0].message);
   }
+
   try {
     const message = await Message.create(body);
-    res.status(201).json(message);
+    return res.status(201).json(message);
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 };
 
 const updateMessage = async (req, res) => {
   const { body } = req;
   const { error } = messageValidation(body);
+
   if (error) {
     return res.status(400).json(error.details[0].message);
   }
+
   try {
     const message = await Message.update(body, {
       where: { id: req.params.id },
     });
     if (message) {
-      res.status(200).json("Message modifié");
-    } else {
-      res.status(404).json("Message non enregistré");
+      return res.status(200).json("Message modifié");
     }
+    return res.status(404).json("Message non enregistré");
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 };
 
