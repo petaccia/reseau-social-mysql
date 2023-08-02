@@ -34,7 +34,7 @@ const createMessage = async (req, res) => {
   }
   try {
     const message = await Message.create(body);
-    res.status(201).json("Votre message a été créé");
+    res.status(201).json(message);
   } catch (err) {
     res.status(500).json(err);
   }
