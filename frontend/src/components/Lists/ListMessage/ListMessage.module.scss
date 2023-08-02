@@ -1,33 +1,64 @@
 .containerList {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  background-color: #077a97;
-  color: #34495e;
-  width: 100%;
-  max-width: 500px;
-    .list{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      background-color: #ecf0f1;
-      color: #34495e;
-      width: 100%;
-
-      .title {
-        font-size: 2em;
-        margin-bottom: 20px;
-      }
-      .description {
-        font-size: 1em;
-        margin-bottom: 20px;
-      }
-    }
-
-
-
+  padding: 1em;
+  overflow-x: auto;
+  max-width: 100%;
 }
 
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  overflow: hidden;
 
+  th,
+  td {
+    padding: 0.75em;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+
+  th {
+    background-color: #344955; // change this to your preferred color
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  tr {
+    &:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    &:hover {
+      background-color: #ddd;
+      transition: background-color 0.3s ease;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    tr {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    th,
+    td {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    th::before {
+      content: "";
+    }
+
+    td::before {
+      content: attr(data-label);
+      flex-basis: 50%;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+  }
+}
