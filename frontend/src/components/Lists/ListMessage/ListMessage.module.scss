@@ -1,0 +1,33 @@
+.containerList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #077a97;
+  color: #34495e;
+  width: 100%;
+  max-width: 500px;
+    .list{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      background-color: #ecf0f1;
+      color: #34495e;
+      width: 100%;
+
+      .title {
+        font-size: 2em;
+        margin-bottom: 20px;
+      }
+      .description {
+        font-size: 1em;
+        margin-bottom: 20px;
+      }
+    }
+
+
+
+}
+
+
