@@ -15,12 +15,10 @@ const roleController = require("./controllers/RoleController");
 const usersController = require("./controllers/UserController");
 const eventController = require("./controllers/EventController");
 const statsController = require("./controllers/StatsController");
+const messageController = require("./controllers/MessageController");
 
 const LoginLimiter = require("./middleware/LoginLimiter");
 const upload = require("./services/multer");
-
-
-
 
 // Routes d'admin
 router.get("/admin", adminController.getAllAdmin);
@@ -54,7 +52,11 @@ router.put("/:id", connectionController.approveConnection);
 router.get("/family", familyController.getAllFamily);
 router.get("/family/:id", familyController.getOneFamily);
 router.post("/family", upload.single("image"), familyController.createFamily);
-router.put("/family/:id", upload.single("image"), familyController.updateFamily);
+router.put(
+  "/family/:id",
+  upload.single("image"),
+  familyController.updateFamily
+);
 router.delete("/family/:id", familyController.deleteFamily);
 
 // Routes de contact
@@ -99,7 +101,10 @@ router.delete("/user/:id", usersController.deleteUser);
 // Routes de statFamily
 router.get("/stat/FamilyMemberCount/:id", statsController.getFamilyMemberCount);
 router.get("/stat/recentPostCount/:id", statsController.getRecentPostCount);
-router.get("/stat/upcomingEventCount/:id", statsController.getUpcomingEventCount);
+router.get(
+  "/stat/upcomingEventCount/:id",
+  statsController.getUpcomingEventCount
+);
 
 // Routes d'évênements
 router.get("/event", eventController.getAllEvents);
@@ -108,10 +113,11 @@ router.post("/event", eventController.createEvent);
 router.put("/event/:id", eventController.updateEvent);
 router.delete("/event/:id", eventController.deleteEvent);
 
+// Routes de message
+router.get("/message", messageController.getAllMessages);
+router.get("/message/:id", messageController.getMessage);
+router.post("/message", messageController.createMessage);
+router.put("/message/:id", messageController.updateMessage);
+router.delete("/message/:id", messageController.deleteMessage);
 
 module.exports = router;
-
-
-
-
-
