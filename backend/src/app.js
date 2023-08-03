@@ -9,7 +9,7 @@ const router = require("./routes");
 
 const Db = require("../databaseSequelize");
 
-Db.sync({ force: true })
+Db.sync({ alter: true })
   .then(console.error("Connexion à la base de données"))
   .catch((err) => console.error(err));
 
