@@ -8,7 +8,7 @@ const MessageProvider = ({ children }) => {
   // recuperer les messages
   const getMessages = async () => {
     try {
-      const res = await apiConnect.get("/messages");
+      const res = await apiConnect.get("/message");
       setMessages(res.data);
     } catch (error) {
       console.error(error);
@@ -17,7 +17,7 @@ const MessageProvider = ({ children }) => {
   // ajouter des messages
   const addMessage = async (message) => {
     try {
-      const res = await apiConnect.post("/messages", message);
+      const res = await apiConnect.post("/message", message);
       setMessages((prevMessages) => [...prevMessages, res.data]);
     } catch (error) {
       console.error(error);

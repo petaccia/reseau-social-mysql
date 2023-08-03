@@ -1,9 +1,13 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useEffect } from "react";
 import Styles from "./ListMessage.module.scss";
 import MessageContext from "../../../contexts/MessageContext/MessageContext.jsx";
 
 const MessageList = () => {
-  const { messages } = useContext(MessageContext);
+  const { messages, getMessages } = useContext(MessageContext);
+
+  useEffect(() => {
+    getMessages(); 
+  });
 
   return (
     <div className={Styles.containerList}>

@@ -14,7 +14,7 @@ const Role = db.define("roles", {
     unique: true,
   },
   roleDescription: {
-    type: DataTypes.ENUM("admin", "creator", "family"),
+    type: DataTypes.ENUM("admin", "creator", "user"),
     allowNull: false,
   },
 });
