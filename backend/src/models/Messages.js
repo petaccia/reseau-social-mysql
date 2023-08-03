@@ -19,11 +19,11 @@ const Message = db.define("messages", {
     allowNull: false,
   },
   senderId: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   receiverId: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   status: {

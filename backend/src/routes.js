@@ -45,7 +45,6 @@ router.delete("/comments/:id", commentsController.deleteComment);
 router.post("/signup", connectionController.register);
 router.post("/login", LoginLimiter, connectionController.login);
 
-router.get("/:id", connectionController.approveConnection);
 router.put("/:id", connectionController.approveConnection);
 
 // Routes de family
