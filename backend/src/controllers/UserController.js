@@ -25,7 +25,7 @@ const getOneUser = async (req, res) => {
 
 const createUser = async (req, res) => {
   const { body } = req;
-  console.log(body);
+  console.info(body);
   const { error } = userValidation(body);
   if (error) {
     return res.status(400).json(error.details[0].message);
@@ -35,9 +35,9 @@ const createUser = async (req, res) => {
       ...body,
       image: req.file ? req.file.path : null,
     });
-    res.status(201).json(user);
-  } catch (error) {
-    res.status(500).json({ error });
+    return res.status(201).json(user);
+  } catch (err) {
+    return res.status(500).json({ err });
   }
 };
 
@@ -54,12 +54,11 @@ const updateUser = async (req, res) => {
     );
     const user = await User.findOne(body, { where: { id: req.params.id } });
     if (user) {
-      res.status(200).json(user);
-    } else {
-      res.status(404).json({ error: "User not found" });
+      return res.status(200).json(user);
     }
-  } catch (error) {
-    res.status(500).json({ error });
+    return res.status(404).json({ error: "User not found" });
+  } catch (err) {
+    return res.status(500).json({ err });
   }
 };
 
