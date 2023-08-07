@@ -79,6 +79,19 @@ const CardMessage = ({ message, addMessage, deleteMessage, sendMessage }) => {
     setReplyText(e.target.value);
   };
 
+  // Envoie de la réponse
+  const sendReply = async () => {
+    await sendMessage({
+      title: message.title,
+      description: message.description,
+      message: replyText,
+      senderId: sender.id,
+      receiverId: receiver.id,
+      status: check,
+    });
+    closeReplyModal();
+  };
+
   return (
     <div className={Styles.container}>
       <div className={Styles.card}>
@@ -155,7 +168,7 @@ const CardMessage = ({ message, addMessage, deleteMessage, sendMessage }) => {
                   placeholder="Votre réponse ..."
                 />
                 <div className={Styles.containerModalButton}>
-                  <button className={Styles.buttonSend} onClick={sendMessage}>
+                  <button className={Styles.buttonSend} onClick={sendReply}>
                     Envoyer
                   </button>
                 </div>
