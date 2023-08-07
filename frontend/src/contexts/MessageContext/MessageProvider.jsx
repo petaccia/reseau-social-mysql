@@ -39,7 +39,7 @@ const MessageProvider = ({ children }) => {
   // envoie des messsges
   const sendMessage = async (message) => {
     try {
-      const res = await apiConnect.post("/messages", message);
+      const res = await apiConnect.post("/message", message);
       setMessages((prevMessages) => [...prevMessages, res.data]);
     } catch (error) {
       console.error(error);

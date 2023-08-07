@@ -16,7 +16,6 @@ const MessageList = () => {
   useEffect(() => {
     getMessages();
   }, []);
-  console.log(messages);
 
   return (
     <div className={Styles.containerList}>
