@@ -1,0 +1,102 @@
+@import "../../../style/variables";
+
+.container {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  
+  .card {
+    width: 40rem;
+    height: 20rem;
+    padding: 4rem 1rem 0rem 1rem;
+    border-radius: 10px;
+    border: 1px solid $border-color;
+    transition: all 0.5s;
+
+    .containerTitle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .cardTitle {
+        color: $primary-color;
+      }
+      .title {
+        font-weight: bold;
+        color: $title-message;
+      }
+    }
+    .containerDescription {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .cardDescription {
+        color: $primary-color;
+      }
+      .description {
+        font-weight: bold;
+        color: $title-message;
+      }
+    }
+    .containerContent {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      padding-top: 4rem;
+      h6 {
+        color: $primary-color;
+        font-weight: bold;
+      }
+      p {
+        color: $border-color;
+        font-weight: bold;
+        font-size: 12px;
+      }
+    }
+    .containerStatus {
+      font-size: 1.5rem;
+      position: absolute;
+      top: 1rem;
+      .iconStatusValid {
+        color: $success-color;
+      }
+      .iconStatusInvalid {
+        color: $error-color;
+      }
+    }
+    .containerToggle {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      display: flex;
+      .icon {
+        color: $primary-color;
+      }
+      .containerButton{
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        margin: 0 3rem;
+        .button {
+          background-color: transparent;
+          outline: none;
+          border-radius: 5px;
+          color: $primary-color;
+          padding: 5px;
+          margin: 5px;
+          border: 1px solid $border-color;
+          cursor: pointer;
+          transition: all 0.5s;
+          &:hover {
+            background-color: $primary-color;
+            color: $background-fond;
+            border: 1px solid $primary-color;
+            
+          }
+        }        
+      }
+    }
+  }
+}
