@@ -7,11 +7,23 @@ import {
 import Styles from "./CardMessage.module.scss";
 import apiConnect from "../../../services/API/apiConnection.jsx";
 
-const CardMessage = ({ message }) => {
+const CardMessage = ({ message, addMessage, deleteMessage, sendMessage }) => {
   const [sender, setSender] = useState("");
   const [receiver, setReceiver] = useState("");
   const [date, setDate] = useState("");
   const [check, setCheck] = useState("");
+
+  // Overture des boutons d'actions
+  const [open, setOpen] = useState(false);
+
+  // répondre à un message
+  const [isReplyModalOpen, setIsReplyModalOpen] = useState(false);
+
+  // Text de Reply
+  const [replyText, setReplyText] = useState("");
+
+  // Pour fermer le containerButton automatiquement
+  const [containerButton, setContainerButton] = useState(false);
 
   const formatDate = (inputDate) => {
     const options = {
@@ -49,8 +61,23 @@ const CardMessage = ({ message }) => {
   }, [message.senderId]);
 
   // Ouvrir les menu d'actions
-  const [open, setOpen] = useState(false);
   const toggleOpen = () => setOpen(!open);
+
+  // Ouverture de la modal de réponse
+  const openReplyModal = () => {
+    setIsReplyModalOpen(true);
+  };
+
+  // Fermeture de la modal de réponse
+  const closeReplyModal = () => {
+    setIsReplyModalOpen(false);
+    setReplyText("");
+  };
+
+  // Text de la réponse
+  const replyTextHandler = (e) => {
+    setReplyText(e.target.value);
+  };
 
   return (
     <div className={Styles.container}>
@@ -87,9 +114,52 @@ const CardMessage = ({ message }) => {
           <BsThreeDotsVertical className={Styles.icon} onClick={toggleOpen} />
           {open && (
             <div className={Styles.containerButton}>
-              <button className={Styles.button}>Répondre</button>
-              <button className={Styles.button}>Modifier</button>
-              <button className={Styles.button}>Supprimer</button>
+              <button
+                className={Styles.button}
+                onClick={() => {
+                  openReplyModal();
+                  toggleOpen(false);
+                }}
+              >
+                Répondre
+              </button>
+              <button className={Styles.button} onclick={deleteMessage}>
+                Supprimer
+              </button>
+            </div>
+          )}
+        </div>
+        <div className={Styles.containerReplyModal}>
+          {isReplyModalOpen && (
+            <div className={Styles.modal}>
+              <div className={Styles.modalHeader}>
+                <h6 className={Styles.modalTitle}>Titre </h6>
+                <p className={Styles.modalMessageTitle}> {message.title}</p>
+              </div>
+              <button className={Styles.buttonClose} onClick={closeReplyModal}>
+                fermer
+              </button>
+              <div className={Styles.containerModalDescription}>
+                <h6 className={Styles.modalDescription}>description :</h6>
+                <p className={Styles.description}>{message.description}</p>
+              </div>
+              <div className={Styles.containerModalContent}>
+                <textarea
+                  className={Styles.textarea}
+                  type="text"
+                  id=""
+                  cols="90"
+                  rows="5"
+                  value={replyText}
+                  onChange={replyTextHandler}
+                  placeholder="Votre réponse ..."
+                />
+                <div className={Styles.containerModalButton}>
+                  <button className={Styles.buttonSend} onClick={sendMessage}>
+                    Envoyer
+                  </button>
+                </div>
+              </div>
             </div>
           )}
         </div>

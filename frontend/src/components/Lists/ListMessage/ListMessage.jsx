@@ -4,7 +4,14 @@ import MessageContext from "../../../contexts/MessageContext/MessageContext.jsx"
 import CardMessage from "../../Cards/cardMessages/CardMessage.jsx";
 
 const MessageList = () => {
-  const { messages, getMessages } = useContext(MessageContext);
+  const {
+    messages,
+    getMessages,
+    addMessage,
+    deleteMessage,
+    updateMessage,
+    sendMessage,
+  } = useContext(MessageContext);
 
   useEffect(() => {
     getMessages();
@@ -15,7 +22,14 @@ const MessageList = () => {
     <div className={Styles.containerList}>
       <div className={Styles.CardContainer}>
         {messages.map((message) => (
-          <CardMessage key={message.id} message={message} />
+          <CardMessage
+            key={message.id}
+            message={message}
+            addMessage={addMessage}
+            deleteMessage={deleteMessage}
+            updateMessage={updateMessage}
+            sendMessage={sendMessage}
+          />
         ))}
       </div>
     </div>
