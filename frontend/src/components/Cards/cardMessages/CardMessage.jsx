@@ -6,6 +6,13 @@ import {
 } from "react-icons/bs";
 import Styles from "./CardMessage.module.scss";
 import apiConnect from "../../../services/API/apiConnection.jsx";
+import {
+  toastSuccess,
+  toastError,
+  toastWarning,
+  toastInfo,
+  toastNonLu,
+} from "../../../services/Toastify/toastConfig.jsx";
 
 const CardMessage = ({ message, addMessage, deleteMessage, sendMessage }) => {
   const [sender, setSender] = useState("");
@@ -22,9 +29,7 @@ const CardMessage = ({ message, addMessage, deleteMessage, sendMessage }) => {
   // Text de Reply
   const [replyText, setReplyText] = useState("");
 
-  // Pour fermer le containerButton automatiquement
-  const [containerButton, setContainerButton] = useState(false);
-
+  // Date du message
   const formatDate = (inputDate) => {
     const options = {
       year: "numeric",
@@ -40,18 +45,16 @@ const CardMessage = ({ message, addMessage, deleteMessage, sendMessage }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await apiConnect.get(`user/${message.senderId}`);
-        setSender(res.data);
-
-        const res2 = await apiConnect.get(`user/${message.receiverId}`);
+        const [res1, res2, res3, res4] = await Promise.all([
+          apiConnect.get(`/user/${message.senderId}`),
+          apiConnect.get(`/user/${message.receiverId}`),
+          apiConnect.get(`/message/${message.id}`),
+          apiConnect.get(`/message/${message.id}`),
+        ]);
+        setSender(res1.data);
         setReceiver(res2.data);
-
-        const res3 = await apiConnect.get(`message/${message.id}`);
         setDate(res3.data.createdAt);
-
-        const res4 = await apiConnect.get(`message/${message.id}/`);
         setCheck(res4.data.status);
-        // console.log(res4.data.status);
       } catch (error) {
         console.error(error);
       }
@@ -81,20 +84,55 @@ const CardMessage = ({ message, addMessage, deleteMessage, sendMessage }) => {
 
   // Envoie de la réponse
   const sendReply = async () => {
-    await sendMessage({
-      title: message.title,
-      description: message.description,
-      message: replyText,
-      senderId: sender.id,
-      receiverId: receiver.id,
-      status: check,
-    });
-    closeReplyModal();
+    // Vérification si le champ de réponse est vide
+    if (!replyText) {
+      toastWarning("Veuillez remplir le champ de réponse");
+      return;
+    }
+    try {
+      await sendMessage({
+        title: message.title,
+        description: message.description,
+        message: replyText,
+        senderId: sender.id,
+        receiverId: receiver.id,
+        status: check,
+      });
+      toastSuccess("Votre message a bien été envoyé");
+      closeReplyModal();
+    } catch (error) {
+      console.error(error);
+      toastError("Erreur lors de l'envoi du message", {
+        className: Styles.toastSuccess,
+        style: {
+          top: "150px",
+          right: "100px",
+          boxShadow: "5px 2px 1px red",
+          backgroundColor: "#10131e",
+          color: "red",
+        },
+      });
+    }
+  };
+
+  // Affiohage du status du message
+  const checkStatusInfo = () => {
+    if (check === true) {
+      toastInfo("Le message a été lu", {
+        className: Styles.toastInfo,
+        style: {
+          color: "white",
+        },
+      });
+      return <BsFillCheckCircleFill className={Styles.iconStatusValid} />;
+    }
+    toastNonLu("Le message n'a pas été lu");
+    return <BsFillExclamationCircleFill className={Styles.iconStatusInvalid} />;
   };
 
   return (
     <div className={Styles.container}>
-      <div className={Styles.card}>
+      <div className={Styles.card} onClick={checkStatusInfo}>
         <div className={Styles.containerTitle}>
           <h5 className={Styles.cardTitle}>titre : </h5>
           <p className={Styles.title}>{message.title}</p>

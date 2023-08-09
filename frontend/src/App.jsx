@@ -5,6 +5,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute.jsx";
 import HomeAdmin from "./pages/Backoffice/homeAdmin/HomeAdmin.jsx";
 import ProfilAdmin from "./pages/Backoffice/ProfilAdmin.jsx";
@@ -27,6 +28,7 @@ const App = () => {
   return (
     <div className="App">
       <Router>
+        <ToastContainer />
         <AuthProvider>
           <UserProvider>
             <NotificationProvider>
