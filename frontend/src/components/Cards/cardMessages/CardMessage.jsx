@@ -29,6 +29,9 @@ const CardMessage = ({ message, addMessage, deleteMessage, sendMessage }) => {
   // Text de Reply
   const [replyText, setReplyText] = useState("");
 
+  // supprimer un message avec l'animation
+  const [deleteCard, setDeleteCard] = useState(false);
+
   // Date du message
   const formatDate = (inputDate) => {
     const options = {
@@ -118,21 +121,32 @@ const CardMessage = ({ message, addMessage, deleteMessage, sendMessage }) => {
   // Affiohage du status du message
   const checkStatusInfo = () => {
     if (check === true) {
-      toastInfo("Le message a été lu", {
-        className: Styles.toastInfo,
-        style: {
-          color: "white",
-        },
-      });
+      toastInfo("Le message a été lu");
       return <BsFillCheckCircleFill className={Styles.iconStatusValid} />;
     }
     toastNonLu("Le message n'a pas été lu");
     return <BsFillExclamationCircleFill className={Styles.iconStatusInvalid} />;
   };
 
+  // Suppression du message
+  const handleDelete = async () => {
+    setDeleteCard(true);
+    setTimeout(async () => {
+      try {
+        await deleteMessage(message.id);
+        toastSuccess("Le message a bien été supprimé");
+      } catch (error) {
+        console.error(error);
+        toastError("Erreur lors de la suppression du message");
+      }
+    }, 1000);
+  };
   return (
     <div className={Styles.container}>
-      <div className={Styles.card} onClick={checkStatusInfo}>
+      <div
+        className={`${Styles.card} ${deleteCard ? Styles.animateOut : ""}`}
+        onClick={checkStatusInfo}
+      >
         <div className={Styles.containerTitle}>
           <h5 className={Styles.cardTitle}>titre : </h5>
           <p className={Styles.title}>{message.title}</p>
@@ -174,7 +188,7 @@ const CardMessage = ({ message, addMessage, deleteMessage, sendMessage }) => {
               >
                 Répondre
               </button>
-              <button className={Styles.button} onclick={deleteMessage}>
+              <button className={Styles.button} onClick={handleDelete}>
                 Supprimer
               </button>
             </div>
