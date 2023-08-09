@@ -76,18 +76,14 @@ const deleteMessage = async (req, res) => {
     res.status(500).json(err);
   }
 };
-
-// Suppression de tous les messages
 const AllDeleteMessage = async (req, res) => {
   try {
-    const message = await Message.deleteMany();
+    const message = await Message.destroy({ where: {} });
     res
       .status(200)
-      .send({ message: "Tous les messages ont été supprimés" }, message);
+      .json({ message: "Tous les messages ont été supprimés", count: message });
   } catch (err) {
-    res
-      .status(500)
-      .send({ message: "Erreur lors de la suppression des messages" }, err);
+    res.status(500).json(err);
   }
 };
 

@@ -14,7 +14,13 @@ import {
   toastNonLu,
 } from "../../../services/Toastify/toastConfig.jsx";
 
-const CardMessage = ({ message, addMessage, deleteMessage, sendMessage }) => {
+const CardMessage = ({
+  message,
+  addMessage,
+  deleteMessage,
+  deleteAll,
+  sendMessage,
+}) => {
   const [sender, setSender] = useState("");
   const [receiver, setReceiver] = useState("");
   const [date, setDate] = useState("");
@@ -141,10 +147,13 @@ const CardMessage = ({ message, addMessage, deleteMessage, sendMessage }) => {
       }
     }, 1000);
   };
+
   return (
     <div className={Styles.container}>
       <div
-        className={`${Styles.card} ${deleteCard ? Styles.animateOut : ""}`}
+        className={`${Styles.card} ${
+          deleteCard || deleteAll ? Styles.animateOut : ""
+        }`}
         onClick={checkStatusInfo}
       >
         <div className={Styles.containerTitle}>
@@ -190,6 +199,9 @@ const CardMessage = ({ message, addMessage, deleteMessage, sendMessage }) => {
               </button>
               <button className={Styles.button} onClick={handleDelete}>
                 Supprimer
+              </button>
+              <button className={Styles.button} onClick={handleDelete}>
+                tout supprimer
               </button>
             </div>
           )}
