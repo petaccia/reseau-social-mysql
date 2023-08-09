@@ -36,6 +36,16 @@ const MessageProvider = ({ children }) => {
     }
   };
 
+  // supprimer tous les messages
+  const deleteAllMessages = async () => {
+    try {
+      const res = await apiConnect.delete("/messages");
+      setMessages([]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   // envoie des messsges
   const sendMessage = async (message) => {
     try {
@@ -67,6 +77,7 @@ const MessageProvider = ({ children }) => {
         getMessages,
         addMessage,
         deleteMessage,
+        deleteAllMessages,
         sendMessage,
         updateMessage,
       }}

@@ -76,6 +76,16 @@ const deleteMessage = async (req, res) => {
     res.status(500).json(err);
   }
 };
+const AllDeleteMessage = async (req, res) => {
+  try {
+    const message = await Message.destroy({ where: {} });
+    res
+      .status(200)
+      .json({ message: "Tous les messages ont été supprimés", count: message });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
 
 module.exports = {
   getAllMessages,
@@ -83,4 +93,5 @@ module.exports = {
   createMessage,
   updateMessage,
   deleteMessage,
+  AllDeleteMessage,
 };
