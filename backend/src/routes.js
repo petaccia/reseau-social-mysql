@@ -118,5 +118,6 @@ router.get("/message/:id", messageController.getMessage);
 router.post("/message", messageController.createMessage);
 router.put("/message/:id", messageController.updateMessage);
 router.delete("/message/:id", messageController.deleteMessage);
+router.delete("/message", messageController.AllDeleteMessage);
 
 module.exports = router;
