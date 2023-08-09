@@ -15,6 +15,7 @@ const MessageList = () => {
 
   useEffect(() => {
     getMessages();
+    deleteMessage();
   }, []);
 
   return (

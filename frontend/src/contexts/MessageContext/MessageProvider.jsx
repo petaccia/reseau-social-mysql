@@ -27,9 +27,9 @@ const MessageProvider = ({ children }) => {
   // supprimer un message
   const deleteMessage = async (id) => {
     try {
-      const res = await apiConnect.delete(`/messages/${id}`);
+      const res = await apiConnect.delete(`/message/${id}`);
       setMessages((prevMessages) =>
-        prevMessages.filter((message) => message.id !== id)
+        prevMessages.filter((message) => message.id !== id, res.data)
       );
     } catch (error) {
       console.error(error);

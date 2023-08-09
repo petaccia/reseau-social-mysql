@@ -194,6 +194,7 @@
               color: $primary-color;
               &:hover {
                 color: $secondary-color;
+              }
             }
           }
         }
@@ -201,4 +202,21 @@
     }
   }
 }
+
+.animateOut {
+  animation: rotateOut 1s forwards;
+}
+
+@keyframes rotateOut {
+  from {
+    transform: rotateY(0deg);
+    opacity: 1;
+    trasition: all 0.5s;
+
+  }
+  to {
+    transform: rotateY(180deg);
+    opacity: 0;
+    trasition: all 0.5s;
+  }
 }
