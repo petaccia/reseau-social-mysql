@@ -14,13 +14,7 @@ import {
   toastNonLu,
 } from "../../../services/Toastify/toastConfig.jsx";
 
-const CardMessage = ({
-  message,
-  addMessage,
-  deleteMessage,
-  deleteAll,
-  sendMessage,
-}) => {
+const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
   const [sender, setSender] = useState("");
   const [receiver, setReceiver] = useState("");
   const [date, setDate] = useState("");
