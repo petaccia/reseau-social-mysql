@@ -1,0 +1,29 @@
+@import "../../style/variables";
+.selectReceiverId{
+    width: 40%;
+    padding: 0.5rem;
+  background-color: transparent;
+  border: 1px solid $border-color;
+  border-radius: 10px;
+  outline: none;
+  color: $title-message;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.5s;
+
+  &:hover{
+    border-color: darken($border-color, 10%);
+  }
+
+  &:focus{
+    border-color: $primary-color;
+    box-shadow: 0px 0px 10px 0px $primary-color;
+  }
+
+  option{
+    background-color: $background-fond;
+    color: $title-message;
+    font-weight: bold;
+    padding: 0.5rem;
+  }
+}
