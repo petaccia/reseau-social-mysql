@@ -4,14 +4,13 @@ import { toast, ToastContainer } from "react-toastify";
 import styles from "./Connexion.module.scss";
 import famille from "../../assets/illustration/famille.jpg";
 import family from "../../assets/illustration/family.jpg";
-import apiConnect from "../../services/API/apiConnection.jsx";
 import "react-toastify/dist/ReactToastify.css";
 import AuthContext from "../../contexts/AuthContext/AuthContext.jsx";
 
 const Connexion = () => {
   const { mode } = useParams();
   const location = useLocation();
-  const { login } = useContext(AuthContext);
+  const { login, signup } = useContext(AuthContext);
 
   const [isLogin, setIsLogin] = useState(mode === "login");
   const [formData, setFormData] = useState({
@@ -19,6 +18,7 @@ const Connexion = () => {
     email: "",
     password: "",
   });
+
 
   useEffect(() => {
     setIsLogin(mode === "login");
@@ -28,21 +28,13 @@ const Connexion = () => {
     let response;
     try {
       if (isLogin) {
-        response = await apiConnect.post("/login", {
-          email: formData.email,
-          password: formData.password,
-        });
+   response = await login(formData.email, formData.password);
         if (response.status === 200) {
-          login();
         }
       } else {
-        response = await apiConnect.post("/signup", {
-          username: formData.username,
-          email: formData.email,
-          password: formData.password,
-        });
+        response = await signup(formData.username, formData.email, formData.password);
         if (response.status === 201) {
-          login();
+          // login();
         }
       }
       if (response && (response.status === 200 || response.status === 201)) {

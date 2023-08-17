@@ -1,55 +1,74 @@
-import React, { useEffect, useReducer } from "react";
+import React, {useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "./AuthContext.jsx";
-
-const LOGIN = "LOGIN";
-const LOGOUT = "LOGOUT";
-
-const authReducer = (state, action) => {
-  switch (action.type) {
-    case LOGIN:
-      return { isAuthenticated: true };
-    case LOGOUT:
-      return { isAuthenticated: false };
-    default:
-      return state;
-  }
-};
-
-const initialState = {
-  isAuthenticated: false,
-};
+import AuthContext from "./AuthContext";
+import apiConnect from "../../services/API/apiConnection.jsx";
+import { toastSuccess, toastError } from "../../services/Toastify/toastConfig.jsx";
 
 const AuthProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(authReducer, initialState);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [token, setToken] = useState(localStorage.getItem("token") || null);
   const navigate = useNavigate();
 
-  const login = () => {
-    dispatch({ type: LOGIN });
-    console.info("Logging in");
-    navigate("/home"); // Redirige vers la page de home  .
-    localStorage.setItem("isAuthenticated", "true");
+  useEffect(() => {
+    const authStatus = localStorage.getItem("isAuthenticated");
+    setIsAuthenticated(authStatus === "true");
+  }, []);
+
+  const login = async (email, password) => {
+    try {
+      const res = await apiConnect.post("/login", { email, password });
+      console.log("Api Response", res);
+      if (res.status === 200) {
+        toastSuccess("Connexion réussie");
+        setToken(res.data.token);
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("isAuthenticated", "true");
+        navigate("/home");
+        return res.data;
+      }
+    } catch (error) {
+      console.error("login error", error);
+      if (error.response && error.response.data) {
+        toastError(error.response.data.message);
+      } else {
+        toastError(error.message);
+      }
+    }
+  };
+
+  const signup = async (username, email, password) => {
+    try {
+      const res = await apiConnect.post("/signup", { username, email, password });
+      if (res.status === 201) {
+        setToken(res.data.token);
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("isAuthenticated", "true");
+        navigate("/login");
+        return res.data;
+      }
+    } catch (error) {
+      console.error("signup error", error);
+      if (error.response && error.response.data) {
+        toastError(error.response.data.message);
+      } else {
+        toastError(error.message);
+      }
+    }
   };
 
   const logout = () => {
-    dispatch({ type: LOGOUT });
-    console.info("Logging out");
-    navigate("/login"); // Redirige vers la page de connexion après la déconnexion
-    localStorage.setItem("isAuthenticated", "false");
+    setIsAuthenticated(false);
+    setToken(null);
+    localStorage.removeItem("token");
+    localStorage.removeItem("isAuthenticated");
+    navigate("/login");
   };
 
-  useEffect(() => {
-    const storedAuth = localStorage.getItem("isAuthenticated");
-    if (storedAuth === "true") {
-      dispatch({ type: LOGIN });
-    } else if (storedAuth === "false") {
-      dispatch({ type: LOGOUT });
-    }
-  }, []);
-
-  const value = { ...state, login, logout };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ isAuthenticated, token, login, signup, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
-export default AuthProvider;
+export default AuthProvider ;
