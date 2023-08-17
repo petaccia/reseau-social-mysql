@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import Styles from "./ListMessage.module.scss";
-import UserContext from "../../../contexts/UserContext/UserContext.jsx";
 import MessageContext from "../../../contexts/MessageContext/MessageContext.jsx";
 import CardMessage from "../../Cards/cardMessages/CardMessage.jsx";
 import {
@@ -8,11 +7,11 @@ import {
   toastError,
   toastInfo,
 } from "../../../services/Toastify/toastConfig.jsx";
-import SelectUser from "../../selectUser/selectUser.jsx";
+import SelectUser from "../../selectUser/SelectUser.jsx";
+import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
 
 const MessageList = () => {
-  const { currentUser, currentUserLogin } = useContext(UserContext);
-  console.log(currentUser);
+  const { currentUser } = useContext(AuthContext);
   const {
     messages,
     getMessages,
@@ -21,7 +20,7 @@ const MessageList = () => {
     deleteAllMessages,
     sendMessage,
   } = useContext(MessageContext);
-
+  
   const [deleteAll, setDeleteAll] = useState(false);
   const [createMessage, setCreateMessage] = useState(false);
   const [newMessage, setNewMessage] = useState({
@@ -31,20 +30,17 @@ const MessageList = () => {
   });
   const [selectedReceiverId, setSelectedReceiverId] = useState("");
   
-  const credentials = {
-    email: "example@gmail.com",
-    password: "mot de passe",
-  };
   useEffect(() => {
-    currentUserLogin(credentials);
+    console.log(currentUser);
     getMessages();
-  }, []);
-
+  }, [ currentUser ]);
+  
   const deleteAllMessage = async () => {
     setDeleteAll(true);
     try {
       await deleteAllMessages();
-      if (messages.length > 0) { // Correction de la faute de frappe "lenght" à "length"
+      if (messages.length > 0) {
+        // Correction de la faute de frappe "lenght" à "length"
         toastSuccess("Tous les messages ont été supprimés");
       } else {
         toastInfo("Vous n'avez plus de messages");
@@ -87,7 +83,7 @@ const MessageList = () => {
         receiverId: selectedReceiverId,
         status: false,
       };
-    
+
       await addMessage(messageWithUser);
       closeCreateMessage();
       toastSuccess("Votre message a bien été ajouté");
@@ -115,7 +111,10 @@ const MessageList = () => {
       <div className={Styles.containerCreateMessage}>
         {createMessage && (
           <div className={Styles.modal}>
-            <SelectUser value={selectedReceiverId} onChange={(e) => setSelectedReceiverId(e.target.value)} />
+            <SelectUser
+              value={selectedReceiverId}
+              onChange={(e) => setSelectedReceiverId(e.target.value)}
+            />
             <button className={Styles.buttonClose} onClick={closeCreateMessage}>
               X
             </button>
