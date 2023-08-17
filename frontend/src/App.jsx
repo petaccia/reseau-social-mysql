@@ -23,12 +23,14 @@ import NotificationProvider from "./contexts/NotificationContext/NotificationPro
 import Notification from "./pages/Notification/Notification.jsx";
 import Message from "./pages/Message/Message.jsx";
 import MessageProvider from "./contexts/MessageContext/MessageProvider.jsx";
+// import TokenProvider from "./contexts/TokenContext/TokenProvider.jsx";
 
 const App = () => {
   return (
     <div className="App">
       <Router>
         <ToastContainer />
+        {/* <TokenProvider> */}
         <AuthProvider>
           <UserProvider>
             <NotificationProvider>
@@ -118,6 +120,7 @@ const App = () => {
             </NotificationProvider>
           </UserProvider>
         </AuthProvider>
+        {/* </TokenProvider> */}
       </Router>
     </div>
   );

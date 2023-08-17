@@ -1,12 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import UserContext from "./UserContext.jsx";
 import apiConnect from "../../services/API/apiConnection.jsx";
 import {
   toastSuccess,
   toastError,
 } from "../../services/Toastify/toastConfig.jsx";
+// import TokenContext from "../TokenContext/TokenContext.jsx";
+import { useNavigate } from "react-router-dom";
+
 
 const UserProvider = ({ children }) => {
+  const navigate= useNavigate();
+  // Token de l'utilisateur dans le contexte
+  // const {setToken} = useContext(TokenContext)
+
+
+  // Etat pour tous les utilisateurs
   const [users, setUsers] = useState([]);
 
   // Etat pour l'utilisateur actuel
@@ -22,10 +31,15 @@ const UserProvider = ({ children }) => {
     }
   };
   // Fonction pour récupérer l'utilisateur actuel
-  const getUser = async () => {
+  const getUser = async (user) => {
+    if (!user || !user.id) {
+    console.log("--------->getUser",user)
+    return;
+    }
     try {
-      const res = await apiConnect.get("/user");
-      setUsers(res.data);
+      const res = await apiConnect.get(`/user/${user.id}`);
+      console.log("--------->getUser",res)
+      setCurrentUser(res.data.user);
     } catch (error) {
       console.error(error);
     }
@@ -54,7 +68,7 @@ const UserProvider = ({ children }) => {
   // Fonction pour supprimer l'utilisateur
   const deleteUser = async (id) => {
     try {
-      const res = await apiConnect.delete(`/user/${id}`);
+     await apiConnect.delete(`/user/${id}`);
       setUsers((prevUser) => prevUser.filter((user) => user.id !== id));
     } catch (error) {
       console.error(error);
@@ -66,15 +80,16 @@ const UserProvider = ({ children }) => {
     console.log("Fonction currentUserLogin est lancé");
     try {
       const res = await apiConnect.post("/login", credential);
-      console.log("---------->res est ", res);
-      if (res && res.data) {
-        // Stocker le token dans le local storage
-        localStorage.setItem("token", res.data.token);
+      console.log("--------->Login ", res.data);
+      if (res && res.data && res.data.token) {
+        // Stocker le token dans le contexte
+       localStorage.setItem("token", res.data.token);
 
         // Mettre à jour l'état de l'utilisateur actuel
-        setCurrentUser(res.data);
-        
+        setCurrentUser(res.data.user);
         toastSuccess("Vous êtes connecté");
+        navigate("/home");
+        
       } else {
         toastError("Réponse inattendue du serveur");
       }
