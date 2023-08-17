@@ -1,10 +1,14 @@
-import React, {useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "./AuthContext";
 import apiConnect from "../../services/API/apiConnection.jsx";
-import { toastSuccess, toastError } from "../../services/Toastify/toastConfig.jsx";
+import {
+  toastSuccess,
+  toastError,
+} from "../../services/Toastify/toastConfig.jsx";
 
 const AuthProvider = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const navigate = useNavigate();
@@ -20,6 +24,7 @@ const AuthProvider = ({ children }) => {
       console.log("Api Response", res);
       if (res.status === 200) {
         toastSuccess("Connexion réussie");
+        setCurrentUser(res.data.user);
         setToken(res.data.token);
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("isAuthenticated", "true");
@@ -38,7 +43,11 @@ const AuthProvider = ({ children }) => {
 
   const signup = async (username, email, password) => {
     try {
-      const res = await apiConnect.post("/signup", { username, email, password });
+      const res = await apiConnect.post("/signup", {
+        username,
+        email,
+        password,
+      });
       if (res.status === 201) {
         setToken(res.data.token);
         localStorage.setItem("token", res.data.token);
@@ -65,10 +74,12 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, token, login, signup, logout }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, token, login, signup, logout, currentUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
-export default AuthProvider ;
+export default AuthProvider;
