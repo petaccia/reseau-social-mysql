@@ -119,5 +119,6 @@ router.post("/message", messageController.createMessage);
 router.put("/message/:id", messageController.updateMessage);
 router.delete("/message/:id", messageController.deleteMessage);
 router.delete("/messages", messageController.AllDeleteMessage);
+router.put("/message/read/:id", messageController.markReadMessage);
 
 module.exports = router;
