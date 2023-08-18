@@ -93,8 +93,8 @@ const markReadMessage = async (req, res) => {
     if (!message) {
       return res.status(404).json("Message non enregistré");      
     }
-    if (!message.statusRead) {
-      message.statusRead = true;
+    if (message.statusRead !== "read") {
+      message.statusRead = "read";
       message.viewedAt = new Date();
       await message.save();
       return res.status(200).json("Message marqué comme lu");

@@ -31,9 +31,9 @@ const Message = db.define("messages", {
     allowNull: false,
   },
   statusRead: {
-    type: DataTypes.BOOLEAN,
+    type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: false,
+    defaultValue: "sent",
   },
   viewedAt: {
     type: DataTypes.DATE,
