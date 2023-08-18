@@ -70,6 +70,23 @@ const MessageProvider = ({ children }) => {
     }
   };
 
+  // Marquage du message comme lu par le destinataire
+   const markReadMessage = async (id) => {
+  try {
+    const res = await apiConnect.put(`/message/read/${id}`);
+    if (res.status === 200) {
+      setMessages((prevMessages) =>
+        prevMessages.map((message) =>
+        message.id === res.data.id ? {...message, statusRead: true, viewedAt: new Date()} : message
+        )
+      );
+    } else {
+      console.error("Erreur du marquage de la lecture du message: ", res);
+    }
+  } catch (err) {
+    console.error(err); 
+  }
+   };
   return (
     <MessageContext.Provider
       value={{
@@ -80,6 +97,7 @@ const MessageProvider = ({ children }) => {
         deleteAllMessages,
         sendMessage,
         updateMessage,
+        markReadMessage,
       }}
     >
       {children}

@@ -30,6 +30,15 @@ const Message = db.define("messages", {
     type: DataTypes.BOOLEAN,
     allowNull: false,
   },
+  statusRead: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: "sent",
+  },
+  viewedAt: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  }
 });
 
 Message.belongsTo(User, { foreignKey: "senderId" });

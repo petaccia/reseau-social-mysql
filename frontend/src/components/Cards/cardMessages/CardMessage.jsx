@@ -13,6 +13,8 @@ import {
   toastInfo,
   toastNonLu,
 } from "../../../services/Toastify/toastConfig.jsx";
+import ReadStatusMessageReceiver from "../../Status/readStatusReceiver/ReadStatusMessageReceiver.jsx";
+
 
 const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
   const [sender, setSender] = useState("");
@@ -144,6 +146,7 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
 
   return (
     <div className={Styles.container}>
+      <ReadStatusMessageReceiver messageId={message.id}></ReadStatusMessageReceiver>
       <div
         className={`${Styles.card} ${
           deleteCard || deleteAll ? Styles.animateOut : ""
