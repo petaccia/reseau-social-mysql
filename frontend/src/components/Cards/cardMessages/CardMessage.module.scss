@@ -1,12 +1,10 @@
 @import "../../../style/variables";
 
-.container {
+.containerCard {
   position: relative;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   justify-content: center;
-
   .card {
     width: 40rem;
     height: 20rem;
@@ -14,6 +12,20 @@
     border-radius: 10px;
     border: 1px solid $border-color;
     transition: all 0.5s;
+    background-color: $background-fond;
+    color: $primary-color;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    margin: 3rem;
+    transition: all 0.5s;
+    box-shadow: 0px 10px 10px 3px $primary-color;
+    position: relative;
+
+
+    &:hover {
+      transform: scale(1.1);
+    }
 
   }
 }
@@ -26,12 +38,12 @@
   from {
     transform: rotateY(0deg);
     opacity: 1;
-    trasition: all 0.5s;
+    transition: all 0.5s;
 
   }
   to {
     transform: rotateY(180deg);
     opacity: 0;
-    trasition: all 0.5s;
+    transition: all 0.5s;
   }
 }

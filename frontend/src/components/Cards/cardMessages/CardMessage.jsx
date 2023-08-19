@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Styles from "./CardMessage.module.scss";
 
 import MessageAction from "../../Messages/MessageActions/MessageAction.jsx";
@@ -8,7 +8,6 @@ import MessageBody from "../../Messages/MessageBody/MessageBody.jsx";
 import ReplyModal from "../../modals/ReplyModal/ReplyModal.jsx";
 import ReadStatusMessageReceiver from "../../Status/readStatusReceiver/ReadStatusMessageReceiver.jsx";
 
-import apiConnect from "../../../services/API/apiConnection.jsx";
 import {
   toastSuccess,
   toastError,
@@ -78,7 +77,8 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
   
 
   return (
-    <div className={Styles.container}>
+    // <div className={Styles.containerCardMessage}>
+    <div className={Styles.containerCard}>
       {/* <ReadStatusMessageReceiver messageId={message.id}></ReadStatusMessageReceiver> */}
       <div
         className={`${Styles.card} ${
@@ -118,6 +118,7 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
         />
       </div>
     </div>
+    // </div>
   );
 };
 
