@@ -1,0 +1,39 @@
+@import "../../../style/variables";
+
+.containerToggle {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  
+  .icon {
+    color: $primary-color;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+  .containerButton {
+    position: absolute;
+    background-color: $background-fond;
+    border: 1px 1px 1px 0px solid $border-color;
+    display: flex;
+    flex-direction: column;
+    margin: 0 3rem;
+    z-index: 1;
+    .button {
+      background-color: transparent;
+      outline: none;
+      border-radius: 5px;
+      color: $primary-color;
+      padding: 5px;
+      margin: 5px;
+      border: 1px solid $border-color;
+      cursor: pointer;
+      transition: all 0.5s;
+      &:hover {
+        background-color: $primary-color;
+        color: $background-fond;
+        border: 1px solid $primary-color;
+      }
+    }
+  }
+}

@@ -28,6 +28,7 @@ const getMessage = async (req, res) => {
 
 const createMessage = async (req, res) => {
   const { body } = req;
+  console.log("bodybackend", body);
   const { error } = messageValidation(body);
 
   if (error) {

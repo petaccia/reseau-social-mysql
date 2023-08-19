@@ -1,0 +1,19 @@
+@import "../../../style/variables";
+
+.containerContent {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  padding-top: 4rem;
+  bottom: 10px;
+  h6 {
+    color: $primary-color;
+    font-weight: bold;
+  }
+  p {
+    color: $border-color;
+    font-weight: bold;
+    font-size: 12px;
+  }
+}
