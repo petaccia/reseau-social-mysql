@@ -27,11 +27,12 @@ const MessageList = () => {
     title: "",
     description: "",
     message: "",
+    senderId: "",
+    receiverId: "",
   });
   const [selectedReceiverId, setSelectedReceiverId] = useState("");
   
   useEffect(() => {
-    console.log(currentUser);
     getMessages();
   }, [ currentUser ]);
   
@@ -83,6 +84,9 @@ const MessageList = () => {
         receiverId: selectedReceiverId,
         status: false,
       };
+      console.log("messageWithUser", messageWithUser),
+      console.log("receiverId", selectedReceiverId),
+      console.log("currentUserId", currentUser.id);
 
       await addMessage(messageWithUser);
       closeCreateMessage();
@@ -91,6 +95,8 @@ const MessageList = () => {
         title: "",
         description: "",
         message: "",
+        senderId: "",
+        receiverId: "",
       });
     } catch (error) {
       console.error(error);
@@ -113,7 +119,8 @@ const MessageList = () => {
           <div className={Styles.modal}>
             <SelectUser
               value={selectedReceiverId}
-              onChange={(e) => setSelectedReceiverId(e.target.value)}
+              onChange={(e) => {setSelectedReceiverId(number(e.target.value));
+              console.log("selected receiver", e.target.value)}}
             />
             <button className={Styles.buttonClose} onClick={closeCreateMessage}>
               X

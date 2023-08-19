@@ -1,0 +1,31 @@
+@import "../../../style/variables";
+.container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+.containerTitle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .cardTitle {
+    color: $primary-color;
+  }
+  .title {
+    font-weight: bold;
+    color: $title-message;
+  }
+}
+.containerDescription {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .cardDescription {
+    color: $primary-color;
+  }
+  .description {
+    font-weight: bold;
+    color: $title-message;
+  }
+}
+}
