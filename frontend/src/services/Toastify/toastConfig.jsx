@@ -9,6 +9,7 @@ const toastSuccess = (message) => {
       boxShadow: "5px 5px 10px green",
       backgroundColor: "#10131e",
       color: "green",
+      autoClose: 5000,
     },
   });
 };
@@ -22,6 +23,7 @@ const toastError = (message) => {
       boxShadow: "5px 5px 10px red",
       backgroundColor: "#10131e",
       color: "red",
+      autoClose: 5000,
     },
   });
 };
@@ -35,6 +37,7 @@ const toastWarning = (message) => {
       boxShadow: "5px 5px 10px yellow",
       backgroundColor: "#10131e",
       color: "yellow",
+      autoClose: 5000,
     },
   });
 };
@@ -48,6 +51,7 @@ const toastInfo = (message) => {
       boxShadow: "5px 5px 10px #2f84eb",
       backgroundColor: "#10131e",
       color: "#2f84eb",
+      autoClose: 5000,
     },
   });
 };
@@ -61,6 +65,7 @@ const toastNonLu = (message) => {
       boxShadow: "5px 5px 10px #E25c5c",
       backgroundColor: "#10131e",
       color: "#E25c5c",
+      autoClose: 5000,
     },
   });
 };

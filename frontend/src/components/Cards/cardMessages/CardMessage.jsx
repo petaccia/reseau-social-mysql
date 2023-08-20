@@ -15,6 +15,9 @@ import {
 import DeleteMessage from "../../Messages/DeleteMessage/DeleteMessage.jsx";
 
 const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
+// Etat pour savoir si le message est ouvert
+  const [isMessageOpen, setIsMessageOpen] = useState(false);
+
   // Overture des boutons d'actions
   const [open, setOpen] = useState(false);
 
@@ -43,6 +46,7 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
   };
 
   const checkStatusInfo = () => {
+    setIsMessageOpen(true);
     setDeleteCard(false);
     toggleOpen();
   };
@@ -63,8 +67,9 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
         console.error(error);
         toastError("Erreur lors de la suppression du message");
       }
-    }, 3000);
+    }, 800);
   };
+
 
   return (
     // <div className={Styles.containerCardMessage}>
@@ -79,7 +84,10 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
       
       />
       {/* Composant de la card du status du message */}
-      <MessageStatus check={message.status} />
+      <MessageStatus 
+      check={message.status} 
+      showStoast={isMessageOpen}
+      />
       <MessageBody
         message={message}
         title={message.title}

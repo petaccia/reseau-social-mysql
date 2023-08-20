@@ -3,10 +3,13 @@ import { toastInfo, toastNonLu } from "../../../services/Toastify/toastConfig.js
 import { BsFillCheckCircleFill, BsFillExclamationCircleFill } from "react-icons/bs";
 import Styles from "./MessageStatus.module.scss";
 
-const MessageStatus = ({ check }) => {
+const MessageStatus = ({ showStoast, check }) => {
 
 
   useEffect(() => {
+    if (!showStoast) {
+      return;
+    }
     if (check) {
       toastInfo("Le message a été lu");
     } else {
