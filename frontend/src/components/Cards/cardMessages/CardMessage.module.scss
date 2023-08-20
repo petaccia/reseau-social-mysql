@@ -2,9 +2,8 @@
 
 .containerCard {
   position: relative;
-  .card {
-    transform-style: preserve-3d;
-    perspective: 1000px;
+    .card {
+    // perspective: 1000px;
     width: 40rem;
     height: 20rem;
     padding: 4rem 1rem 0rem 1rem;
