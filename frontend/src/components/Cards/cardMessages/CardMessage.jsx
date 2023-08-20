@@ -44,12 +44,17 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
   const replyTextHandler = (e) => {
     setReplyText(e.target.value);
   };
-
+// Status pour savoir si le message est lu ou non
   const checkStatusInfo = () => {
     setIsMessageOpen(true);
     setDeleteCard(false);
-    toggleOpen();
   };
+
+  //Empêcher la propagation de l'événement action sur le bouton
+  const handleActionClick = (e) => {
+    e.stopPropagation();
+    toggleOpen();
+  }
 
   // Fermeture de la modal de réponse
   const closeReplyModal = () => {
@@ -85,7 +90,7 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
       />
       {/* Composant de la card du status du message */}
       <MessageStatus 
-      check={message.status} 
+      check={isMessageOpen}
       showStoast={isMessageOpen}
       />
       <MessageBody
@@ -96,7 +101,7 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
       <MessageFooter messageUser={message} />
       <MessageAction
         onReply={openReplyModal}
-        toggleOpen={toggleOpen}
+        toggleOpen={handleActionClick}
         open={open}
         onDelete={handleDelete}
       />

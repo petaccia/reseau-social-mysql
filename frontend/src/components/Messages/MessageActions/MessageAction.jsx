@@ -8,24 +8,16 @@ const MessageAction = ({ onReply, onDelete, toggleOpen, open }) => {
 
   
   return (
-    <div className={Styles.containerToggle} onClick={(e) => e.stopPropagation()}>
+    <div className={Styles.containerToggle} onClick={toggleOpen}>
       <BsThreeDotsVertical  className={Styles.icon} onClick={() => {
         toggleOpen();
         setDeleteCard(false)}} />
       {open && (
         <div className={Styles.containerButton}>
-      <button onClick={(e) => { 
-        e.stopPropagation();
-         onReply()}} 
+      <button onClick={onReply}
          className={Styles.button}>Répondre</button>
-      <button onClick={(e) => {
-        e.stopPropagation();
-        onDelete();
-      }} className={Styles.button}>Supprimer</button>
-      <button onClick={(e) => {
-        e.stopPropagation();
-        deleteAll();
-      }} className={Styles.button}>tout supprimer</button>
+      <button onClick={onDelete}
+       className={Styles.button}>Supprimer</button>
       </div>
       )}
       </div>
