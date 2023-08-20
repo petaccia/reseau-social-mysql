@@ -65,7 +65,7 @@ const MessageList = () => {
           createMessage={createMessage}
         />
       </div>
-      <div className={Styles.CardContainer}>
+      <div className={Styles.cardContainer}>
       {messages.map((message) => (
         <CardMessage
           key={message.id}
