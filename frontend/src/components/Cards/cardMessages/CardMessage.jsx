@@ -14,7 +14,10 @@ import {
 } from "../../../services/Toastify/toastConfig.jsx";
 import DeleteMessage from "../../Messages/DeleteMessage/DeleteMessage.jsx";
 
-const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
+const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage, currentUser }) => {
+// Etat pour savoir si le message est ouvert
+  const [isMessageOpen, setIsMessageOpen] = useState(false);
+
   // Overture des boutons d'actions
   const [open, setOpen] = useState(false);
 
@@ -41,11 +44,16 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
   const replyTextHandler = (e) => {
     setReplyText(e.target.value);
   };
-
+// Status pour savoir si le message est lu ou non
   const checkStatusInfo = () => {
+    setIsMessageOpen(true);
     setDeleteCard(false);
-    toggleOpen();
   };
+
+  //Empêcher la propagation de l'événement action sur le bouton
+  const handleActionClick = (e) => {
+    toggleOpen();
+  }
 
   // Fermeture de la modal de réponse
   const closeReplyModal = () => {
@@ -63,8 +71,9 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
         console.error(error);
         toastError("Erreur lors de la suppression du message");
       }
-    }, 3000);
+    }, 800);
   };
+
 
   return (
     // <div className={Styles.containerCardMessage}>
@@ -73,13 +82,21 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
           deleteCard || deleteAll ? Styles.animateOut : ""
         }`}
       >
-      {/* <ReadStatusMessageReceiver messageId={message.id}></ReadStatusMessageReceiver> */}
+        { message.senderId === currentUser.id &&
+      <ReadStatusMessageReceiver messageStatus={message.statusRead}></ReadStatusMessageReceiver>
+        }
       <DeleteMessage
         onDelete={handleDelete}
       
       />
       {/* Composant de la card du status du message */}
-      <MessageStatus check={message.status} />
+      { message.senderId !== currentUser.id &&
+        <MessageStatus 
+        check={isMessageOpen}
+        showStoast={isMessageOpen}
+        />
+      }
+        
       <MessageBody
         message={message}
         title={message.title}
@@ -88,7 +105,7 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
       <MessageFooter messageUser={message} />
       <MessageAction
         onReply={openReplyModal}
-        toggleOpen={toggleOpen}
+        toggleOpen={handleActionClick}
         open={open}
         onDelete={handleDelete}
       />

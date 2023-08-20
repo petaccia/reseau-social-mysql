@@ -73,6 +73,7 @@ const MessageList = () => {
           deleteMessage={deleteMessage}
           deleteAll={deleteAll}
           sendMessage={sendMessage}
+          currentUser={currentUser}
         />
       ))}
     </div>

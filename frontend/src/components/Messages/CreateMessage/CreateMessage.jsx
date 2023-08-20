@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import Styles from './CreateMessage.module.scss'
 import SelectUser from "../../selectUser/SelectUser.jsx";
 import { toastError, toastSuccess } from "../../../services/Toastify/toastConfig";
+import ReadStatusMessageReceiver from "../../Status/readStatusReceiver/ReadStatusMessageReceiver.jsx";
 
 const CreateMessage = ({ currentUser, addMessage, setCreateMessage, createMessage  }) => {
+  const [showStatus, setShowStatus] = useState(false);
   const [selectedReceiverId, setSelectedReceiverId] = useState("");
   const [newMessage, setNewMessage] = useState({
     title: "",
@@ -12,7 +14,6 @@ const CreateMessage = ({ currentUser, addMessage, setCreateMessage, createMessag
     senderId: "",
     receiverId: "",
   });
-
 
   const closeCreateMessage = () => {
     setCreateMessage(false);
@@ -41,14 +42,14 @@ const CreateMessage = ({ currentUser, addMessage, setCreateMessage, createMessag
         ...newMessage,
         senderId: currentUser.id,
         receiverId: selectedReceiverId,
-        status: false,
+        statusRead: "sent",
       };
       console.log("messageWithUser", messageWithUser),
       console.log("receiverId", selectedReceiverId),
       console.log("currentUserId", currentUser.id);
 
       await addMessage(messageWithUser);
-      closeCreateMessage();
+            closeCreateMessage();
       toastSuccess("Votre message a bien été ajouté");
       setNewMessage({
         title: "",
@@ -114,7 +115,6 @@ const CreateMessage = ({ currentUser, addMessage, setCreateMessage, createMessag
         </div>
       </div>
     )}
-   
   </div>
   );
 };

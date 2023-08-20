@@ -6,7 +6,8 @@ const messageValidation = (data) => {
     description: Joi.string().required(),
     sender: Joi.number().required(),
     receiver: Joi.number().required(),
-    status: Joi.boolean().required(),
+    status: Joi.boolean().optional(),
+    statusRead: Joi.string().valid("sent", "delivered", "read").required(),
   });
   return schema.validate(data, { abortEarly: false }).error;
 };

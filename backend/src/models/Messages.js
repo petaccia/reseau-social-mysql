@@ -31,7 +31,7 @@ const Message = db.define("messages", {
     allowNull: false,
   },
   statusRead: {
-    type: DataTypes.STRING,
+    type: DataTypes.ENUM("sent", "delivered", "read"),
     allowNull: false,
     defaultValue: "sent",
   },

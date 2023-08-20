@@ -34,7 +34,11 @@ const createMessage = async (req, res) => {
   if (error) {
     return res.status(400).json(error.details[0].message);
   }
+  //Définir le status de la lecture par défaut
+  body.statusRead = "sent";
 
+  // Définir le status du message par défaut
+  body.status = false;
   try {
     const message = await Message.create(body);
     return res.status(201).json(message);
@@ -88,25 +92,6 @@ const AllDeleteMessage = async (req, res) => {
   }
 };
 
-const markReadMessage = async (req, res) => {
-  try{
-    const message = await Message.findOne({ where: { id: req.params.id } });
-    if (!message) {
-      return res.status(404).json("Message non enregistré");      
-    }
-    if (message.statusRead !== "read") {
-      message.statusRead = "read";
-      message.viewedAt = new Date();
-      await message.save();
-      return res.status(200).json("Message marqué comme lu");
-    } 
-    return res.status(404).json("Message non lu");
-  } catch (err) {
-    console.error("Erreur du marquage de la lecture du message: ", err);
-    return res.status(500).json(err);
-  }
-};
-
 
 module.exports = {
   getAllMessages,
@@ -115,5 +100,4 @@ module.exports = {
   updateMessage,
   deleteMessage,
   AllDeleteMessage,
-  markReadMessage
 };

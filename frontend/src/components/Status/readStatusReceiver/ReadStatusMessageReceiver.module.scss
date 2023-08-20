@@ -1,5 +1,12 @@
 @import "../../../style/variables";
 
+.containerReadStatus{
+  font-size: 1.5rem;
+  position: absolute;
+  top: 1rem;
+
+}
+
 .iconStatusSent{
   color: $border-color;
 }
