@@ -13,7 +13,10 @@ const MessageAction = ({ onReply, onDelete, toggleOpen, open }) => {
       {open && (
         <div className={Styles.containerButton}>
       <button onClick={onReply} className={Styles.button}>Répondre</button>
-      <button onClick={onDelete} className={Styles.button}>Supprimer</button>
+      <button onClick={(e) => {
+        e.stopPropagation();
+        onDelete();
+      }} className={Styles.button}>Supprimer</button>
       <button onClick={onDelete} className={Styles.button}>tout supprimer</button>
       </div>
       )}

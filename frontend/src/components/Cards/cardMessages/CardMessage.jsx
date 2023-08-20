@@ -11,13 +11,10 @@ import ReadStatusMessageReceiver from "../../Status/readStatusReceiver/ReadStatu
 import {
   toastSuccess,
   toastError,
-  toastWarning,
 } from "../../../services/Toastify/toastConfig.jsx";
-
+import DeleteMessage from "../../Messages/DeleteMessage/DeleteMessage.jsx";
 
 const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
-
-
   // Overture des boutons d'actions
   const [open, setOpen] = useState(false);
 
@@ -27,10 +24,10 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
   // Text de Reply
   const [replyText, setReplyText] = useState("");
 
-  // supprimer un message avec l'animation
-  const [deleteCard, setDeleteCard] = useState(false);
+  
+    // supprimer un message avec l'animation
+    const [deleteCard, setDeleteCard] = useState(false);
 
-  // Date du message
 
   // Ouvrir les menu d'actions
   const toggleOpen = () => setOpen(!open);
@@ -40,15 +37,21 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
     setIsReplyModalOpen(true);
   };
 
-            // Text de la réponse
-            const replyTextHandler = (e) => {
-              setReplyText(e.target.value);
-            };
-      
-    
-  
+  // Text de la réponse
+  const replyTextHandler = (e) => {
+    setReplyText(e.target.value);
+  };
 
+  const checkStatusInfo = () => {
+    setDeleteCard(false);
+    toggleOpen();
+  };
 
+  // Fermeture de la modal de réponse
+  const closeReplyModal = () => {
+    setIsReplyModalOpen(false);
+    setReplyText("");
+  };
   // Suppression du message
   const handleDelete = async () => {
     setDeleteCard(true);
@@ -60,65 +63,50 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
         console.error(error);
         toastError("Erreur lors de la suppression du message");
       }
-    }, 1000);
+    }, 3000);
   };
-
-  const checkStatusInfo = () => {
-    setDeleteCard(false);
-    toggleOpen();
-  };
-  
-        // Fermeture de la modal de réponse
-        const closeReplyModal = () => {
-          setIsReplyModalOpen(false);
-          setReplyText("");
-        };
-      
-  
 
   return (
     // <div className={Styles.containerCardMessage}>
-    <div className={Styles.containerCard}>
-      {/* <ReadStatusMessageReceiver messageId={message.id}></ReadStatusMessageReceiver> */}
-      <div
-        className={`${Styles.card} ${
+    <div className={Styles.containerCard} onClick={checkStatusInfo}>
+      <div className={`${Styles.card} ${
           deleteCard || deleteAll ? Styles.animateOut : ""
         }`}
-        onClick={checkStatusInfo}
       >
-         {/* Composant de la card du status du message */}
-        <MessageStatus 
-        check={message.status} />
-        <MessageBody
-          message={message}
-          title={message.title}
-          description={message.description}
-        />
-          <MessageFooter 
-          messageUser={message}
-          />
-        <MessageAction 
-          onReply={openReplyModal}
-          toggleOpen={toggleOpen}
-          open={open}
-          onDelete={handleDelete}
-        />
-        <ReplyModal
-          isReplyModalOpen={isReplyModalOpen}
-          closeReplyModal={closeReplyModal}
-          replyTextHandler={replyTextHandler}
-          title={message.title}
-          description={message.description}
-          message={message}
-          check={message.status}
-          sender={message.senderId}
-          receiver={message.receiverId}
-          replyText={replyText}
-          sendMessage={sendMessage}
-        />
-      </div>
+      {/* <ReadStatusMessageReceiver messageId={message.id}></ReadStatusMessageReceiver> */}
+      <DeleteMessage
+        onDelete={handleDelete}
+      
+      />
+      {/* Composant de la card du status du message */}
+      <MessageStatus check={message.status} />
+      <MessageBody
+        message={message}
+        title={message.title}
+        description={message.description}
+      />
+      <MessageFooter messageUser={message} />
+      <MessageAction
+        onReply={openReplyModal}
+        toggleOpen={toggleOpen}
+        open={open}
+        onDelete={handleDelete}
+      />
+      <ReplyModal
+        isReplyModalOpen={isReplyModalOpen}
+        closeReplyModal={closeReplyModal}
+        replyTextHandler={replyTextHandler}
+        title={message.title}
+        description={message.description}
+        message={message}
+        check={message.status}
+        sender={message.senderId}
+        receiver={message.receiverId}
+        replyText={replyText}
+        sendMessage={sendMessage}
+      />
     </div>
-    // </div>
+    </div>
   );
 };
 

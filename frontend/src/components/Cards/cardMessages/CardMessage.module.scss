@@ -2,10 +2,9 @@
 
 .containerCard {
   position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
   .card {
+    transform-style: preserve-3d;
+    perspective: 1000px;
     width: 40rem;
     height: 20rem;
     padding: 4rem 1rem 0rem 1rem;
@@ -47,3 +46,5 @@
     transition: all 0.5s;
   }
 }
+
+
