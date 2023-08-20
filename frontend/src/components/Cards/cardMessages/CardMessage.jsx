@@ -14,7 +14,7 @@ import {
 } from "../../../services/Toastify/toastConfig.jsx";
 import DeleteMessage from "../../Messages/DeleteMessage/DeleteMessage.jsx";
 
-const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
+const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage, currentUser }) => {
 // Etat pour savoir si le message est ouvert
   const [isMessageOpen, setIsMessageOpen] = useState(false);
 
@@ -52,7 +52,6 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
 
   //Empêcher la propagation de l'événement action sur le bouton
   const handleActionClick = (e) => {
-    e.stopPropagation();
     toggleOpen();
   }
 
@@ -83,16 +82,21 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage }) => {
           deleteCard || deleteAll ? Styles.animateOut : ""
         }`}
       >
-      {/* <ReadStatusMessageReceiver messageId={message.id}></ReadStatusMessageReceiver> */}
+        { message.senderId === currentUser.id &&
+      <ReadStatusMessageReceiver messageStatus={message.statusRead}></ReadStatusMessageReceiver>
+        }
       <DeleteMessage
         onDelete={handleDelete}
       
       />
       {/* Composant de la card du status du message */}
-      <MessageStatus 
-      check={isMessageOpen}
-      showStoast={isMessageOpen}
-      />
+      { message.senderId !== currentUser.id &&
+        <MessageStatus 
+        check={isMessageOpen}
+        showStoast={isMessageOpen}
+        />
+      }
+        
       <MessageBody
         message={message}
         title={message.title}

@@ -11,7 +11,7 @@ const MessageAction = ({ onReply, onDelete, toggleOpen, open }) => {
     <div className={Styles.containerToggle} onClick={toggleOpen}>
       <BsThreeDotsVertical  className={Styles.icon} onClick={() => {
         toggleOpen();
-        setDeleteCard(false)}} />
+      }} />
       {open && (
         <div className={Styles.containerButton}>
       <button onClick={onReply}

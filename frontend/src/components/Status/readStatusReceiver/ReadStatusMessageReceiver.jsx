@@ -1,18 +1,16 @@
-import React, { Children, useContext, useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import Styles from "./ReadStatusMessageReceiver.module.scss"
-import MessageContext from "../../../contexts/MessageContext/MessageContext.jsx";
 import { GoCheck } from "react-icons/go";
 
-const ReadStatusMessageReceiver = ({ children , messageId}) => {
-  const {markReadMessage} = useContext(MessageContext);
-  
+const ReadStatusMessageReceiver = ({ messageStatus }) => {
+
   useEffect(() => {
-    markReadMessage();
-    },
-  []);
+    checkReadMessage()
+  }, []);
     
   const checkReadMessage = () => {
-    switch (markReadMessage(messageId)) {
+    console.log("messageStatus", messageStatus);
+    switch (messageStatus) {
       case "sent":
         return <GoCheck className={Styles.iconStatusSent} />;
         case "delivered":
@@ -36,7 +34,8 @@ const ReadStatusMessageReceiver = ({ children , messageId}) => {
 
  
     return (
-    <div>{children} {checkReadMessage()}</div>
+    <div className={Styles.containerReadStatus}>
+       {checkReadMessage()}</div>
   )
 }
 
