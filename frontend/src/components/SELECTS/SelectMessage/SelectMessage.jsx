@@ -4,6 +4,7 @@ import OptionMessageDate from "../../OPTIONSELECT/OptionMessageDate/OptionMessag
 import OptionMessageInProgress from "../../OPTIONSELECT/OptionMessageInProgress/OptionMessageInProgress.jsx";
 import OptionMessageSent from "@components/OPTIONSELECT/OptionMessageSent/OptionMessageSent";
 import OptionMessageReceiver from "@components/OPTIONSELECT/OptionMessageReceiver/OptionMessageReceiver";
+import OptionMessageRead from "@components/OPTIONSELECT/OptionMessageRead/OptionMessageRead";
 
 const SelectMessage = ({ onSort, messages }) => {
   const sortByDate = (order) => {
@@ -30,6 +31,11 @@ const SelectMessage = ({ onSort, messages }) => {
           return messages.statusRead === "received";
         })
         break;
+      case "read":
+        sorted = sorted.filter((messages) => {
+          return messages.statusRead === "read";
+        })
+        break;
     }
     onSort(sorted);
     console.log("sorted", sorted);
@@ -47,7 +53,7 @@ const SelectMessage = ({ onSort, messages }) => {
         <OptionMessageInProgress />
         <OptionMessageSent />
         <OptionMessageReceiver />
-        <option value="read">Messages lus</option>
+        <OptionMessageRead />
         <option value="unread">Messages non lus</option>
         <OptionMessageDate />
         <option value="destination">Destinataire</option>
