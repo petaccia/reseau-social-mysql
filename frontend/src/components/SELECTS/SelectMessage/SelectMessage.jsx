@@ -2,6 +2,7 @@ import React from "react";
 import Styles from "./SelectMessage.module.scss";
 import OptionMessageDate from "../../OPTIONSELECT/OptionMessageDate/OptionMessageDate.jsx";
 import OptionMessageInProgress from "../../OPTIONSELECT/OptionMessageInProgress/OptionMessageInProgress.jsx";
+import OptionMessageSent from "@components/OPTIONSELECT/OptionMessageSent/OptionMessageSent";
 
 const SelectMessage = ({ onSort, messages }) => {
   const sortByDate = (order) => {
@@ -38,7 +39,7 @@ const SelectMessage = ({ onSort, messages }) => {
         <option value="">Trier par</option>
         <option value="all">Tous les messages</option>
         <OptionMessageInProgress />
-        <option value="sent">Messages envoyés</option>
+        <OptionMessageSent />
         <option value="received">Messages reçus</option>
         <option value="read">Messages lus</option>
         <option value="unread">Messages non lus</option>
