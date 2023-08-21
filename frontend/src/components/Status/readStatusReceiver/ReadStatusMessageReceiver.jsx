@@ -5,11 +5,10 @@ import { GoCheck } from "react-icons/go";
 const ReadStatusMessageReceiver = ({ messageStatus }) => {
 
   useEffect(() => {
-    checkReadMessage()
+    checkReadMessage();
   }, []);
     
   const checkReadMessage = () => {
-    console.log("messageStatus", messageStatus);
     switch (messageStatus) {
       case "sent":
         return <GoCheck className={Styles.iconStatusSent} />;

@@ -8,32 +8,6 @@
   background-color: $background-fond;
   border: 1px solid $border-color;
 
-  .searchContainer {
-    display: flex;
-    align-items: center;
-    border: 1px solid #594848;
-    border-radius: 15px;
-    margin: 1rem;
-    padding: 0.5rem;
-
-    .searchIcon {
-      font-size: 1.5rem;
-      padding-left: 0.5rem;
-    }
-
-    .searchInput {
-      width: 20rem;
-      margin-left: 1rem;
-      background-color: transparent;
-      border: none;
-      outline: none;
-      color: #2aa6ff;
-
-      &::placeholder {
-        color: #2aa6ff;
-      }
-    }
-  }
   .buttonContainer {
     display: flex;
     align-items: center;
