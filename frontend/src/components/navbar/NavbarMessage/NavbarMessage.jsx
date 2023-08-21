@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import CreateMessage from "../../Messages/CreateMessage/CreateMessage.jsx";
 import Styles from "./NavbarMessage.module.scss";
-import { FcSearch } from "react-icons/fc";
 import SelectMessage from "../../SELECTS/SelectMessage/SelectMessage.jsx";
+import SearchInput from "../../SearchInput/SearchInput.jsx";
 
 const NavbarMessage = ({
   currentUser,
@@ -13,20 +13,23 @@ const NavbarMessage = ({
   addMessage,
   messages,
   onSort,
+  searchTerm,
+  handleSearchChange,
 }) => {
+
+
+
+
   return (
     <div className={Styles.containerNavbar}>
-      <div className={Styles.searchContainer}>
-        <FcSearch alt="icon de recherche" className={Styles.searchIcon} />
-        <input
-          type="search"
-          value={""}
-          onChange={(e) => {}}
-          placeholder="Rechercher"
-          className={Styles.searchInput}
-        />
-      </div>
       <div className={Styles.buttonContainer}>
+        <SearchInput 
+        onChange={handleSearchChange}
+        value={searchTerm}
+        
+
+
+        />
         <button className={Styles.button} onClick={openCreateMessage}>
           Ajouter un message
         </button>

@@ -9,9 +9,11 @@ import {
 } from "../../../services/Toastify/toastConfig.jsx";
 import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
 import NavbarMessage from "@components/navbar/NavbarMessage/NavbarMessage";
+import UserContext from "../../../contexts/UserContext/UserContext.jsx";
 
 const MessageList = () => {
   const { currentUser } = useContext(AuthContext);
+  const { users } = useContext(UserContext);
   const {
     messages,
     getMessages,
@@ -25,10 +27,11 @@ const MessageList = () => {
 
   const [deleteAll, setDeleteAll] = useState(false);
   const [sortedMessages, setSortedMessages] = useState(messages);
+  const  [searchTerm, setSearchTerm] = useState("");
   
   useEffect(() => {
     getMessages();
-  }, [ currentUser ]);
+  }, [ currentUser,]);
 
   const openCreateMessage = () => {
     setCreateMessage(true);
@@ -49,7 +52,35 @@ const MessageList = () => {
     }
   };
 
+  const handleSearchChange = (e) => {
+    console.log("good to go",e.target.value);
+    setSearchTerm(e.target.value);
+  };
 
+  const getFirstName = (id) => {
+    const user = users.find((user) => user.id === id);
+    return user.firstname + " " + user.lastname;
+  }
+  
+  // flitre de recherche de message par nom ou prénom de l'utilisateur
+  const filteredMessages = messages.filter((message) => {
+   const sender = getFirstName(message.senderId);
+   const receiver = getFirstName(message.receiverId);
+  
+   if (sender.toLowerCase().includes(searchTerm.toLowerCase()) || receiver.toLowerCase().includes(searchTerm.toLowerCase())) {
+     return message;
+   }
+  });
+
+  useEffect(() => {
+    if (searchTerm) {
+      setSortedMessages(filteredMessages);
+    } else {
+      setSortedMessages(messages);
+    }
+  }, [searchTerm, messages, filteredMessages]);
+  
+  
   return (
     <div className={Styles.containerList}>
       <div className={Styles.containerNavbar}>
@@ -62,6 +93,9 @@ const MessageList = () => {
       addMessage={addMessage}
       messages={messages}
       onSort={setSortedMessages}
+      handleSearchChange={handleSearchChange}
+      searchTerm={searchTerm}
+
       />
       </div>
       <div className={Styles.cardContainer}>
