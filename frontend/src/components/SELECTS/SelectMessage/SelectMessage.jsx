@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Styles from "./SelectMessage.module.scss";
 import OptionMessageDate from "../../OPTIONSELECT/OptionMessageDate/OptionMessageDate.jsx";
 import OptionMessageInProgress from "../../OPTIONSELECT/OptionMessageInProgress/OptionMessageInProgress.jsx";
@@ -6,8 +6,16 @@ import OptionMessageSent from "@components/OPTIONSELECT/OptionMessageSent/Option
 import OptionMessageReceiver from "@components/OPTIONSELECT/OptionMessageReceiver/OptionMessageReceiver";
 import OptionMessageRead from "@components/OPTIONSELECT/OptionMessageRead/OptionMessageRead";
 import OptionMessageUnread from "@components/OPTIONSELECT/optionMessageUnread/OptionMessageUnread";
+import OptionMessageRecipient from "@components/OPTIONSELECT/OptionMessageRecipient/OptionMessageRecipient";
+import UserContext from "../../../contexts/UserContext/UserContext.jsx";
 
 const SelectMessage = ({ onSort, messages }) => {
+  const {users} = useContext(UserContext);
+
+  const getRecipient = (receiverId) => {
+    const user = users.find((user) => user.id === receiverId);
+    return user.firstname + " " + user.lastname
+  }
   const sortByDate = (order) => {
     let sorted = [...messages];
     switch (order) {
@@ -42,6 +50,13 @@ const SelectMessage = ({ onSort, messages }) => {
           return messages.status === false;           
         })
         break;
+        case "recipient":
+        sorted.sort((a, b) => {
+          const recipientA = getRecipient(a.receiverId);
+          const recipientB = getRecipient(b.receiverId);
+          return recipientA.localeCompare(recipientB);
+        })
+        break;
     }
     onSort(sorted);
     console.log("sorted", sorted);
@@ -62,7 +77,7 @@ const SelectMessage = ({ onSort, messages }) => {
         <OptionMessageRead />
         <OptionMessageUnread />
         <OptionMessageDate />
-        <option value="destination">Destinataire</option>
+        <OptionMessageRecipient />
         <option value="expéditeur">Expéditeur</option>
       </select>
     </div>
