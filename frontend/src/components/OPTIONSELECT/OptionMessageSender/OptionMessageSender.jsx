@@ -1,9 +1,9 @@
 import React from 'react'
 
-const OptionMessgeSender = () => {
+const OptionMessageSender = () => {
   return (
     <option value="sender">Expéditeurs</option>
   )
 }
 
-export default OptionMessgeSender
+export default OptionMessageSender
