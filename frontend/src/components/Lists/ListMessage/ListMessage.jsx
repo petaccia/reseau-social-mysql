@@ -9,6 +9,8 @@ import {
 } from "../../../services/Toastify/toastConfig.jsx";
 import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
 import CreateMessage from "../../Messages/CreateMessage/CreateMessage.jsx";
+import { Nav } from "react-bootstrap";
+import NavbarMessage from "@components/navbar/NavbarMessage/NavbarMessage";
 
 const MessageList = () => {
   const { currentUser } = useContext(AuthContext);
@@ -51,19 +53,15 @@ const MessageList = () => {
 
   return (
     <div className={Styles.containerList}>
-      <div className={Styles.buttonContainer}>
-        <button className={Styles.button} onClick={deleteAllMessage}>
-          Supprimer tous les messages
-        </button>
-        <button className={Styles.button} onClick={openCreateMessage}>
-          Ajouter un message
-        </button>
-        <CreateMessage
-          addMessage={addMessage}
-          currentUser={currentUser}
-          setCreateMessage={setCreateMessage}
-          createMessage={createMessage}
-        />
+      <div className={Styles.containerNavbar}>
+      <NavbarMessage 
+      currentUser={currentUser}
+      setCreateMessage={setCreateMessage}
+      createMessage={createMessage}
+      deleteAllMessage={deleteAllMessage}
+      openCreateMessage={openCreateMessage}
+      addMessage={addMessage}
+      />
       </div>
       <div className={Styles.cardContainer}>
       {messages.map((message) => (
