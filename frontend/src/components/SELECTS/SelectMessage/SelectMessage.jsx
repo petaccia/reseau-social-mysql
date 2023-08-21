@@ -5,10 +5,10 @@ import OptionMessageInProgress from "../../OPTIONSELECT/OptionMessageInProgress/
 import OptionMessageSent from "../../OPTIONSELECT/OptionMessageSent/OptionMessageSent";
 import OptionMessageReceiver from "../../OPTIONSELECT/OptionMessageReceiver/OptionMessageReceiver";
 import OptionMessageRead from "../../OPTIONSELECT/OptionMessageRead/OptionMessageRead";
-import OptionMessageUnread from "../../OPTIONSELECT";
+import OptionMessageUnread from "../../OPTIONSELECT/OptionMessageUnread/OptionMessageUnread.jsx";
 import OptionMessageRecipient from "../../OPTIONSELECT/OptionMessageRecipient/OptionMessageRecipient";
 import UserContext from "../../../contexts/UserContext/UserContext.jsx";
-import OptionMessgeSender from "../../OPTIONSELECT/OptionMessgeSender/OptionMessgeSender";
+import OptionMessgeSender from "../../OPTIONSELECT/OptionMessageSender/OptionMessageSender.jsx";
 
 const SelectMessage = ({ onSort, messages }) => {
   const {users} = useContext(UserContext);
