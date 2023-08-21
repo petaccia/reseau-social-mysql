@@ -5,29 +5,12 @@
   height: 100%;
   margin-top: 3rem;
 
-  .buttonContainer {
+  .containerNavbar{
     display: flex;
-    align-items: center;
     justify-content: center;
-    margin-bottom: 1rem;
-
-    .button {
-      background-color: transparent;
-      outline: none;
-      border-radius: 5px;
-      color: $primary-color;
-      padding: 5px;
-      margin: 5px;
-      cursor: pointer;
-      border: 1px solid $border-color;
-      &:hover {
-        background-color: $primary-color;
-        color: $background-fond;
-        border: 1px solid $primary-color;
-
-      }
-    }
   }
+
+ 
   .cardContainer{
     display: flex;
     flex-wrap: wrap;
