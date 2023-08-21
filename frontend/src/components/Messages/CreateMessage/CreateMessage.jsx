@@ -1,10 +1,18 @@
-import React, { useState } from 'react'
-import Styles from './CreateMessage.module.scss'
-import SelectUser from "../../selectUser/SelectUser.jsx";
-import { toastError, toastSuccess } from "../../../services/Toastify/toastConfig";
+import React, { useState } from "react";
+import Styles from "./CreateMessage.module.scss";
+import SelectUser from "../../SELECTS/selectUser/SelectUser.jsx";
+import {
+  toastError,
+  toastSuccess,
+} from "../../../services/Toastify/toastConfig";
 import ReadStatusMessageReceiver from "../../Status/readStatusReceiver/ReadStatusMessageReceiver.jsx";
 
-const CreateMessage = ({ currentUser, addMessage, setCreateMessage, createMessage  }) => {
+const CreateMessage = ({
+  currentUser,
+  addMessage,
+  setCreateMessage,
+  createMessage,
+}) => {
   const [showStatus, setShowStatus] = useState(false);
   const [selectedReceiverId, setSelectedReceiverId] = useState("");
   const [newMessage, setNewMessage] = useState({
@@ -45,11 +53,11 @@ const CreateMessage = ({ currentUser, addMessage, setCreateMessage, createMessag
         statusRead: "sent",
       };
       console.log("messageWithUser", messageWithUser),
-      console.log("receiverId", selectedReceiverId),
-      console.log("currentUserId", currentUser.id);
+        console.log("receiverId", selectedReceiverId),
+        console.log("currentUserId", currentUser.id);
 
       await addMessage(messageWithUser);
-            closeCreateMessage();
+      closeCreateMessage();
       toastSuccess("Votre message a bien été ajouté");
       setNewMessage({
         title: "",
@@ -66,57 +74,57 @@ const CreateMessage = ({ currentUser, addMessage, setCreateMessage, createMessag
 
   const number = (e) => {
     setSelectedReceiverId(e.target.value);
-  }
-
-
+  };
 
   return (
     <div className={Styles.containerCreateMessage}>
-    {createMessage && (
-      <div className={Styles.modal}>
-        <SelectUser
-          value={selectedReceiverId}
-          onChange={(e) => {number(e); }}
-        />
-        <button className={Styles.buttonClose} onClick={closeCreateMessage}>
-          X
-        </button>
-        <div className={Styles.containerModalInput}>
-          <input
-            className={Styles.inputTitle}
-            type="text"
-            name="title"
-            value={newMessage.title}
-            onChange={handleChange}
-            placeholder="Titre du message ..."
+      {createMessage && (
+        <div className={Styles.modal}>
+          <SelectUser
+            value={selectedReceiverId}
+            onChange={(e) => {
+              number(e);
+            }}
           />
-          <textarea
-            className={Styles.textareaDescription}
-            name="description"
-            value={newMessage.description}
-            onChange={handleChange}
-            placeholder="Description du message"
-          />
-          <textarea
-            className={Styles.textareaMessage}
-            name="message"
-            value={newMessage.message}
-            onChange={handleChange}
-            placeholder="Votre message ..."
-          />
-        </div>
-        <div className={Styles.containerModalButton}>
-          <button
-            className={Styles.buttonCreateMessage}
-            onClick={handleCreateMessage}
-          >
-            Envoyer
+          <button className={Styles.buttonClose} onClick={closeCreateMessage}>
+            X
           </button>
+          <div className={Styles.containerModalInput}>
+            <input
+              className={Styles.inputTitle}
+              type="text"
+              name="title"
+              value={newMessage.title}
+              onChange={handleChange}
+              placeholder="Titre du message ..."
+            />
+            <textarea
+              className={Styles.textareaDescription}
+              name="description"
+              value={newMessage.description}
+              onChange={handleChange}
+              placeholder="Description du message"
+            />
+            <textarea
+              className={Styles.textareaMessage}
+              name="message"
+              value={newMessage.message}
+              onChange={handleChange}
+              placeholder="Votre message ..."
+            />
+          </div>
+          <div className={Styles.containerModalButton}>
+            <button
+              className={Styles.buttonCreateMessage}
+              onClick={handleCreateMessage}
+            >
+              Envoyer
+            </button>
+          </div>
         </div>
-      </div>
-    )}
-  </div>
+      )}
+    </div>
   );
 };
 
-export default CreateMessage
+export default CreateMessage;
