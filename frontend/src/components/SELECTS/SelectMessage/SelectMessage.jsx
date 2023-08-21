@@ -2,13 +2,13 @@ import React, { useContext } from "react";
 import Styles from "./SelectMessage.module.scss";
 import OptionMessageDate from "../../OPTIONSELECT/OptionMessageDate/OptionMessageDate.jsx";
 import OptionMessageInProgress from "../../OPTIONSELECT/OptionMessageInProgress/OptionMessageInProgress.jsx";
-import OptionMessageSent from "@components/OPTIONSELECT/OptionMessageSent/OptionMessageSent";
-import OptionMessageReceiver from "@components/OPTIONSELECT/OptionMessageReceiver/OptionMessageReceiver";
-import OptionMessageRead from "@components/OPTIONSELECT/OptionMessageRead/OptionMessageRead";
-import OptionMessageUnread from "@components/OPTIONSELECT/optionMessageUnread/OptionMessageUnread";
-import OptionMessageRecipient from "@components/OPTIONSELECT/OptionMessageRecipient/OptionMessageRecipient";
+import OptionMessageSent from "../../OPTIONSELECT/OptionMessageSent/OptionMessageSent";
+import OptionMessageReceiver from "../../OPTIONSELECT/OptionMessageReceiver/OptionMessageReceiver";
+import OptionMessageRead from "../../OPTIONSELECT/OptionMessageRead/OptionMessageRead";
+import OptionMessageUnread from "../../OPTIONSELECT";
+import OptionMessageRecipient from "../../OPTIONSELECT/OptionMessageRecipient/OptionMessageRecipient";
 import UserContext from "../../../contexts/UserContext/UserContext.jsx";
-import OptionMessgeSender from "@components/OPTIONSELECT/OptionMessageSender/OptionMessgeSender";
+import OptionMessgeSender from "../../OPTIONSELECT/OptionMessgeSender/OptionMessgeSender";
 
 const SelectMessage = ({ onSort, messages }) => {
   const {users} = useContext(UserContext);
