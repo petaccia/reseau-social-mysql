@@ -8,12 +8,18 @@ import OptionMessageRead from "@components/OPTIONSELECT/OptionMessageRead/Option
 import OptionMessageUnread from "@components/OPTIONSELECT/optionMessageUnread/OptionMessageUnread";
 import OptionMessageRecipient from "@components/OPTIONSELECT/OptionMessageRecipient/OptionMessageRecipient";
 import UserContext from "../../../contexts/UserContext/UserContext.jsx";
+import OptionMessgeSender from "@components/OPTIONSELECT/OptionMessageSender/OptionMessgeSender";
 
 const SelectMessage = ({ onSort, messages }) => {
   const {users} = useContext(UserContext);
 
   const getRecipient = (receiverId) => {
     const user = users.find((user) => user.id === receiverId);
+    return user.firstname + " " + user.lastname
+  }
+
+  const getSender = (senderId) => {
+    const user = users.find((user) => user.id === senderId);
     return user.firstname + " " + user.lastname
   }
   const sortByDate = (order) => {
@@ -57,6 +63,13 @@ const SelectMessage = ({ onSort, messages }) => {
           return recipientA.localeCompare(recipientB);
         })
         break;
+        case "sender":
+        sorted.sort((a, b) => {
+          const senderA = getSender(a.senderId);
+          const senderB = getSender(b.senderId);
+          return senderA.localeCompare(senderB);
+        })
+        break;
     }
     onSort(sorted);
     console.log("sorted", sorted);
@@ -78,7 +91,7 @@ const SelectMessage = ({ onSort, messages }) => {
         <OptionMessageUnread />
         <OptionMessageDate />
         <OptionMessageRecipient />
-        <option value="expéditeur">Expéditeur</option>
+        <OptionMessgeSender />
       </select>
     </div>
   );
