@@ -1,6 +1,7 @@
 import React from 'react'
 import Styles from './SelectMessage.module.scss';
 import OptionMessageDate from "../../OPTIONSELECT/OptionMessageDate/OptionMessageDate.jsx";
+import OptionMessageInProgress from "../../OPTIONSELECT/OptionMessageInProgress/OptionMessageInProgress.jsx";
 
 const SelectMessage = ({ onSort, messages}) => {
   const sortByDate = (order) => {
@@ -15,8 +16,14 @@ const SelectMessage = ({ onSort, messages}) => {
         
         new Date(a.createdAt) - new Date(b.createdAt));
         break;
+        case "inProgress":
+      sorted = sorted.filter((messages) => {
+        return messages.statusRead === "inProgress";
+      })
+
       };
       onSort(sorted);
+      console.log("sorted",sorted)
     }
 
   return (
@@ -27,7 +34,7 @@ const SelectMessage = ({ onSort, messages}) => {
     className={Styles.selectMessage}>
       <option value="">Trier par</option>
       <option value="all">Tous les messages</option>
-      <option value="messages">Messages en cours</option>
+      <OptionMessageInProgress />
       <option value="sent">Messages envoyés</option>
       <option value="received">Messages reçus</option>
       <option value="read">Messages lus</option>
