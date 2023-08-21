@@ -58,35 +58,5 @@
 
     }
   }
-  .selectMessage {
-    color: $title-message;
-    background-color: transparent;
-    border: 1px solid $border-color;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.5s;
-    &:hover {
-      border-color: darken($border-color, 10%);
-
-    }
-
-    &:focus {
-      border-color: $primary-color;
-      box-shadow: 0px 0px 10px 0px $primary-color;
-    }
-
-   
-
-    option{
-      color: $primary-color;
-      background-color: $background-fond;
-      padding: 0.5rem;
-
-      
-    }
-
-    
-   
-
-  }
+ 
 }

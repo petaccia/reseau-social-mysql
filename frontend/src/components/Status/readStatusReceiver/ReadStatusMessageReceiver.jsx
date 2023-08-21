@@ -13,6 +13,14 @@ const ReadStatusMessageReceiver = ({ messageStatus }) => {
     switch (messageStatus) {
       case "sent":
         return <GoCheck className={Styles.iconStatusSent} />;
+        case "inProgress":
+          return (
+            <>
+              <GoCheck className={Styles.iconStatusInProgress} />
+              <GoCheck className={Styles.iconStatusInProgress} />
+            </>
+          )   
+
         case "delivered":
           return (
             <>
