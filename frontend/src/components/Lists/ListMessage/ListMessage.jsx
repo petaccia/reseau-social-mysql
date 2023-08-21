@@ -8,8 +8,6 @@ import {
   toastInfo,
 } from "../../../services/Toastify/toastConfig.jsx";
 import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
-import CreateMessage from "../../Messages/CreateMessage/CreateMessage.jsx";
-import { Nav } from "react-bootstrap";
 import NavbarMessage from "@components/navbar/NavbarMessage/NavbarMessage";
 
 const MessageList = () => {
@@ -26,6 +24,7 @@ const MessageList = () => {
   const [createMessage, setCreateMessage] = useState(false);
 
   const [deleteAll, setDeleteAll] = useState(false);
+  const [sortedMessages, setSortedMessages] = useState(messages);
   
   useEffect(() => {
     getMessages();
@@ -61,10 +60,12 @@ const MessageList = () => {
       deleteAllMessage={deleteAllMessage}
       openCreateMessage={openCreateMessage}
       addMessage={addMessage}
+      messages={messages}
+      onSort={setSortedMessages}
       />
       </div>
       <div className={Styles.cardContainer}>
-      {messages.map((message) => (
+      {sortedMessages.map((message) => (
         <CardMessage
           key={message.id}
           message={message}

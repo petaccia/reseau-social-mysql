@@ -11,6 +11,8 @@ const NavbarMessage = ({
   deleteAllMessage,
   openCreateMessage,
   addMessage,
+  messages,
+  onSort,
 }) => {
   return (
     <div className={Styles.containerNavbar}>
@@ -32,7 +34,10 @@ const NavbarMessage = ({
           Supprimer tous les messages
         </button>
       </div>
-     <SelectMessage   />
+     <SelectMessage 
+     messages={messages}
+     onSort={onSort}
+        />
       <CreateMessage
         addMessage={addMessage}
         currentUser={currentUser}
