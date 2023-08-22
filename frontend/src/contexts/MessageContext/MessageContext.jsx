@@ -8,7 +8,7 @@ const MessageContext = createContext({
   deleteAllMessages: () => {},
   updateMessage: () => {},
   getMessages: () => {},
-  markReadMessage: () => {},
+  updateViewStatus: () => {},
 });
 
 export default MessageContext;

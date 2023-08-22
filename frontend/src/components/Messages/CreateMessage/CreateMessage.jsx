@@ -5,7 +5,6 @@ import {
   toastError,
   toastSuccess,
 } from "../../../services/Toastify/toastConfig";
-import ReadStatusMessageReceiver from "../../Status/readStatusReceiver/ReadStatusMessageReceiver.jsx";
 
 const CreateMessage = ({
   currentUser,
@@ -13,7 +12,6 @@ const CreateMessage = ({
   setCreateMessage,
   createMessage,
 }) => {
-  const [showStatus, setShowStatus] = useState(false);
   const [selectedReceiverId, setSelectedReceiverId] = useState("");
   const [newMessage, setNewMessage] = useState({
     title: "",

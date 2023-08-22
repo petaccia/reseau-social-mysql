@@ -40,7 +40,7 @@ const MessageProvider = ({ children }) => {
   const deleteAllMessages = async () => {
     try {
       const res = await apiConnect.delete("/messages");
-      setMessages([]);
+      setMessages([], res.data);
     } catch (error) {
       console.error(error);
     }
@@ -70,6 +70,17 @@ const MessageProvider = ({ children }) => {
     }
   };
 
+  // Fonction pour mettre à jour le status de la visualisation de lecture  d'un message
+  const updateViewStatus = async (messageId , status) => {
+    try {
+      const res = await apiConnect.put(`/message/${messageId}/view`, {status});
+      setMessages((prevMessages) => prevMessages.map((message) => 
+      message.id === messageId ? res.data : message))
+    } catch(error) {
+      console.error("Erreur du status",error);
+    }
+  };
+
   return (
     <MessageContext.Provider
       value={{
@@ -80,6 +91,7 @@ const MessageProvider = ({ children }) => {
         deleteAllMessages,
         sendMessage,
         updateMessage,
+        updateViewStatus
       }}
     >
       {children}

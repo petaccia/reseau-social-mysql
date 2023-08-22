@@ -14,7 +14,7 @@ import {
 } from "../../../services/Toastify/toastConfig.jsx";
 import DeleteMessage from "../../Messages/DeleteMessage/DeleteMessage.jsx";
 
-const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage, currentUser }) => {
+const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage, currentUser, updateViewStatus }) => {
 // Etat pour savoir si le message est ouvert
   const [isMessageOpen, setIsMessageOpen] = useState(false);
 
@@ -48,6 +48,10 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage, currentUs
   const checkStatusInfo = () => {
     setIsMessageOpen(true);
     setDeleteCard(false);
+    if (message.senderId !== currentUser.id && !message.status) {
+        // Mettre à jour le status de la visualisation de lecture  d'un message
+        updateViewStatus(message.id, true);
+    }
   };
 
   //Empêcher la propagation de l'événement action sur le bouton
@@ -92,7 +96,7 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage, currentUs
       {/* Composant de la card du status du message */}
       { message.senderId !== currentUser.id &&
         <MessageStatus 
-        check={isMessageOpen}
+        check={message.status}
         showStoast={isMessageOpen}
         />
       }
