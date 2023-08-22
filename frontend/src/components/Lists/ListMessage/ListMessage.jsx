@@ -79,7 +79,7 @@ const MessageList = () => {
     } else {
       setSortedMessages(messages);
     }
-  }, [searchTerm, messages, filteredMessages]);
+  }, [searchTerm, messages ]);
   
   
   return (

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import CreateMessage from "../../Messages/CreateMessage/CreateMessage.jsx";
 import Styles from "./NavbarMessage.module.scss";
 import SelectMessage from "../../SELECTS/SelectMessage/SelectMessage.jsx";
@@ -29,7 +29,7 @@ const NavbarMessage = ({
         
 
 
-        />
+        /> 
         <button className={Styles.button} onClick={openCreateMessage}>
           Ajouter un message
         </button>
