@@ -21,6 +21,7 @@ const MessageList = () => {
     deleteMessage,
     deleteAllMessages,
     sendMessage,
+    updateViewStatus,
   } = useContext(MessageContext);
   
   const [createMessage, setCreateMessage] = useState(false);
@@ -107,6 +108,7 @@ const MessageList = () => {
           deleteAll={deleteAll}
           sendMessage={sendMessage}
           currentUser={currentUser}
+          updateViewStatus={updateViewStatus}
         />
       ))}
     </div>

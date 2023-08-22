@@ -19,6 +19,8 @@ const messageController = require("./controllers/MessageController");
 
 const LoginLimiter = require("./middleware/LoginLimiter");
 const upload = require("./services/multer");
+const setStatusReadBaseOrigin = require("./middleware/StatusRead");
+
 
 // Routes d'admin
 router.get("/admin", adminController.getAllAdmin);
@@ -115,9 +117,10 @@ router.delete("/event/:id", eventController.deleteEvent);
 // Routes de message
 router.get("/message", messageController.getAllMessages);
 router.get("/message/:id", messageController.getMessage);
-router.post("/message", messageController.createMessage);
+router.post("/message", setStatusReadBaseOrigin, messageController.createMessage);
 router.put("/message/:id", messageController.updateMessage);
 router.delete("/message/:id", messageController.deleteMessage);
 router.delete("/messages", messageController.AllDeleteMessage);
+router.put("/message/:id/view", messageController.updateViewStatus);
 
 module.exports = router;
