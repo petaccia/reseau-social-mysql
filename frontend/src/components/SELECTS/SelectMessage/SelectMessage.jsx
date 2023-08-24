@@ -9,9 +9,14 @@ import OptionMessageUnread from "../../OPTIONSELECT/OptionMessageUnread/OptionMe
 import OptionMessageRecipient from "../../OPTIONSELECT/OptionMessageRecipient/OptionMessageRecipient";
 import UserContext from "../../../contexts/UserContext/UserContext.jsx";
 import OptionMessgeSender from "../../OPTIONSELECT/OptionMessageSender/OptionMessageSender.jsx";
+import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
 
 const SelectMessage = ({ onSort, messages }) => {
+  console.log("messages", messages);
   const {users} = useContext(UserContext);
+  console.log("users", users);
+  const {currentUser} = useContext(AuthContext);
+  console.log("currentUser",currentUser);
 
   const getRecipient = (receiverId) => {
     const user = users.find((user) => user.id === receiverId);
@@ -32,28 +37,29 @@ const SelectMessage = ({ onSort, messages }) => {
         sorted.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
         break;
       case "inProgress":
-        sorted = sorted.filter((messages) => {
-          return messages.statusRead === "inProgress";
+        sorted = sorted.filter((message) => {
+          return message.statusRead === "inProgress";
         });
         break;
       case "sent":
-        sorted = sorted.filter((messages) => {
-          return messages.statusRead === "sent";
+        sorted = sorted.filter((message) => {
+          return  message.statusRead === "sent";
         })
         break;
       case "received":
-        sorted = sorted.filter((messages) => {
-          return messages.statusRead === "received";
+        sorted = sorted.filter((message) => {
+          return (message.receiverId === currentUser.id && message.status === false) || message.statusRead === "delivered";
         })
         break;
       case "read":
-        sorted = sorted.filter((messages) => {
-          return messages.statusRead === "read";
+        sorted = sorted.filter((message) => {
+
+          return message.status === true || message.statusRead === "read"; 
         })
         break;
         case "unread":
-        sorted = sorted.filter((messages) => {
-          return messages.status === false;           
+        sorted = sorted.filter((message) => {
+          return  (message.receiverId === currentUser.id && message.status === false) || message.statusRead === "unread";           
         })
         break;
         case "recipient":
