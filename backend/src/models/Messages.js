@@ -29,11 +29,11 @@ const Message = db.define("messages", {
   status: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
+    defaultValue: false,
   },
   statusRead: {
-    type: DataTypes.ENUM("sent", "delivered", "read"),
-    allowNull: false,
-    defaultValue: "sent",
+    type: DataTypes.ENUM("sent", "delivered", "inProgress", "read"),
+    allowNull: true,
   },
   viewedAt: {
     type: DataTypes.DATE,

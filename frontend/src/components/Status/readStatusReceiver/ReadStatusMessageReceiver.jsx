@@ -5,7 +5,7 @@ import { GoCheck } from "react-icons/go";
 const ReadStatusMessageReceiver = ({ messageStatus }) => {
 
   useEffect(() => {
-    checkReadMessage();
+    // checkReadMessage();
   }, []);
     
   const checkReadMessage = () => {
