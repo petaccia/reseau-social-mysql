@@ -32,7 +32,7 @@ const Message = db.define("messages", {
     defaultValue: false,
   },
   statusRead: {
-    type: DataTypes.ENUM("sent", "delivered", "inProgress", "read"),
+    type: DataTypes.ENUM("sent", "delivered", "inProgress", "read" , "unread"),
     allowNull: true,
   },
   viewedAt: {
