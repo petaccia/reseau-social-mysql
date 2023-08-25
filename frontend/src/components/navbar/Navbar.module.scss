@@ -101,6 +101,18 @@
             color: $secondary-color;
           }
         }
+        .bubble{
+          position: absolute;
+          top: 4.5rem;
+          color: $primary-color;
+          font-size: 12px;
+          font-weight: bold;
+          border-radius: 50%;
+          border: 5px solid $border-color;
+          background-color: $background-fond;
+          padding: 0.1rem 0.5rem;
+
+        }
       }
       .imgUser {
         width: 5rem;

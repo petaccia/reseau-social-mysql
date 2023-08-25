@@ -27,6 +27,13 @@ const ReadStatusMessageReceiver = ({ messageStatus }) => {
               <GoCheck className={Styles.iconStatusDelivered} />
             </>
           );
+          case "unread":
+            return (
+              <>
+                <GoCheck className={Styles.iconStatusUnread} />
+                <GoCheck className={Styles.iconStatusUnread} />
+              </>
+            )
           case "read":
             return (
               <>

@@ -12,11 +12,8 @@ import OptionMessgeSender from "../../OPTIONSELECT/OptionMessageSender/OptionMes
 import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
 
 const SelectMessage = ({ onSort, messages }) => {
-  console.log("messages", messages);
   const {users} = useContext(UserContext);
-  console.log("users", users);
   const {currentUser} = useContext(AuthContext);
-  console.log("currentUser",currentUser);
 
   const getRecipient = (receiverId) => {
     const user = users.find((user) => user.id === receiverId);
@@ -78,7 +75,6 @@ const SelectMessage = ({ onSort, messages }) => {
         break;
     }
     onSort(sorted);
-    console.log("sorted", sorted);
   };
 
   return (

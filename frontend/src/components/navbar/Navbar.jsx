@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { FcSearch } from "react-icons/fc";
@@ -6,9 +6,25 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import { BsFillEnvelopeFill } from "react-icons/bs";
 import styles from "./Navbar.module.scss";
 import userImage from "../../assets/users/laure.jpg";
+import MessageContext from "../../contexts/MessageContext/MessageContext";
+import AuthContext from "../../contexts/AuthContext/AuthContext";
 
 const Navbar = ({ famille }) => {
   const [searchText, setSearchText] = useState("");
+
+  // Context pour recuperer le user connecté
+  const { currentUser } = useContext(AuthContext);
+
+  // Context pour récupérer les message de la BDD
+  const { messages, getMessages } = useContext(MessageContext);
+
+  useEffect(() => {
+    getMessages();
+  }, []);
+
+  // Calculer le nombre de message non lus
+  const unreadMessagesCount = messages.filter((message) => (message.receiverId === currentUser.id && (message.status === false || message.statusRead === "unread"))).length;
+    
 
   const handleSearch = (e) => {
     setSearchText(e.target.value);
@@ -39,8 +55,11 @@ const Navbar = ({ famille }) => {
                   className={styles.icon}
                 />
               </Link>
-              <Link to="/message" className={styles.link}>
+              <Link to="/message?sort=unread" className={styles.link} onClick={() => console.log("click message")}>
                 <BsFillEnvelopeFill className={styles.icon} />
+                {unreadMessagesCount > 0 && (
+                  <span className={styles.bubble}>{unreadMessagesCount}</span>
+                )}
               </Link>
               <div>
                 <img src={userImage} alt="avatar" className={styles.imgUser} />

@@ -10,6 +10,7 @@ import {
 import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
 import NavbarMessage from "@components/navbar/NavbarMessage/NavbarMessage";
 import UserContext from "../../../contexts/UserContext/UserContext.jsx";
+import { useLocation } from "react-router-dom";
 
 const MessageList = () => {
   const { currentUser } = useContext(AuthContext);
@@ -23,7 +24,12 @@ const MessageList = () => {
     sendMessage,
     updateViewStatus,
   } = useContext(MessageContext);
-  
+  // naviguer avec uselocation
+  const location = useLocation();
+  const queryParms = new URLSearchParams(location.search);
+  // naviguer vers sort messages
+  const sortParams = queryParms.get("sort");
+
   const [createMessage, setCreateMessage] = useState(false);
 
   const [deleteAll, setDeleteAll] = useState(false);
@@ -63,24 +69,29 @@ const MessageList = () => {
     return user.firstname + " " + user.lastname;
   }
   
-  // flitre de recherche de message par nom ou prénom de l'utilisateur
-  const filteredMessages = messages.filter((message) => {
-   const sender = getFirstName(message.senderId);
-   const receiver = getFirstName(message.receiverId);
-  
-   if (sender.toLowerCase().includes(searchTerm.toLowerCase()) || receiver.toLowerCase().includes(searchTerm.toLowerCase())) {
-     return message;
-   }
-  });
 
   useEffect(() => {
+    console.log("useEffect for filteredMessages");
+    console.log("Current sortParams", sortParams);
+    let filtered = [...messages];
+
+    // Filtrage par terme de recherche
     if (searchTerm) {
-      setSortedMessages(filteredMessages);
-    } else {
-      setSortedMessages(messages);
+        filtered = filtered.filter((message) => {
+            const sender = getFirstName(message.senderId);
+            const receiver = getFirstName(message.receiverId);
+            return sender.toLowerCase().includes(searchTerm.toLowerCase()) || receiver.toLowerCase().includes(searchTerm.toLowerCase());
+        });
     }
-  }, [searchTerm, messages ]);
-  
+
+    // Filtrage des messages non lus
+    if (sortParams === "unread") {
+        filtered = filtered.filter((message) => (message.receiverId === currentUser.id && message.status === false) || message.statusRead === "unread");
+        console.log("unread messages", filtered);
+    }
+
+    setSortedMessages(filtered);
+}, [searchTerm, messages, sortParams]);
   
   return (
     <div className={Styles.containerList}>
