@@ -49,7 +49,7 @@ const Sidebar = ({ children }) => {
       >
         <div className={Styles.top_section}>
           <div className={Styles.logoContainer}>
-            <Link to="/">
+            <Link to="/home">
               <img
                 src={logo}
                 style={{ display: isOpen ? "block" : "none" }}

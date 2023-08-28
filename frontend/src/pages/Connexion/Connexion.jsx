@@ -1,18 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import {  useNavigate, useParams } from "react-router-dom";
+// import { toast, ToastContainer } from "react-toastify";
 import styles from "./Connexion.module.scss";
 import famille from "../../assets/illustration/famille.jpg";
 import family from "../../assets/illustration/family.jpg";
-import "react-toastify/dist/ReactToastify.css";
 import AuthContext from "../../contexts/AuthContext/AuthContext.jsx";
+import { toastError, toastSuccess } from "../../services/Toastify/toastConfig.jsx";
 
 const Connexion = () => {
-  const { mode } = useParams();
-  const location = useLocation();
+  // const { mode } = useParams();
+  // const location = useLocation();
   const { login, signup } = useContext(AuthContext);
+  const navigate = useNavigate();
+  
 
-  const [isLogin, setIsLogin] = useState(mode === "login");
+  const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -20,109 +22,73 @@ const Connexion = () => {
   });
 
 
-  useEffect(() => {
-    setIsLogin(mode === "login");
-  }, [mode, location]);
-
   const auth = async () => {
-    let response;
     try {
+      // Validation des champs
+      if (formData.email === "" && formData.password === "" ) {
+        toastError("L'adresse mail et le mot de passe sont obligatoire 😡");
+        return;
+      }
+      if (formData.email === "") {
+        toastError("L'adresse mail est obligatoire 😡");
+        return;
+      }
+      if (formData.password === "") {
+        toastError("Le mot de passe est obligatoire 😡");
+        return;
+      }
+      if (formData.password.length < 8) {
+        toastError("Le mot de passe doit contenir au moins 8 caractères 😡");
+        return;
+      }
+  
+      let response;
       if (isLogin) {
-   response = await login(formData.email, formData.password);
-        if (response.status === 200) {
+        response = await login(formData.email, formData.password);
+        if (response && response.user.roleId === 3) {
+          toastSuccess(`Bienvenue ${response.user.username} ! Vous êtes connecté ! 👋`);
+          navigate("/home");
+        } else {
+          console.log("Réponse de la connexion inaccessible", response);
+          toastError("Votre inscription ou votre connexion n'a pas pu être effectuée 😡");
+          return;
         }
       } else {
-        response = await signup(formData.username, formData.email, formData.password);
-        if (response.status === 201) {
-          // login();
+        if (formData.username === "") {
+          toastError("Le nom d'utilisateur est obligatoire 😡");
+          return;
         }
-      }
-      if (response && (response.status === 200 || response.status === 201)) {
-        toast.success(
-          `Bienvenue ${formData.username} ! Vous êtes ${
-            isLogin ? "connecté" : "inscrit"
-          } ! 👋`,
-          {
-            className: styles.toastSuccess,
-            style: {
-              top: "100px",
-              right: "100px",
-              boxShadow: "5px 5px 10px green",
-              backgroundColor: "#10131e",
-              color: "green",
-            },
-          }
-        );
+        response = await signup(formData.username, formData.email, formData.password);
+        console.log("response signup",response);
+        if (response && response.token) {
+          toastSuccess(`Bienvenue ${formData.username} ! Vous êtes inscrit ! 👋`);
+          navigate("/login");
+        } else {
+          console.log("Réponse de l'inscription inaccessible", response);
+          toastError("Votre inscription ou votre connexion n'a pas pu être effectuée 😡");
+        }
       }
     } catch (error) {
-      console.info("chercher l'error", error);
-      if (error.response) {
-        if (error.response.status === 409) {
-          toast.error("Votre email existe déjà 😡", {
-            className: styles.toastError,
-            style: {
-              top: "100px",
-              right: "100px",
-              boxShadow: "5px 5px 10px red",
-              backgroundColor: "#10131e",
-              color: "red",
-            },
-          });
-        } else if (error.response.status === 400) {
-          toast.error(
-            "Votre mot de passe n'est pas correct ou aucun champs n'est remplis 😡",
-            {
-              className: styles.toastError,
-              style: {
-                top: "100px",
-                right: "100px",
-                boxShadow: "5px 5px 10px red",
-                backgroundColor: "#10131e",
-                color: "red",
-              },
-            }
-          );
-        } else if (error.response.status === 401) {
-          toast.error("Votre email n'est pas correct 😡", {
-            className: styles.toastError,
-            style: {
-              top: "100px",
-              right: "100px",
-              boxShadow: "5px 5px 10px red",
-              backgroundColor: "#10131e",
-              color: "red",
-            },
-          });
-        } else if (error.response.status === 500) {
-          toast.error("Une erreur est survenue 😡", {
-            className: styles.toastError,
-            style: {
-              top: "100px",
-              right: "100px",
-              boxShadow: "5px 5px 10px red",
-              backgroundColor: "#10131e",
-              color: "red",
-            },
-          });
+      console.log("chercher l'error du catch", error);
+      if (error.status) {
+        console.log("error.status", error.status);
+        if(error.status === 409) {
+          toastError("Votre email existe déjà 😡");
+        } else if(error.status === 400) {
+          toastError("Votre mot de passe n'est pas correct ou aucun champ n'est rempli 😡");
+        } else if(error.status === 401) {
+          toastError("Votre email n'est pas correct 😡");
+        } else if(error.status === 500) {
+          toastError("Une erreur est survenue 😡");
         } else {
-          toast.error(
-            "Votre inscription ou votre connexion n'a pas pu être effectué 😡",
-            {
-              className: styles.toastError,
-              style: {
-                top: "100px",
-                right: "100px",
-                boxShadow: "5px 5px 10px red",
-                backgroundColor: "#10131e",
-                color: "red",
-              },
-            }
-          );
+          toastError("Votre inscription ou votre connexion n'a pas pu être effectuée 😡");
         }
+      } else {
+        toastError(error.message);
       }
     }
   };
-  const switchMode = () => {
+      const switchMode = () => {
     setIsLogin(!isLogin);
   };
 
@@ -201,17 +167,6 @@ const Connexion = () => {
           </form>
         </div>
       </div>
-      <ToastContainer
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        toastStyle={{ backgroundColor: "#10131e" }}
-      />
     </div>
   );
 };
