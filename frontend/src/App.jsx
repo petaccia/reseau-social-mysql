@@ -23,6 +23,7 @@ import NotificationProvider from "./contexts/NotificationContext/NotificationPro
 import Notification from "./pages/Notification/Notification.jsx";
 import Message from "./pages/Message/Message.jsx";
 import MessageProvider from "./contexts/MessageContext/MessageProvider.jsx";
+import ProfilUser from "./pages/ProfilUIser/ProfilUser.jsx";
 // import TokenProvider from "./contexts/TokenContext/TokenProvider.jsx";
 
 const App = () => {
@@ -83,6 +84,14 @@ const App = () => {
                       element={
                         <MainLayout>
                           <Profil />
+                        </MainLayout>
+                      }
+                    />
+                    <Route
+                      path="/profilUser"
+                      element={
+                        <MainLayout>
+                          <ProfilUser />
                         </MainLayout>
                       }
                     />
