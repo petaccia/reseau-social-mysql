@@ -101,7 +101,7 @@
             color: $secondary-color;
           }
         }
-        .bubble{
+        .bubble {
           position: absolute;
           top: 4.5rem;
           color: $primary-color;
@@ -111,17 +111,63 @@
           border: 5px solid $border-color;
           background-color: $background-fond;
           padding: 0.1rem 0.5rem;
-
         }
       }
-      .imgUser {
-        width: 5rem;
-        height: 5rem;
-        border-radius: 50%;
-        margin-bottom: 0.5rem;
-        margin-left: 10rem;
-        object-fit: cover;
+
+      .profileContainer {
+        position: relative;
+        cursor: pointer;
+      
+        .imgUser {
+          width: 5rem;
+          height: 5rem;
+          margin-left: 5rem;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      
+        .profileTooltip {
+          position: relative;
+          display: inline-block;
+      
+          &:hover .tooltipText {
+            visibility: visible;
+            opacity: 1;
+          }
+      
+          .tooltipText {
+            visibility: hidden;
+            width: 60px;
+            background-color: $background-fond;
+            color: $secondary-color;
+            text-align: center;
+            border-radius: 6px;
+            border: 1px solid $primary-color;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            top: 30%; /* Position the tooltip above the text */
+            right: -50%;
+            margin-left: -60px; /* Use margin-left to center the tooltip */
+            opacity: 0;
+            transition: opacity 0.3s;
+          }
+      
+          .tooltipText::after {
+            content: "";
+            position: absolute;
+            top:30%;
+            right: 100%;
+            margin-left: -5px;
+            border-width: 10px;
+            border-style: inset;
+            border-color: $primary-color transparent transparent transparent;
+            transform: rotate(90deg);
+          }
+        }
+      }
+            
       }
     }
   }
-}
+
