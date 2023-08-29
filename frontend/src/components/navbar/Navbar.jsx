@@ -23,8 +23,11 @@ const Navbar = ({ famille }) => {
   }, []);
 
   // Calculer le nombre de message non lus
-  const unreadMessagesCount = messages.filter((message) => (message.receiverId === currentUser.id && (message.status === false || message.statusRead === "unread"))).length;
-    
+  const unreadMessagesCount = messages.filter(
+    (message) =>
+      message.receiverId === currentUser.id &&
+      (message.status === false || message.statusRead === "unread")
+  ).length;
 
   const handleSearch = (e) => {
     setSearchText(e.target.value);
@@ -55,14 +58,22 @@ const Navbar = ({ famille }) => {
                   className={styles.icon}
                 />
               </Link>
-              <Link to="/message?sort=unread" className={styles.link} onClick={() => console.log("click message")}>
+              <Link
+                to="/message?sort=unread"
+                className={styles.link}
+                onClick={() => console.log("click message")}
+              >
                 <BsFillEnvelopeFill className={styles.icon} />
                 {unreadMessagesCount > 0 && (
                   <span className={styles.bubble}>{unreadMessagesCount}</span>
                 )}
               </Link>
-              <div>
+            </div>
+            <div className={styles.profileContainer}>
+              <div className={styles.profileTooltip}>
+                
                 <img src={userImage} alt="avatar" className={styles.imgUser} />
+                <div className={styles.tooltipText}>Profil</div>
               </div>
             </div>
           </div>
