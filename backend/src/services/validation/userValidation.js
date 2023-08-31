@@ -12,6 +12,10 @@ const userValidation = (data) => {
     firstName: Joi.string().alphanum().min(3).max(30).presence("required"),
     lastName: Joi.string().alphanum().min(3).max(30).presence("required"),
     dateOfBirth: Joi.date().presence("required"),
+    numberPhone: Joi.number().integer().presence("optional"),
+    adress: Joi.string().presence("optional"),
+    city: Joi.string().presence("optional"),
+    postalCode: Joi.number().integer().presence("optional"),
     profilePicture: Joi.string().allow(null, ""),
     familyId: Joi.number().integer().presence("required"),
   });

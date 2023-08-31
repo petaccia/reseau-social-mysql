@@ -28,6 +28,22 @@ const User = db.define("users", {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  numberPhone: {
+    type: DataTypes.NUMBER,
+    allowNull: true,
+  },
+  adress: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  city: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  postalCode: {
+    type: DataTypes.NUMBER,
+    allowNull: true,
+  },
   dateOfBirth: {
     type: DataTypes.DATEONLY,
     allowNull: true,
