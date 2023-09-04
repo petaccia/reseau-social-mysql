@@ -29,7 +29,7 @@ const User = db.define("users", {
     allowNull: true,
   },
   numberPhone: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
     allowNull: true,
   },
   adress: {
@@ -41,7 +41,7 @@ const User = db.define("users", {
     allowNull: true,
   },
   postalCode: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
     allowNull: true,
   },
   dateOfBirth: {
