@@ -1,26 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./ProfilUser.module.scss";
+import UserContext from "../../contexts/UserContext/UserContext.jsx";
 
 const ProfilUser = () => {
-  // Télécharger une photo de profil
-  const [file, setFile] = useState(null);
+  const { currentUser } = useContext(UserContext);
+  console.info("Données de l'utilisateur actuel dans profilUser", currentUser);
 
-  const { dataUser, setDataUser } = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: "",
-    dateOfBirth: "",
-    numberPhone: "",
-    adress: "",
-    city: "",
-    postalCode: "",
-    pays: "",
-    NameFamily: "",
-  });
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setDataUser({ ...dataUser, [name]: value });
+  const [file, setFile] = useState(null);
+  const [data, setData] = useState(currentUser);
+
+  const handleChange = (place, value) => {
+    const newDataUser = { ...data };
+    newDataUser[place] = value;
+    setData(newDataUser);
+  };
+
+  const handleFileUpload = (event) => {
+    const uploadedFile = event.target.files[0];
+    setFile(uploadedFile);
   };
 
   return (
@@ -29,94 +26,92 @@ const ProfilUser = () => {
       <div className={styles.containerProfilUser}>
         <div className={styles.containerImgUser}>
           <h2 className={styles.titleImgProfilUser}>Photo de profil</h2>
-          <img src="" alt="photo de profil" className={styles.imgProfilUser} />
+          <img
+            src={file ? URL.createObjectURL(file) : ""}
+            alt="photo de profil"
+            className={styles.imgProfilUser}
+          />
         </div>
         <div className={styles.containerFormUser}>
           <form action="" className={styles.formUser}>
             <input
+              id="firstname"
               type="text"
               placeholder="Nom"
               name="firstname"
-              onChange={handleChange}
+              value={data.lastname}
+              onChange={(e) => handleChange("lastname", e.target.value)}
               className={styles.input}
             />
-
             <input
+              id="lastname"
               type="text"
               placeholder="Prénom"
               name="lastname"
-              onChange={handleChange}
+              value={data.firstname}
+              onChange={(e) => handleChange("firstname", e.target.value)}
               className={styles.input}
             />
-
             <input
-              type="email"
-              placeholder="Adresse mail"
-              name="email"
-              onChange={handleChange}
-              className={styles.input}
-            />
-
-            <input
-              type="password"
-              placeholder="Mot de passe"
-              name="password"
-              onChange={handleChange}
-              className={styles.input}
-            />
-
-            <input
-              type="date" 
+              id="birthday"
+              type="date"
               placeholder="Date de naissance"
               name="dateOfBirth"
-              onChange={handleChange}
+              value={data.dateOfBirth}
+              onChange={(e) => handleChange("dateOfBirth", e.target.value)}
               className={styles.input}
             />
-
             <input
-              type="number"
+              id="phone"
+              type="text"
               placeholder="Téléphone"
               name="numberPhone"
-              onChange={handleChange}
+              value={data.numberPhone}
+              onChange={(e) => handleChange("numberPhone", e.target.value)}
               className={styles.input}
             />
-
             <input
+              id="adress"
               type="text"
               placeholder="Adresse"
               name="adress"
-              onChange={handleChange}
+              value={data.adress}
+              onChange={(e) => handleChange("adress", e.target.value)}
               className={styles.input}
             />
-
             <input
+              id="city"
               type="text"
               placeholder="Ville"
               name="city"
-              onChange={handleChange}
+              value={data.city}
+              onChange={(e) => handleChange("city", e.target.value)}
               className={styles.input}
             />
-
             <input
-              type="number"
+              id="postalCode"
+              type="text"
               placeholder="Code postal"
               name="postalCode"
-              onChange={handleChange}
+              value={data.postalCode}
+              onChange={(e) => handleChange("postalCode", e.target.value)}
               className={styles.input}
             />
-
             <input
+              id="country"
               type="text"
-              placeholder="Pays"
+              placeholder="pays"
               name="pays"
-              onChange={handleChange}
+              value={data.pays}
+              onChange={(e) => handleChange("pays", e.target.value)}
               className={styles.input}
             />
-
             <input
+              id="familyName"
               type="text"
               placeholder="Famille"
               name="NameFamily"
+              value={data.NameFamily}
               className={styles.input}
             />
           </form>
