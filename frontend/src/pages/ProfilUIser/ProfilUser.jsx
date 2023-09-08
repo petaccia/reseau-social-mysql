@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import styles from "./ProfilUser.module.scss";
 import UserContext from "../../contexts/UserContext/UserContext.jsx";
+import ModalPassword from "../../components/modals/ModalPassword/ModalPassword.jsx";
 
 const ProfilUser = () => {
   const { currentUser } = useContext(UserContext);
@@ -8,6 +9,8 @@ const ProfilUser = () => {
 
   const [file, setFile] = useState(null);
   const [data, setData] = useState(currentUser);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  console.info("Ouverture de la modal", isModalOpen);
 
   const handleChange = (place, value) => {
     const newDataUser = { ...data };
@@ -21,7 +24,11 @@ const ProfilUser = () => {
   };
 
   return (
-    <div className={styles.containerPageProfilUser}>
+    <div
+      className={`${styles.containerPageProfilUser} ${
+        isModalOpen ? styles.blurred : ""
+      }`}
+    >
       <h1 className={styles.titleProfilUser}>Page de profil</h1>
       <div className={styles.containerProfilUser}>
         <div className={styles.containerImgUser}>
@@ -115,6 +122,19 @@ const ProfilUser = () => {
               className={styles.input}
             />
           </form>
+        </div>
+        <div className={styles.containerButtonUser}>
+          <button
+            type="button"
+            className={styles.button}
+            onClick={() => setIsModalOpen(true)}
+          >
+            Modifier mot de passe
+          </button>
+          <ModalPassword
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+           />
         </div>
       </div>
     </div>
