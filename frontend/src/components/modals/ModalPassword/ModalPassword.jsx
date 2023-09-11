@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { LiaEyeSlash, LiaEye } from "react-icons/lia";
 import Styles from "./ModalPassword.module.scss";
 import apiConnect from "../../../services/API/apiConnection.jsx";
+import {
+  toastError,
+  toastSuccess,
+} from "../../../services/Toastify/toastConfig.jsx";
+import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
 
 const ModalPassword = ({ isOpen, onClose }) => {
+  const { authUser } = useContext(AuthContext);
+  console.log("authUser in ModalPassword",authUser);
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -14,23 +21,46 @@ const ModalPassword = ({ isOpen, onClose }) => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (newPassword === confirmPassword) {
-      apiConnect
-        .put("/users/password", {
-          password,
-          newPassword,
-        })
-        .then((res) => {
-          onClose();
-        })
-        .catch((err) => {});
-    } else {
-      setError("Les nouveaux mots de passe ne sont pas identiques");
+
+    try {
+      // Vérifiez le mot de passe actuel
+      const response = await apiConnect.post("/verifyPassword", {
+        userId: authUser.id,
+        password,
+      });
+
+      console.log("response", response);
+
+      if (response) {
+        console.log("response.data", response);
+        // Si le mot de passe actuel est correct
+        if (newPassword === confirmPassword) {
+
+          // Faire une requête à votre API pour mettre à jour le mot de passe
+          const updateResponse = await apiConnect.put("/user/password", {
+            userId: authUser.id,
+            password: newPassword,
+          });
+            console.log("updateResponse", updateResponse);
+          if (updateResponse.status === 200) {
+            onClose();
+            toastSuccess("Mot de passe mis à jour avec succès");
+          } else {
+            throw new Error("Erreur lors de la mise à jour du mot de passe");
+          }
+        } else {
+          setError("Les nouveaux mots de passe ne sont pas identiques");
+        }
+      } else {
+        setError("Mot de passe actuel incorrect");
+      }
+    } catch (err) {
+      toastError("Une erreur est survenue");
+      console.error("Erreur lors de la mise à jour du mot de passe", err);
     }
   };
-
   // Fonction pour afficher ou non le mot de passe dans les 3 champs
   const handleClickShowCurrentPassword = () => {
     setShowPassword(!showPassword);
@@ -109,13 +139,13 @@ const ModalPassword = ({ isOpen, onClose }) => {
                 {showConfirmPassword ? <LiaEye /> : <LiaEyeSlash />}
               </button>
             </div>
+            <div className={Styles.containerButton}>
+              <button type="submit">Changer de mot de passe</button>
+              <button type="button" onClick={onClose}>
+                Annuler
+              </button>
+            </div>
           </form>
-          <div className={Styles.containerButton}>
-            <button type="submit">Changer de mot de passe</button>
-            <button type="button" onClick={onClose}>
-              Annuler
-            </button>
-          </div>
         </div>
       ) : null}
     </div>

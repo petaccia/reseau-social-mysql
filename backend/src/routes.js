@@ -16,6 +16,7 @@ const usersController = require("./controllers/UserController");
 const eventController = require("./controllers/EventController");
 const statsController = require("./controllers/StatsController");
 const messageController = require("./controllers/MessageController");
+const passwordController = require("./controllers/PasswordController");
 
 const LoginLimiter = require("./middleware/LoginLimiter");
 const upload = require("./services/multer");
@@ -48,6 +49,10 @@ router.post("/signup", connectionController.register);
 router.post("/login", LoginLimiter, connectionController.login);
 
 router.put("/:id", connectionController.approveConnection);
+
+// Routes de password
+router.post("/verifyPassword", passwordController.verifyPassword);
+router.put("/user/password", passwordController.updatePassword);
 
 // Routes de family
 router.get("/family", familyController.getAllFamily);
