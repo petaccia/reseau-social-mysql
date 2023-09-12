@@ -2,6 +2,12 @@ import React, { useContext, useState } from "react";
 import styles from "./ProfilUser.module.scss";
 import UserContext from "../../contexts/UserContext/UserContext.jsx";
 import ModalPassword from "../../components/modals/ModalPassword/ModalPassword.jsx";
+import ModalEmail from "../../components/modals/ModalEmail/ModalEmail.jsx";
+import {
+  toastError,
+  toastSuccess,
+} from "../../services/Toastify/toastConfig.jsx";
+import apiConnect from "../../services/API/apiConnection.jsx";
 
 const ProfilUser = () => {
   const { currentUser } = useContext(UserContext);
@@ -9,13 +15,30 @@ const ProfilUser = () => {
 
   const [file, setFile] = useState(null);
   const [data, setData] = useState(currentUser);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  console.info("Ouverture de la modal", isModalOpen);
+  const [isModalOpenPassword, setIsModalOpenPassword] = useState(false);
+  const [isModalOpenEmail, setIsModalOpenEmail] = useState(false);
 
   const handleChange = (place, value) => {
     const newDataUser = { ...data };
     newDataUser[place] = value;
     setData(newDataUser);
+  };
+
+  // Mettre à jour le formulaire
+  const handleUpdateForm = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await apiConnect.put("/user/" + currentUser.id, data);
+      console.info("Données de l'utilisateur enregistré dans le serveur du fichier ProfilUser", response);
+      if (response.status === 200) {
+        toastSuccess("Profil mis à jour avec succès");
+      } else {
+        toastError("Veuillez Vérifier vos champs");
+      }
+    } catch (error) {
+      toastError("Error lors de la mise à jour du profil");
+      console.error(" Erreur lors de la mise à jour du profil", error.response);
+    }
   };
 
   const handleFileUpload = (event) => {
@@ -26,7 +49,7 @@ const ProfilUser = () => {
   return (
     <div
       className={`${styles.containerPageProfilUser} ${
-        isModalOpen ? styles.blurred : ""
+        isModalOpenPassword || isModalOpenEmail ? styles.blurred : ""
       }`}
     >
       <h1 className={styles.titleProfilUser}>Page de profil</h1>
@@ -40,7 +63,11 @@ const ProfilUser = () => {
           />
         </div>
         <div className={styles.containerFormUser}>
-          <form action="" className={styles.formUser}>
+          <form
+            action=""
+            className={styles.formUser}
+            onSubmit={handleUpdateForm}
+          >
             <input
               id="firstname"
               type="text"
@@ -121,20 +148,34 @@ const ProfilUser = () => {
               value={data.NameFamily}
               className={styles.input}
             />
+            <button type="submit" className={styles.updateButton}>
+              Mettre à jour
+            </button>
           </form>
         </div>
         <div className={styles.containerButtonUser}>
           <button
             type="button"
             className={styles.button}
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setIsModalOpenPassword(true)}
           >
             Modifier mot de passe
           </button>
           <ModalPassword
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-           />
+            isOpen={isModalOpenPassword}
+            onClose={() => setIsModalOpenPassword(false)}
+          />
+          <button
+            type="button"
+            className={styles.button}
+            onClick={() => setIsModalOpenEmail(true)}
+          >
+            Modifier email
+          </button>
+          <ModalEmail
+            isOpen={isModalOpenEmail}
+            onClose={() => setIsModalOpenEmail(false)}
+          />
         </div>
       </div>
     </div>

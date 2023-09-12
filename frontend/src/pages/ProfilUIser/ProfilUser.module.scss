@@ -1,6 +1,7 @@
 @import "../../style/variables";
 
 .containerPageProfilUser {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,15 +15,15 @@
     // en lettres capitales
     text-transform: uppercase;
   }
-      .containerProfilUser {
-        display: flex;
-        flex-direction: column; 
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-      
-    .containerImgUser{
+  .containerProfilUser {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+
+    .containerImgUser {
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -52,14 +53,14 @@
       align-items: center;
       justify-content: center;
       margin-top: 1rem;
-      .formUser{
+      .formUser {
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
 
-        .input{
+        .input {
           width: 30%;
           height: 3rem;
           background-color: transparent;
@@ -77,13 +78,58 @@
             font-size: 1rem;
             font-weight: 500;
           }
-          &:focus{
+          &:focus {
             border-color: 1px solid $primary-color;
             box-shadow: 0 0 5px rgba($primary-color, 0.5);
           }
-          transition: border-color 0.3s , box-shadow 0.3s;
+          transition: border-color 0.3s, box-shadow 0.3s;
         }
       }
     }
-  }    
+    .updateButton{
+      padding: 0.5rem;
+      background-color: $primary-color;
+      border: 1px solid $primary-color;
+      border-radius: 10px;
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+      color: $background-fond;
+      font-weight: bold;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.5s;
+      &:hover {
+        background-color: $background-fond;
+        color: $primary-color;  
+        border: 1px solid $primary-color;
+        box-shadow: 0 0 5px rgba($primary-color, 0.5);
+        transform: translateY(-5px);
+      }
+    }
+  }
+  .containerButtonUser {
+    position: absolute;
+    top: 1rem;
+    right: 4rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin: 1rem;
+    .button {
+      padding: 0.5rem;
+      background-color: $primary-color;
+      border: 1px solid $primary-color;
+      border-radius: 10px;
+      color: $background-fond;
+      font-weight: bold;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.5s;
+      &:hover {
+        background-color: $background-fond;
+        color: $primary-color;
+        border: 1px solid $primary-color;
+      }
+    }
+  }
 }

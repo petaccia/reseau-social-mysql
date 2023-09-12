@@ -29,7 +29,7 @@ const User = db.define("users", {
     allowNull: true,
   },
   numberPhone: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: true,
   },
   adress: {
