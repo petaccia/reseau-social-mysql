@@ -44,6 +44,10 @@ const User = db.define("users", {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
+  country: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   dateOfBirth: {
     type: DataTypes.DATEONLY,
     allowNull: true,

@@ -16,6 +16,7 @@ const userValidation = (data) => {
     adress: Joi.string().presence("optional"),
     city: Joi.string().presence("optional"),
     postalCode: Joi.number().integer().presence("optional"),
+    country: Joi.string().presence("optional"),
     profilePicture: Joi.string().allow(null, ""),
     familyId: Joi.number().integer().presence("required"),
   });

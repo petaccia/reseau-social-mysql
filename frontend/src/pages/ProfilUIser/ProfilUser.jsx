@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import styles from "./ProfilUser.module.scss";
 import UserContext from "../../contexts/UserContext/UserContext.jsx";
 import ModalPassword from "../../components/modals/ModalPassword/ModalPassword.jsx";
@@ -12,24 +12,52 @@ import apiConnect from "../../services/API/apiConnection.jsx";
 const ProfilUser = () => {
   const { currentUser } = useContext(UserContext);
   console.info("Données de l'utilisateur actuel dans profilUser", currentUser);
+  console.info(
+    "image de l'utilisateur actuel dans profilUser",
+    currentUser.profilePicture
+  );
 
   const [file, setFile] = useState(null);
   const [data, setData] = useState(currentUser);
   const [isModalOpenPassword, setIsModalOpenPassword] = useState(false);
   const [isModalOpenEmail, setIsModalOpenEmail] = useState(false);
 
+
   const handleChange = (place, value) => {
     const newDataUser = { ...data };
     newDataUser[place] = value;
     setData(newDataUser);
   };
-
   // Mettre à jour le formulaire
   const handleUpdateForm = async (e) => {
     e.preventDefault();
+    // Creer un objet FormData
+    const formData = new FormData();
+
+    // Alouter le fichier au formData pour le transfert vers le serveur
+    if (file) {
+      formData.append("image", file);
+    }
+
+    // Ajouter les autres data de user à l'objet FormData
+    for (const key in data) {
+      formData.append(key, data[key]);
+    }
+
     try {
-      const response = await apiConnect.put("/user/" + currentUser.id, data);
-      console.info("Données de l'utilisateur enregistré dans le serveur du fichier ProfilUser", response);
+      const response = await apiConnect.put(
+        "/user/" + currentUser.id,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.info(
+        "Données de l'utilisateur enregistré dans le serveur du fichier ProfilUser",
+        response
+      );
       if (response.status === 200) {
         toastSuccess("Profil mis à jour avec succès");
       } else {
@@ -41,6 +69,8 @@ const ProfilUser = () => {
     }
   };
 
+  // Utilisation de Use ref
+  const fileInput = useRef(null);
   const handleFileUpload = (event) => {
     const uploadedFile = event.target.files[0];
     setFile(uploadedFile);
@@ -57,9 +87,10 @@ const ProfilUser = () => {
         <div className={styles.containerImgUser}>
           <h2 className={styles.titleImgProfilUser}>Photo de profil</h2>
           <img
-            src={file ? URL.createObjectURL(file) : ""}
-            alt="photo de profil"
-            className={styles.imgProfilUser}
+            src={`${import.meta.env.VITE_BACKEND_URL}/${
+              currentUser.profilePicture
+            }`}
+            alt="Profil de l'utilisateur"
           />
         </div>
         <div className={styles.containerFormUser}>
@@ -69,11 +100,18 @@ const ProfilUser = () => {
             onSubmit={handleUpdateForm}
           >
             <input
+              id="image"
+              type="file"
+              onChange={handleFileUpload}
+              className={styles.input}
+              ref={fileInput}
+            />
+            <input
               id="firstname"
               type="text"
               placeholder="Nom"
               name="firstname"
-              value={data.lastname}
+              value={data.firstname}
               onChange={(e) => handleChange("lastname", e.target.value)}
               className={styles.input}
             />
@@ -82,7 +120,7 @@ const ProfilUser = () => {
               type="text"
               placeholder="Prénom"
               name="lastname"
-              value={data.firstname}
+              value={data.lastname}
               onChange={(e) => handleChange("firstname", e.target.value)}
               className={styles.input}
             />
@@ -135,9 +173,9 @@ const ProfilUser = () => {
               id="country"
               type="text"
               placeholder="pays"
-              name="pays"
-              value={data.pays}
-              onChange={(e) => handleChange("pays", e.target.value)}
+              name="Country"
+              value={data.country}
+              onChange={(e) => handleChange("country", e.target.value)}
               className={styles.input}
             />
             <input
