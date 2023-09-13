@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "./AuthContext";
+import AuthContext from "./AuthContext.jsx";
 import apiConnect from "../../services/API/apiConnection.jsx";
+import {
+  toastSuccess,
+  toastError,
+} from "../../services/Toastify/toastConfig.jsx";
+
 const AuthProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [authUser, setAuthUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const navigate = useNavigate();
@@ -12,21 +17,22 @@ const AuthProvider = ({ children }) => {
     const authStatus = localStorage.getItem("isAuthenticated");
     setIsAuthenticated(authStatus === "true");
   }, []);
-
   const login = async (email, password) => {
     try {
       const res = await apiConnect.post("/login", { email, password });
-      console.log("Api Response", res);
+      console.info("Api Response", res);
       if (res.status === 200 && res.data.user.roleId === 3) {
-        setCurrentUser(res.data.user);
+        setAuthUser(res.data.user);
         setToken(res.data.token);
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("isAuthenticated", "true");
+        navigate("/home");
+        toastSuccess("Vous êtes connecté");
         return res.data;
-      } else {
-        throw res;
       }
+      throw res;
     } catch (error) {
+      toastError("Veuillez vérifier vos identifiants");
       console.error("login error", error);
       if (error.response) {
         console.error("error.response.data", error.response.data);
@@ -56,10 +62,9 @@ const AuthProvider = ({ children }) => {
         setToken(res.data.token);
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("isAuthenticated", "true");
-        return res.data;
-      } else {
-        throw new Error("Une erreur est survenue");
+        navigate("/login");
       }
+      throw new Error("Une erreur est survenue");
     } catch (error) {
       console.error("signup error", error);
       if (error.response) {
@@ -83,6 +88,7 @@ const AuthProvider = ({ children }) => {
     try {
       setIsAuthenticated(false);
       setToken(null);
+      localStorage.removeItem("userId");
       localStorage.removeItem("token");
       localStorage.removeItem("isAuthenticated");
       navigate("/login");
@@ -93,7 +99,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, token, login, signup, logout, currentUser }}
+      value={{ isAuthenticated, token, login, signup, logout, authUser }}
     >
       {children}
     </AuthContext.Provider>

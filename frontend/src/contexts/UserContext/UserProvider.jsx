@@ -1,25 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 import UserContext from "./UserContext.jsx";
+import AuthContext from "../AuthContext/AuthContext.jsx";
 import apiConnect from "../../services/API/apiConnection.jsx";
-import {
-  toastSuccess,
-  toastError,
-} from "../../services/Toastify/toastConfig.jsx";
-// import TokenContext from "../TokenContext/TokenContext.jsx";
-import { useNavigate } from "react-router-dom";
-
 
 const UserProvider = ({ children }) => {
-  const navigate= useNavigate();
-  // Token de l'utilisateur dans le contexte
-  // const {setToken} = useContext(TokenContext)
-
-
+  // Récupérer le contexte d'authentification
+  const { login } = useContext(AuthContext);
   // Etat pour tous les utilisateurs
   const [users, setUsers] = useState([]);
 
   // Etat pour l'utilisateur actuel
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
 
   // Fonction pour récupérer tous les utilisateurs
   const getAllUsers = async () => {
@@ -33,18 +24,26 @@ const UserProvider = ({ children }) => {
   // Fonction pour récupérer l'utilisateur actuel
   const getUser = async (user) => {
     if (!user || !user.id) {
-    console.log("--------->getUser",user)
-    return;
+      return;
     }
+    console.info("Récupération de l'utilisateur", user);
     try {
       const res = await apiConnect.get(`/user/${user.id}`);
-      console.log("--------->getUser",res)
-      setCurrentUser(res.data.user);
+      console.info("Données reçu de l'API", res.data);
+      setCurrentUser(res.data);
     } catch (error) {
-      console.error(error);
+      console.error("Erreur lors de la récupération de l'utilisateur:", error);
     }
   };
 
+  // useEffect pour récupérer tous les utilisateurs
+  useEffect(() => {
+    getAllUsers();
+    // const userId = localStorage.getItem("userId");
+    // if (userId) {
+      getUser({ id: 1});
+    // }
+  }, []);
   // Fonction pour ajouter un utilisateur
   const addUser = async (user) => {
     try {
@@ -68,7 +67,7 @@ const UserProvider = ({ children }) => {
   // Fonction pour supprimer l'utilisateur
   const deleteUser = async (id) => {
     try {
-     await apiConnect.delete(`/user/${id}`);
+      await apiConnect.delete(`/user/${id}`);
       setUsers((prevUser) => prevUser.filter((user) => user.id !== id));
     } catch (error) {
       console.error(error);
@@ -77,38 +76,16 @@ const UserProvider = ({ children }) => {
 
   // Fonction pour récupérer l'utilisateur actuel
   const currentUserLogin = async (credential) => {
-    console.log("Fonction currentUserLogin est lancé");
     try {
-      const res = await apiConnect.post("/login", credential);
-      console.log("--------->Login ", res.data);
-      if (res && res.data && res.data.token) {
-        // Stocker le token dans le contexte
-       localStorage.setItem("token", res.data.token);
-
-        // Mettre à jour l'état de l'utilisateur actuel
-        setCurrentUser(res.data.user);
-        toastSuccess("Vous êtes connecté");
-        navigate("/home");
-        
-      } else {
-        toastError("Réponse inattendue du serveur");
+      const user = await login(credential.email, credential.password);
+      if (user && user.id) {
+        localStorage.setItem("userId", user.id);
+        setCurrentUser(user);
       }
     } catch (error) {
       console.error(error);
-      if (error.response && error.response.data) {
-        toastError(error.response.data.message);
-      } else {
-        toastError("Erreur lors de la connexion. Veuillez réessayer.");
-      }
     }
   };
-
-  // Définir l'utilisateur après une connexion ou une inscription réussie
-
-  useEffect(() => {
-    getAllUsers();
-  }, []);
-
   return (
     <UserContext.Provider
       value={{

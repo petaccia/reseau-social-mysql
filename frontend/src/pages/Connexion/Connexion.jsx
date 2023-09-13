@@ -1,18 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
-import {  useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 // import { toast, ToastContainer } from "react-toastify";
 import styles from "./Connexion.module.scss";
 import famille from "../../assets/illustration/famille.jpg";
 import family from "../../assets/illustration/family.jpg";
 import AuthContext from "../../contexts/AuthContext/AuthContext.jsx";
-import { toastError, toastSuccess } from "../../services/Toastify/toastConfig.jsx";
+import {
+  toastError,
+  toastSuccess,
+} from "../../services/Toastify/toastConfig.jsx";
 
 const Connexion = () => {
-  // const { mode } = useParams();
-  // const location = useLocation();
   const { login, signup } = useContext(AuthContext);
   const navigate = useNavigate();
-  
 
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
@@ -21,11 +21,10 @@ const Connexion = () => {
     password: "",
   });
 
-
   const auth = async () => {
     try {
       // Validation des champs
-      if (formData.email === "" && formData.password === "" ) {
+      if (formData.email === "" && formData.password === "") {
         toastError("L'adresse mail et le mot de passe sont obligatoire 😡");
         return;
       }
@@ -41,16 +40,18 @@ const Connexion = () => {
         toastError("Le mot de passe doit contenir au moins 8 caractères 😡");
         return;
       }
-  
+
       let response;
       if (isLogin) {
         response = await login(formData.email, formData.password);
         if (response && response.user.roleId === 3) {
-          toastSuccess(`Bienvenue ${response.user.username} ! Vous êtes connecté ! 👋`);
-          navigate("/home");
+          toastSuccess(
+            `Bienvenue ${response.user.username} ! Vous êtes connecté ! 👋`
+          );
         } else {
-          console.log("Réponse de la connexion inaccessible", response);
-          toastError("Votre inscription ou votre connexion n'a pas pu être effectuée 😡");
+          toastError(
+            "Votre inscription ou votre connexion n'a pas pu être effectuée 😡"
+          );
           return;
         }
       } else {
@@ -58,37 +59,45 @@ const Connexion = () => {
           toastError("Le nom d'utilisateur est obligatoire 😡");
           return;
         }
-        response = await signup(formData.username, formData.email, formData.password);
-        console.log("response signup",response);
+        response = await signup(
+          formData.username,
+          formData.email,
+          formData.password
+        );
         if (response && response.token) {
-          toastSuccess(`Bienvenue ${formData.username} ! Vous êtes inscrit ! 👋`);
+          toastSuccess(
+            `Bienvenue ${formData.username} ! Vous êtes inscrit ! 👋`
+          );
           navigate("/login");
         } else {
-          console.log("Réponse de l'inscription inaccessible", response);
-          toastError("Votre inscription ou votre connexion n'a pas pu être effectuée 😡");
+          toastError(
+            "Votre inscription ou votre connexion n'a pas pu être effectuée 😡"
+          );
         }
       }
     } catch (error) {
-      console.log("chercher l'error du catch", error);
       if (error.status) {
-        console.log("error.status", error.status);
-        if(error.status === 409) {
+        if (error.status === 409) {
           toastError("Votre email existe déjà 😡");
-        } else if(error.status === 400) {
-          toastError("Votre mot de passe n'est pas correct ou aucun champ n'est rempli 😡");
-        } else if(error.status === 401) {
+        } else if (error.status === 400) {
+          toastError(
+            "Votre mot de passe n'est pas correct ou aucun champ n'est rempli 😡"
+          );
+        } else if (error.status === 401) {
           toastError("Votre email n'est pas correct 😡");
-        } else if(error.status === 500) {
+        } else if (error.status === 500) {
           toastError("Une erreur est survenue 😡");
         } else {
-          toastError("Votre inscription ou votre connexion n'a pas pu être effectuée 😡");
+          toastError(
+            "Votre inscription ou votre connexion n'a pas pu être effectuée 😡"
+          );
         }
       } else {
         toastError(error.message);
       }
     }
   };
-      const switchMode = () => {
+  const switchMode = () => {
     setIsLogin(!isLogin);
   };
 
