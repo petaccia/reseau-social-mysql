@@ -12,18 +12,18 @@ import OptionMessgeSender from "../../OPTIONSELECT/OptionMessageSender/OptionMes
 import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
 
 const SelectMessage = ({ onSort, messages }) => {
-  const {users} = useContext(UserContext);
-  const {currentUser} = useContext(AuthContext);
+  const { users } = useContext(UserContext);
+  const { authUser } = useContext(AuthContext);
 
   const getRecipient = (receiverId) => {
     const user = users.find((user) => user.id === receiverId);
-    return user.firstname + " " + user.lastname
-  }
+    return user.firstname + " " + user.lastname;
+  };
 
   const getSender = (senderId) => {
     const user = users.find((user) => user.id === senderId);
-    return user.firstname + " " + user.lastname
-  }
+    return user.firstname + " " + user.lastname;
+  };
   const sortByDate = (order) => {
     let sorted = [...messages];
     switch (order) {
@@ -40,38 +40,45 @@ const SelectMessage = ({ onSort, messages }) => {
         break;
       case "sent":
         sorted = sorted.filter((message) => {
-          return  message.statusRead === "sent";
-        })
+          return message.statusRead === "sent";
+        });
         break;
       case "received":
         sorted = sorted.filter((message) => {
-          return (message.receiverId === currentUser.id && message.status === false) || message.statusRead === "delivered";
-        })
+          return (
+            (message.receiverId === authUser.id &&
+              message.status === false) ||
+            message.statusRead === "delivered"
+          );
+        });
         break;
       case "read":
         sorted = sorted.filter((message) => {
-
-          return message.status === true || message.statusRead === "read"; 
-        })
+          return message.status === true || message.statusRead === "read";
+        });
         break;
-        case "unread":
+      case "unread":
         sorted = sorted.filter((message) => {
-          return  (message.receiverId === currentUser.id && message.status === false) || message.statusRead === "unread";           
-        })
+          return (
+            (message.receiverId === authUser.id &&
+              message.status === false) ||
+            message.statusRead === "unread"
+          );
+        });
         break;
-        case "recipient":
+      case "recipient":
         sorted.sort((a, b) => {
           const recipientA = getRecipient(a.receiverId);
           const recipientB = getRecipient(b.receiverId);
           return recipientA.localeCompare(recipientB);
-        })
+        });
         break;
-        case "sender":
+      case "sender":
         sorted.sort((a, b) => {
           const senderA = getSender(a.senderId);
           const senderB = getSender(b.senderId);
           return senderA.localeCompare(senderB);
-        })
+        });
         break;
     }
     onSort(sorted);
