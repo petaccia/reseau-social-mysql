@@ -71,9 +71,10 @@ const Navbar = ({ famille }) => {
             </div>
             <div className={styles.profileContainer}>
               <div className={styles.profileTooltip}>
-                
+                <Link to="/profilUser" className={styles.link}>
                 <img src={userImage} alt="avatar" className={styles.imgUser} />
                 <div className={styles.tooltipText}>Profil</div>
+                </Link>
               </div>
             </div>
           </div>

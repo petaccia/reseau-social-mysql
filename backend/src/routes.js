@@ -16,11 +16,12 @@ const usersController = require("./controllers/UserController");
 const eventController = require("./controllers/EventController");
 const statsController = require("./controllers/StatsController");
 const messageController = require("./controllers/MessageController");
+const passwordController = require("./controllers/PasswordController");
+const emailController = require("./controllers/EmailController");
 
 const LoginLimiter = require("./middleware/LoginLimiter");
 const upload = require("./services/multer");
 const setStatusReadBaseOrigin = require("./middleware/StatusRead");
-
 
 // Routes d'admin
 router.get("/admin", adminController.getAllAdmin);
@@ -48,6 +49,14 @@ router.post("/signup", connectionController.register);
 router.post("/login", LoginLimiter, connectionController.login);
 
 router.put("/:id", connectionController.approveConnection);
+
+// Routes de password
+router.post("/verifyPassword", passwordController.verifyPassword);
+router.put("/user/password", passwordController.updatePassword);
+
+// Routes d' email
+router.post("/verifyEmail", emailController.verifyEmail);
+router.put("/user/email", emailController.updateEmail);
 
 // Routes de family
 router.get("/family", familyController.getAllFamily);
@@ -117,7 +126,11 @@ router.delete("/event/:id", eventController.deleteEvent);
 // Routes de message
 router.get("/message", messageController.getAllMessages);
 router.get("/message/:id", messageController.getMessage);
-router.post("/message", setStatusReadBaseOrigin, messageController.createMessage);
+router.post(
+  "/message",
+  setStatusReadBaseOrigin,
+  messageController.createMessage
+);
 router.put("/message/:id", messageController.updateMessage);
 router.delete("/message/:id", messageController.deleteMessage);
 router.delete("/messages", messageController.AllDeleteMessage);
