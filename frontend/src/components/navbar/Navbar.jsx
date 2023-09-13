@@ -5,15 +5,17 @@ import { FcSearch } from "react-icons/fc";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { BsFillEnvelopeFill } from "react-icons/bs";
 import styles from "./Navbar.module.scss";
-import userImage from "../../assets/users/laure.jpg";
-import MessageContext from "../../contexts/MessageContext/MessageContext";
-import AuthContext from "../../contexts/AuthContext/AuthContext";
+// import userImage from "../../assets/users/laure.jpg";
+import MessageContext from "../../contexts/MessageContext/MessageContext.jsx";
+import AuthContext from "../../contexts/AuthContext/AuthContext.jsx";
+import UserContext from "../../contexts/UserContext/UserContext.jsx";
 
 const Navbar = ({ famille }) => {
   const [searchText, setSearchText] = useState("");
 
   // Context pour recuperer le user connecté
-  const { currentUser } = useContext(AuthContext);
+  const { authUser } = useContext(AuthContext);
+  const { currentUser } = useContext(UserContext);
 
   // Context pour récupérer les message de la BDD
   const { messages, getMessages } = useContext(MessageContext);
@@ -25,7 +27,7 @@ const Navbar = ({ famille }) => {
   // Calculer le nombre de message non lus
   const unreadMessagesCount = messages.filter(
     (message) =>
-      message.receiverId === currentUser.id &&
+      message.receiverId === authUser.id &&
       (message.status === false || message.statusRead === "unread")
   ).length;
 
@@ -72,8 +74,14 @@ const Navbar = ({ famille }) => {
             <div className={styles.profileContainer}>
               <div className={styles.profileTooltip}>
                 <Link to="/profilUser" className={styles.link}>
-                <img src={userImage} alt="avatar" className={styles.imgUser} />
-                <div className={styles.tooltipText}>Profil</div>
+                  <img
+                    src={`${import.meta.env.VITE_BACKEND_URL}/${
+                      currentUser.profilePicture
+                    }`}
+                    alt="avatar"
+                    className={styles.imgUser}
+                  />
+                  <div className={styles.tooltipText}>Profil</div>
                 </Link>
               </div>
             </div>
