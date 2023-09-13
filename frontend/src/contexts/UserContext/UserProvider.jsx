@@ -59,6 +59,11 @@ const UserProvider = ({ children }) => {
     try {
       const res = await apiConnect.put(`/user/${user.id}`, user);
       setUsers((prevUser) => [...prevUser, res.data]);
+
+      // Si l'utilisateur mis à jour est l'utilisateur actuel, mettre à jour l'utilisateur actuel
+      if (user.id === currentUser.id) {
+        setCurrentUser(res.data);
+      }
     } catch (error) {
       console.error(error);
     }
