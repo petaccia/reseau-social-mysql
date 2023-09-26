@@ -13,10 +13,6 @@ const Role = db.define("roles", {
     allowNull: false,
     unique: true,
   },
-  roleDescription: {
-    type: DataTypes.ENUM("admin", "creator", "user"),
-    allowNull: false,
-  },
 });
 
 module.exports = Role;
