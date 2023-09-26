@@ -1,5 +1,11 @@
 import { useContext, useState } from "react";
-import { FcHome, FcPortraitMode, FcFeedback, FcMenu } from "react-icons/fc";
+import {
+  FcHome,
+  FcPortraitMode,
+  FcFeedback,
+  FcMenu,
+  FcBusinessman,
+} from "react-icons/fc";
 import { IoLogOutOutline } from "react-icons/io5";
 import { NavLink, useLocation, Link } from "react-router-dom";
 import Styles from "./Sidebar.module.scss";
@@ -9,7 +15,7 @@ import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const { logout } = useContext(AuthContext);
+  const { logout, userType } = useContext(AuthContext);
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
     {
@@ -26,6 +32,12 @@ const Sidebar = ({ children }) => {
       path: "/contact",
       name: "Contact",
       icon: <FcFeedback />,
+    },
+    {
+      path: "/homeAdmin",
+      name: "Acceuil admin",
+      icon: <FcBusinessman />,
+      adminOnly: true,
     },
   ];
   const logoutItem = {
@@ -65,23 +77,27 @@ const Sidebar = ({ children }) => {
             </div>
           </div>
           <div className={Styles.iconContainer}>
-            {menuItem.map((item, index) => (
-              <NavLink
-                to={item.path}
-                key={index}
-                className={`${Styles.link} ${
-                  location.pathname === item.path ? Styles.active : ""
-                }`}
-              >
-                <div className={Styles.icon}>{item.icon}</div>
-                <div
-                  style={{ display: isOpen ? "block" : "none" }}
-                  className={Styles.link_text}
-                >
-                  {item.name}
-                </div>
-              </NavLink>
-            ))}
+            {menuItem.map(
+              (item, index) =>
+                (!item.adminOnly ||
+                  (item.adminOnly && userType === "adminFamily")) && (
+                  <NavLink
+                    to={item.path}
+                    key={index}
+                    className={`${Styles.link} ${
+                      location.pathname === item.path ? Styles.active : ""
+                    }`}
+                  >
+                    <div className={Styles.icon}>{item.icon}</div>
+                    <div
+                      style={{ display: isOpen ? "block" : "none" }}
+                      className={Styles.link_text}
+                    >
+                      {item.name}
+                    </div>
+                  </NavLink>
+                )
+            )}
           </div>
         </div>
         <NavLink

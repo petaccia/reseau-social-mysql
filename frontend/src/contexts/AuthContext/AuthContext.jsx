@@ -1,14 +1,17 @@
-import React from "react";
+import { createContext } from "react";
 
 // Création du context de l'authentification
 
-const AuthContext = React.createContext({
+const AuthContext = createContext({
   isAuthenticated: false,
   token: null,
+  userType: null,
+  currentUser: null,
   login: () => {},
   signup: () => {},
   logout: () => {},
-  currentUser: null,
+  signupAdminFamily: () => {},
+  loginAdminFamily: () => {},
   
 });
 console.info("-------------------->AuthContext", AuthContext);

@@ -1,9 +1,6 @@
 const { DataTypes } = require("sequelize");
 const db = require("../../databaseSequelize");
 
-const Family = require("./Family");
-const Role = require("./Roles");
-
 const User = db.define("users", {
   id: {
     type: DataTypes.INTEGER,
@@ -56,17 +53,10 @@ const User = db.define("users", {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  familyId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
+  status: {
+    type: DataTypes.ENUM("en attente", "accepté", "refusé"),
+    allowNull: true,
   },
-  roleId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
+ 
 });
-
-User.belongsTo(Family, { foreignKey: "familyId" });
-User.belongsTo(Role, { foreignKey: "roleId" });
-
 module.exports = User;

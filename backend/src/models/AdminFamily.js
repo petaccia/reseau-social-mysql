@@ -1,7 +1,5 @@
 const { DataTypes } = require("sequelize");
 const db = require("../../databaseSequelize");
-const Admin = require("./Admin");
-const Family = require("./Family");
 
 const AdminFamily = db.define("adminFamilies", {
   id: {
@@ -10,17 +8,19 @@ const AdminFamily = db.define("adminFamilies", {
     autoIncrement: true,
     allowNull: false,
   },
-  familyId: {
-    type: DataTypes.INTEGER,
+  name: {
+    type: DataTypes.STRING,
     allowNull: false,
   },
-  adminId: {
-    type: DataTypes.INTEGER,
+  email: {
+    type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
   },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  }
 });
-
-AdminFamily.belongsTo(Admin, { foreignKey: "adminId" });
-AdminFamily.belongsTo(Family, { foreignKey: "familyId" });
 
 module.exports = AdminFamily;

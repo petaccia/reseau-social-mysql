@@ -3,7 +3,6 @@ const db = require("../../databaseSequelize");
 
 const User = require("./User");
 const Family = require("./Family");
-const Admin = require("./Admin");
 const Role = require("./Roles");
 const Creator = require("./Creator");
 
@@ -38,10 +37,6 @@ const Connection = db.define("connections", {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
-  adminId: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-  },
   roleId: {
     type: DataTypes.INTEGER,
     allowNull: true,
@@ -51,6 +46,5 @@ const Connection = db.define("connections", {
 Connection.belongsTo(User, { foreignKey: "userId" });
 Connection.belongsTo(Creator, { foreignKey: "creatorId" });
 Connection.belongsTo(Family, { foreignKey: "familyId" });
-Connection.belongsTo(Admin, { foreignKey: "adminId" });
 Connection.belongsTo(Role, { foreignKey: "roleId" });
 module.exports = Connection;
