@@ -15,7 +15,7 @@
     // justify-content: center;
     border: 1px solid #594848;
     margin-top: 5rem;
-
+    
     .image {
       width: 40rem;
       height: 30rem;
@@ -31,13 +31,13 @@
       margin-top: 1rem;
       .switchButton {
         background-color: transparent;
-        color: #2aa6ff;
+        color: $primary-color;
         border: 1px solid #594848;
         border-radius: 0.5rem;
         padding: 0.5rem;
         width: 10rem;
         &:hover {
-          background-color: #2aa6ff;
+          background-color: $primary-color;
           color: #430f2f;
         }
       }
@@ -47,8 +47,9 @@
       }
     }
   }
-
+  
   .containerCard {
+    position: relative;
     width: 40rem;
     height: 35rem;
     display: flex;
@@ -57,7 +58,7 @@
     margin-top: 5rem;
   }
   .title {
-    color: #2aa6ff;
+    color: $primary-color;
     text-align: center;
   }
   .containerContact {
@@ -86,9 +87,54 @@
         margin: 0.5rem;
 
         &::placeholder {
-          color: #594848;
+          color: border-color;
         }
         color: #b9adad;
+      }
+      .checkboxAdminContainer{
+        position:absolute;
+        bottom: 2rem;
+        left: 2rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        input[type="checkbox"] {
+          display: none;
+          & + label::before {
+            content: "";
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border: 1px solid $border-color;
+            border-radius: 0.2rem;
+            margin-right: 0.5rem;
+            cursor: pointer;
+            vertical-align: middle;
+            background-color: transparent;
+            transition: all 0.5s;
+            position:relative;
+          }
+          &:checked + label::before {
+            background-color: transparent;
+          }
+           &:checked + label::after {
+            content: "";
+            width: 0.3rem;
+            height: 0.6rem;
+            border: solid $primary-color;
+            border-width: 0 2px 2px 0;
+            cursor: pointer;
+            transition: all 0.5s;
+            transform: rotate(45deg);
+            position:absolute;
+            top: 0.5rem;
+            left: 0.4rem;
+           } 
+        }
+        label{
+          color: #b9adad;
+        }
       }
       .button {
         background-color: transparent;
@@ -101,14 +147,14 @@
         margin-left: 20rem;
         &:hover {
           background-color: #594848;
-          color: #430f2f;
+          color: #2aa6ff;
         }
       }
     }
   }
+
 }
 
 .toastSuccess {
   background-color: #2aa6ff
   }
-

@@ -2,10 +2,8 @@ const express = require("express");
 
 const router = express.Router();
 
-const adminController = require("./controllers/AdminController");
 const adminFamilyController = require("./controllers/AdminFamilyController");
 const commentsController = require("./controllers/CommentsController");
-const connectionController = require("./controllers/ConnectionController");
 const familyController = require("./controllers/FamilyController");
 const contactController = require("./controllers/ContactController");
 const creatorController = require("./controllers/CreatorController");
@@ -19,16 +17,12 @@ const messageController = require("./controllers/MessageController");
 const passwordController = require("./controllers/PasswordController");
 const emailController = require("./controllers/EmailController");
 
+const  signupAdminController  = require("./controllers/AuthController");
+const authController = require("./controllers/AuthController");
+
 const LoginLimiter = require("./middleware/LoginLimiter");
 const upload = require("./services/multer");
 const setStatusReadBaseOrigin = require("./middleware/StatusRead");
-
-// Routes d'admin
-router.get("/admin", adminController.getAllAdmin);
-router.get("/admin/:id", adminController.getOneAdmin);
-router.post("/admin", adminController.createAdmin);
-router.put("/admin/:id", adminController.updateAdmin);
-router.delete("/admin/:id", adminController.deleteAdmin);
 
 // Routes d'adminFamily
 router.get("/adminFamily", adminFamilyController.getAllAdminFamily);
@@ -45,10 +39,11 @@ router.put("/comments/:id", commentsController.updateComment);
 router.delete("/comments/:id", commentsController.deleteComment);
 
 // Routes de connection
-router.post("/signup", connectionController.register);
-router.post("/login", LoginLimiter, connectionController.login);
+router.post("/signup", authController.signupUser);
+router.post("/login", LoginLimiter, authController.loginUnified);
 
-router.put("/:id", connectionController.approveConnection);
+// Routes de connection
+router.post("/signupAdmin", signupAdminController.signupAdminFamily);
 
 // Routes de password
 router.post("/verifyPassword", passwordController.verifyPassword);
