@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
 const cookie = require("cookie-parser");
+const morgan = require("morgan");
 
 
 const router = require("./routes");
@@ -10,10 +11,14 @@ const router = require("./routes");
 const Db = require("../databaseSequelize");
 
 Db.sync({ alter: true })
+
   .then(console.error("Connexion à la base de données"))
+
   .catch((err) => console.error(err));
 
 const app = express();
+
+app.use(morgan("dev"));
 app.use(cookie());
 // use some application-level middlewares
 app.use(
