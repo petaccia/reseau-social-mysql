@@ -2,6 +2,7 @@ const Joi = require("joi");
 
 const RegisterValidation = (data) => {
   const schema = Joi.object({
+    familyName: Joi.string().min(3).max(30).required(),
     username: Joi.string().min(3).max(30).alphanum().required(),
     email: Joi.string()
       .email({

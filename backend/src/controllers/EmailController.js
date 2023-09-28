@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const Connection = require("../models/Connection");
+const Connection = require("../models/User");
 const { EmailValidation } = require("../services/validation/EmailValidation");
 
 // Vérifier l'email actuel si il existe
