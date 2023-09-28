@@ -38,7 +38,9 @@ const App = () => {
               <MessageProvider>
                 <Routes>
                   <Route path="/connexion/:mode" element={<Connexion />} />
-                  <Route element={<PrivateRoute />}>
+                  <Route
+                    element={<PrivateRoute exceptedRoutes="adminFamily" />}
+                  >
                     <Route
                       path="/homeAdmin"
                       element={
@@ -71,6 +73,9 @@ const App = () => {
                         </DashBoardLayout>
                       }
                     />
+                  </Route>
+                  {/* Route pour les users */}
+                  <Route element={<PrivateRoute exceptedRoutes="user" />}>
                     <Route
                       path="/home"
                       element={
