@@ -10,7 +10,8 @@ import {
 } from "../../services/Toastify/toastConfig.jsx";
 
 const Connexion = () => {
-  const { loginUnified, signup, signupAdminFamily } = useContext(AuthContext);
+  const { loginUnified, signupUser, signupAdminFamily } =
+    useContext(AuthContext);
   const navigate = useNavigate();
   const [isFamilyAdmin, setIsFamilyAdmin] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
@@ -59,17 +60,15 @@ const Connexion = () => {
       if (isLogin) {
         response = await loginUnified(formData.email, formData.password);
       } else if (isFamilyAdmin) {
-        if (isFamilyAdmin && !isLogin) {
-          response = await signupAdminFamily(
-            formData.familyName,
-            formData.username,
-            formData.email,
-            formData.password
-          );
-        }
-        console.log("reponse du serveur", response);
+        response = await signupAdminFamily(
+          formData.familyName,
+          formData.username,
+          formData.email,
+          formData.password
+        );
       } else {
-        response = await signup(
+        response = await signupUser(
+          formData.familyName,
           formData.username,
           formData.email,
           formData.password
@@ -77,13 +76,21 @@ const Connexion = () => {
       }
 
       if (response && response.token) {
-        console.log("res in auth", response);
+        console.log("response du serveur ", response);
         let name;
         if (isLogin) {
           name = response.name;
-        } else {
+        } else if (isFamilyAdmin) {
           name = response.newAdminFamily.name;
+        } else if (response.newUser) {
+          name = response.newUser.firstname;
+          toastSuccess(
+            `Bienvenue ${name} ! Votre compte a été créé avec succès et en attente de validation par un administrateur familial ! 👋`
+          );
+          navigate("/login");
+          return;
         }
+
         toastSuccess(
           `Bienvenue ${name} ! Vous êtes ${
             isLogin ? "connecté" : "inscrit"
@@ -98,7 +105,6 @@ const Connexion = () => {
       handleErrors(error);
     }
   };
-
   const switchMode = () => {
     setIsLogin(!isLogin);
   };
@@ -177,6 +183,7 @@ const Connexion = () => {
               value={formData.email}
               className={styles.input}
               autoComplete="current-email"
+              required
             />
             <input
               type="password"
@@ -186,6 +193,8 @@ const Connexion = () => {
               value={formData.password}
               className={styles.input}
               autoComplete="current-password"
+              minLength="8"
+              required
             />
             <button type="submit" className={styles.button}>
               {!isLogin ? "Inscrivez-vous" : "Connectez-vous"}

@@ -6,10 +6,8 @@ const adminFamilyController = require("./controllers/AdminFamilyController");
 const commentsController = require("./controllers/CommentsController");
 const familyController = require("./controllers/FamilyController");
 const contactController = require("./controllers/ContactController");
-const creatorController = require("./controllers/CreatorController");
 const likeController = require("./controllers/LikeController");
 const postController = require("./controllers/PostController");
-const roleController = require("./controllers/RoleController");
 const usersController = require("./controllers/UserController");
 const eventController = require("./controllers/EventController");
 const statsController = require("./controllers/StatsController");
@@ -17,46 +15,31 @@ const messageController = require("./controllers/MessageController");
 const passwordController = require("./controllers/PasswordController");
 const emailController = require("./controllers/EmailController");
 
-const  signupAdminController  = require("./controllers/AuthController");
 const authController = require("./controllers/AuthController");
 
 const LoginLimiter = require("./middleware/LoginLimiter");
 const upload = require("./services/multer");
+
+// Les middlewares
 const setStatusReadBaseOrigin = require("./middleware/StatusRead");
+const {
+  authenticateJWT,
+  requireRole,
+  checkUserStatus,
+} = require("./middleware/auth");
 
-// Routes d'adminFamily
-router.get("/adminFamily", adminFamilyController.getAllAdminFamily);
-router.get("/adminFamily/:id", adminFamilyController.getOneAdminFamily);
-router.post("/adminFamily", adminFamilyController.createAdminFamily);
-router.put("/adminFamily/:id", adminFamilyController.updateAdminFamily);
-router.delete("/adminFamily/:id", adminFamilyController.deleteAdminFamily);
-
-// Routes de comments
-router.get("/comments", commentsController.getAllComments);
-router.get("/comments/:id", commentsController.getOneComment);
-router.post("/comments", commentsController.createComment);
-router.put("/comments/:id", commentsController.updateComment);
-router.delete("/comments/:id", commentsController.deleteComment);
-
-// Routes de connection
-router.post("/signup", authController.signupUser);
+// Routes d'authentification
+router.post("/signupAdmin", authController.signupAdminFamily);
 router.post("/login", LoginLimiter, authController.loginUnified);
+router.post("/signup", authController.signupUser);
 
-// Routes de connection
-router.post("/signupAdmin", signupAdminController.signupAdminFamily);
-
-// Routes de password
-router.post("/verifyPassword", passwordController.verifyPassword);
-router.put("/user/password", passwordController.updatePassword);
-
-// Routes d' email
-router.post("/verifyEmail", emailController.verifyEmail);
-router.put("/user/email", emailController.updateEmail);
+// Protéger les routes utiliser par l'adminFamily et l'utilisateur
+router.use(authenticateJWT);
+router.use(checkUserStatus);
 
 // Routes de family
 router.get("/family", familyController.getAllFamily);
 router.get("/family/:id", familyController.getOneFamily);
-router.post("/family", upload.single("image"), familyController.createFamily);
 router.put(
   "/family/:id",
   upload.single("image"),
@@ -64,23 +47,21 @@ router.put(
 );
 router.delete("/family/:id", familyController.deleteFamily);
 
-// Routes de contact
-router.get("/contact", contactController.getAllContact);
-router.get("/contact/:id", contactController.getOneContact);
-router.post("/contact", contactController.createContact);
-router.delete("/contact/:id", contactController.deleteContact);
+// Routes de user
+// obtenir tous les utilisateurs en attente de validation
+router.get("/user", usersController.getAllUser);
+router.get("/user/:id", usersController.getOneUser);
+router.post("/user", upload.single("image"), usersController.createUser);
+router.put("/user/:id", upload.single("image"), usersController.updateUser);
+router.delete("/user/:id", usersController.deleteUser);
 
-// Routes de creator
-router.get("/creator/:id", creatorController.getOneCreator);
-router.post("/creator", creatorController.createCreator);
-router.put("/creator/:id", creatorController.updateCreator);
+// Routes de password
+router.get("/password", passwordController.verifyPassword);
+router.put("/password", passwordController.updatePassword);
 
-// Routes de like
-router.get("/like", likeController.getAllLike);
-router.get("/like/:id", likeController.getOneLike);
-router.post("/like", likeController.createLike);
-router.put("/like/:id", likeController.updateLike);
-router.delete("/like/:id", likeController.deleteLike);
+// Routes de email
+router.get("/email", emailController.verifyEmail);
+router.put("/email", emailController.updateEmail);
 
 // Routes de post
 router.get("/post", postController.getAllPost);
@@ -89,27 +70,18 @@ router.post("/post", postController.createPost);
 router.put("/post/:id", postController.updatePost);
 router.delete("/post/:id", postController.deletePost);
 
-// Routes de role
-router.get("/role", roleController.getAllRoles);
-router.get("/role/:id", roleController.getOneRole);
-router.post("/role", roleController.createRole);
-router.put("/role/:id", roleController.updateRole);
-router.delete("/role/:id", roleController.deleteRole);
+// Routes de comments
+router.get("/comments", commentsController.getAllComments);
+router.get("/comments/:id", commentsController.getOneComment);
+router.post("/comments", commentsController.createComment);
+router.put("/comments/:id", commentsController.updateComment);
+router.delete("/comments/:id", commentsController.deleteComment);
 
-// Routes de user
-router.get("/user", usersController.getAllUser);
-router.get("/user/:id", usersController.getOneUser);
-router.post("/user", upload.single("image"), usersController.createUser);
-router.put("/user/:id", upload.single("image"), usersController.updateUser);
-router.delete("/user/:id", usersController.deleteUser);
-
-// Routes de statFamily
-router.get("/stat/FamilyMemberCount/:id", statsController.getFamilyMemberCount);
-router.get("/stat/recentPostCount/:id", statsController.getRecentPostCount);
-router.get(
-  "/stat/upcomingEventCount/:id",
-  statsController.getUpcomingEventCount
-);
+// Routes de contact
+router.get("/contact", contactController.getAllContact);
+router.get("/contact/:id", contactController.getOneContact);
+router.post("/contact", contactController.createContact);
+router.delete("/contact/:id", contactController.deleteContact);
 
 // Routes d'évênements
 router.get("/event", eventController.getAllEvents);
@@ -117,6 +89,13 @@ router.get("/event/:id", eventController.getOneEvent);
 router.post("/event", eventController.createEvent);
 router.put("/event/:id", eventController.updateEvent);
 router.delete("/event/:id", eventController.deleteEvent);
+
+// Routes de like
+router.get("/like", likeController.getAllLike);
+router.get("/like/:id", likeController.getOneLike);
+router.post("/like", likeController.createLike);
+router.put("/like/:id", likeController.updateLike);
+router.delete("/like/:id", likeController.deleteLike);
 
 // Routes de message
 router.get("/message", messageController.getAllMessages);
@@ -131,4 +110,29 @@ router.delete("/message/:id", messageController.deleteMessage);
 router.delete("/messages", messageController.AllDeleteMessage);
 router.put("/message/:id/view", messageController.updateViewStatus);
 
+// Protéger les routes utiliser seulement par l'adminFamily
+router.use("/adminfamily", requireRole("adminFamily"));
+
+// Routes d'adminFamily
+router.get("/", adminFamilyController.getAllAdminFamily);
+router.get("/:id", adminFamilyController.getOneAdminFamily);
+router.post("/", adminFamilyController.createAdminFamily);
+router.put("/:id", adminFamilyController.updateAdminFamily);
+router.delete("/:id", adminFamilyController.deleteAdminFamily);
+// pour accepter ou refuser un utilisateur de la famille
+router.put("/user/accept", adminFamilyController.acceptRequest);
+
+// Route pour obtenir tous les utilisateurs en attente de validation
+router.get("/user/pending/", usersController.getPendingUsers);
+
+// Route pour créer une famille
+router.post("/family", familyController.createFamily);
+
+// Routes de statFamily
+router.get("/stat/FamilyMemberCount/:id", statsController.getFamilyMemberCount);
+router.get("/stat/recentPostCount/:id", statsController.getRecentPostCount);
+router.get(
+  "/stat/upcomingEventCount/:id",
+  statsController.getUpcomingEventCount
+);
 module.exports = router;

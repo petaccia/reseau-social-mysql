@@ -6,6 +6,16 @@ const userValidation = require("../services/validation/userValidation");
 const replaceBackslash = (path) => {
   return path.replace(/\\/g, "/");
 };
+
+// Obtenir tous les utilisateurs en attente de validation
+const getPendingUsers = async (req, res) => {
+  try {
+    const users = await User.findAll({ where: { status: "en attente" } });
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+};
 const getAllUser = async (req, res) => {
   try {
     const users = await User.findAll();
@@ -93,6 +103,7 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
+  getPendingUsers,
   getAllUser,
   getOneUser,
   createUser,
