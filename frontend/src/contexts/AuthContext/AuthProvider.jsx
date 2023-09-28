@@ -55,22 +55,26 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  const signup = async (username, email, password) => {
+  const signupUser = async (familyName, username, email, password) => {
     try {
       const res = await apiConnect.post("/signup", {
+        familyName,
         username,
         email,
         password,
       });
-      if (res.status === 201) {
+      console.log("response du serveur ", res.data);
+      if (res.status >= 200 && res.status < 300) {
         setToken(res.data.token);
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("isAuthenticated", "true");
         navigate("/login");
       }
-      throw new Error("Une erreur est survenue");
+      return res.data;
     } catch (error) {
-      handleApiError(error.message());
+      console.error("signupUser error", error);
+      handleApiError(error);
+      throw error;
     }
   };
 
@@ -91,7 +95,7 @@ const AuthProvider = ({ children }) => {
       }
       return res.data;
     } catch (error) {
-      console.log("error", error);
+      console.error("error", error);
       handleApiError(error);
       throw error;
     }
@@ -117,7 +121,7 @@ const AuthProvider = ({ children }) => {
         userType,
         authUser,
         loginUnified,
-        signup,
+        signupUser,
         logout,
         signupAdminFamily,
       }}
