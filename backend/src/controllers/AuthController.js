@@ -80,11 +80,19 @@ const signupAdminFamily = async (req, res) => {
         roleId: newAdminFamily.roleId,
         status: newAdminFamily.status,
       },
-      process.env.DB_ACCESS_TOKEN_SECRET,
+      process.env.JWT_SECRET,
       {
         expiresIn: "1h",
       }
     );
+
+    // définir le token dans les cookies
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+      maxAge: 3600000,
+    });
     console.log("Resultat du token JWT", token);
     return res
       .status(201)
@@ -162,11 +170,19 @@ const signupUser = async (req, res) => {
         roleId: newUser.roleId,
         status: newUser.status,
       },
-      process.env.DB_ACCESS_TOKEN_SECRET,
+      process.env.JWT_SECRET,
       {
         expiresIn: "1h",
       }
     );
+
+    // Définir le token dans un cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+      maxAge: 3600000,
+    });
     console.log("nouvel utilisateur", newUser);
     return res
       .status(201)
@@ -178,7 +194,6 @@ const signupUser = async (req, res) => {
 };
 
 const loginUnified = async (req, res) => {
-  console.log("req.body loginunified in back", req.body);
   try {
     const { error } = LoginValidation(req.body);
     if (error) {
@@ -210,7 +225,7 @@ const loginUnified = async (req, res) => {
     }
 
     // Verifier si le status de l'utilisateur est "accepté"
-    if (userType==="user" && user.status !== "accepte") {
+    if (userType === "user" && user.status !== "accepte") {
       return res.status(401).json("Votre compte est en attente de validation");
     }
 
@@ -230,10 +245,17 @@ const loginUnified = async (req, res) => {
         status: user.status,
         userType,
       },
-      process.env.DB_ACCESS_TOKEN_SECRET,
+      process.env.JWT_SECRET,
       { expiresIn: "1h" }
       );
-      console.log("token in loginUnified back", token);
+      // Définir le token dans un cookie
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: 3600000,
+      });
+      console.log("token", token);
     return res.status(200).json({ token, name: user.name, userType });
   } catch (error) {
     console.error("Erreur lors de la connexion de l'utilisateur : ", error);

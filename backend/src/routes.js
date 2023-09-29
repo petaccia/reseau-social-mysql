@@ -25,7 +25,7 @@ const setStatusReadBaseOrigin = require("./middleware/StatusRead");
 const {
   authenticateJWT,
   requireRole,
-  checkUserStatus,
+//   checkUserStatus,
 } = require("./middleware/auth");
 
 // Routes d'authentification
@@ -35,7 +35,7 @@ router.post("/signup", authController.signupUser);
 
 // Protéger les routes utiliser par l'adminFamily et l'utilisateur
 router.use(authenticateJWT);
-router.use(checkUserStatus);
+// router.use(checkUserStatus);
 
 // Routes de family
 router.get("/family", familyController.getAllFamily);
@@ -114,19 +114,19 @@ router.put("/message/:id/view", messageController.updateViewStatus);
 router.use("/adminfamily", requireRole("adminFamily"));
 
 // Routes d'adminFamily
-router.get("/", adminFamilyController.getAllAdminFamily);
-router.get("/:id", adminFamilyController.getOneAdminFamily);
-router.post("/", adminFamilyController.createAdminFamily);
-router.put("/:id", adminFamilyController.updateAdminFamily);
-router.delete("/:id", adminFamilyController.deleteAdminFamily);
+router.get("/adminfamily", adminFamilyController.getAllAdminFamily);
+router.get("/adminfamily/:id", adminFamilyController.getOneAdminFamily);
+router.post("/adminfamily", adminFamilyController.createAdminFamily);
+router.put("/adminfamily/:id", adminFamilyController.updateAdminFamily);
+router.delete("/adminfamily/:id", adminFamilyController.deleteAdminFamily);
 // pour accepter ou refuser un utilisateur de la famille
-router.put("/user/accept", adminFamilyController.acceptRequest);
+router.put("/adminfamily/user/accept", adminFamilyController.acceptRequest);
 
 // Route pour obtenir tous les utilisateurs en attente de validation
-router.get("/user/pending/", usersController.getPendingUsers);
+router.get("/adminfamily/user/pending/", usersController.getPendingUsers);
 
 // Route pour créer une famille
-router.post("/family", familyController.createFamily);
+router.post("/adminfamily/family", familyController.createFamily);
 
 // Routes de statFamily
 router.get("/stat/FamilyMemberCount/:id", statsController.getFamilyMemberCount);

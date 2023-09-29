@@ -8,7 +8,7 @@ const HomeAdmin = () => {
     // récupérer les membres de la famille
     const getFamilyMembers = async () => {
       try {
-        const response = await apiConnect.get("/user/pending");
+        const response = await apiConnect.get("/adminfamily/user/pending/");
         setFamilyMembers(response.data);
         console.log(response.data);
       } catch (error) {
