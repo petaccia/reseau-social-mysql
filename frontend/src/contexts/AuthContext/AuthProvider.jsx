@@ -1,39 +1,45 @@
 import React, { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "./AuthContext.jsx";
 import apiConnect from "../../services/API/apiConnection.jsx";
-import {
-  toastError,
-} from "../../services/Toastify/toastConfig.jsx";
+import { toastError } from "../../services/Toastify/toastConfig.jsx";
 
 const AuthProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [userType, setUserType] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const authStatus = localStorage.getItem("isAuthenticated");
-    setIsAuthenticated(authStatus === "true");
+    const authStatus = !!Cookies.get("token");
+    setIsAuthenticated(authStatus);
   }, []);
 
   // gérer les erreurs
   const handleApiError = (error) => {
     console.error("handleApiError in AuthProvider", error);
+
     if (error.response) {
+      if (error.response.status === 401) {
+        // Si le token est invalide ou expiré
+        Cookies.remove("token");
+        setIsAuthenticated(false);
+        navigate("/login");
+        toastError("Votre session a expiré. Veuillez vous reconnecter.");
+        return; // Sortir de la fonction après avoir géré cette erreur spécifique
+      }
+
       console.error("error.response.data", error.response.data);
       console.error("error.response.status", error.response.status);
       console.error("error.response.headers", error.response.headers);
-      throw error.response;
+      toastError(error.response.data.message || "Une erreur est survenue 😡");
     } else if (error.request) {
       console.error("error.request", error.request);
-      throw new Error("Aucune réponse de l'API");
+      toastError("Aucune réponse de l'API");
     } else {
       console.error("error.message", error.message);
-      throw new Error(
-        "Une erreur est survenue lors de la création de la requête"
-      );
+      toastError(error.message || "Une erreur est survenue 😡");
     }
   };
   const loginUnified = async (email, password) => {
@@ -43,9 +49,9 @@ const AuthProvider = ({ children }) => {
       if (res.status === 200) {
         setUserType(res.data.userType);
         setAuthUser(res.data.user);
-        setToken(res.data.token);
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("isAuthenticated", "true");
+        Cookies.set("token", res.data.token, { expires: 1 });
+        setIsAuthenticated(true);
+        navigate("/home");
         return res.data;
       }
       throw res;
@@ -65,9 +71,8 @@ const AuthProvider = ({ children }) => {
       });
       console.log("response du serveur ", res.data);
       if (res.status >= 200 && res.status < 300) {
-        setToken(res.data.token);
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("isAuthenticated", "true");
+        Cookies.set("token", res.data.token, { expires: 1 });
+        isAuthenticated(true);
         navigate("/login");
       }
       return res.data;
@@ -88,9 +93,8 @@ const AuthProvider = ({ children }) => {
       });
       console.log("response du serveur ", res.data);
       if (res.status >= 200 && res.status < 300) {
-        setToken(res.data.token);
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("isAuthenticated", "true");
+        Cookies.set("token", res.data.token, { expires: 1 });
+        isAuthenticated(true);
         navigate("/login");
       }
       return res.data;
@@ -103,10 +107,7 @@ const AuthProvider = ({ children }) => {
   const logout = () => {
     try {
       setIsAuthenticated(false);
-      setToken(null);
-      localStorage.removeItem("userId");
-      localStorage.removeItem("token");
-      localStorage.removeItem("isAuthenticated");
+      Cookies.remove("token");
       navigate("/login");
     } catch (error) {
       console.error("logout error", error);
@@ -117,7 +118,6 @@ const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         isAuthenticated,
-        token,
         userType,
         authUser,
         loginUnified,
