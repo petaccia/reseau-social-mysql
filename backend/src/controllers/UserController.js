@@ -16,6 +16,28 @@ const getPendingUsers = async (req, res) => {
     res.status(500).json({ error });
   }
 };
+
+// Obtenir tous les utilisateurs acceptés
+const getAcceptedAllUsers = async (req, res) => {
+  try {
+    const users = await User.findAll({ where: { status: "accepté" } });
+    res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error });
+  }
+};
+
+ // Obtenir tous les utilisateurs refusés
+ const getRefusedAllusers = async (req, res) => {
+  try {
+    const users = await User.findAll({ where: { status: "refusé" } });
+    res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error });
+  }
+};
 const getAllUser = async (req, res) => {
   try {
     const users = await User.findAll();
@@ -104,6 +126,8 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
   getPendingUsers,
+  getAcceptedAllUsers,
+  getRefusedAllusers,
   getAllUser,
   getOneUser,
   createUser,

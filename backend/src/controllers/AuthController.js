@@ -12,57 +12,41 @@ const {
   LoginValidation,
 } = require("../services/validation/ConnectionUserValidation");
 
-// Inscription de l'AdminFamily et creation de la famille avec le mot de passe haché et l'email crypté
 const signupAdminFamily = async (req, res) => {
   console.log("req.body", req.body);
   try {
     const { error } = AdminFamilyRegisterValidation(req.body);
-    console.log("erreur après validation", error);
     if (error) {
-      console.log("Eurrteur de validation", error);
       return res.status(400).json({ error: error.details[0].message });
     }
-    // Crypter l'email
+
     const cryptedEmail = crypto
       .HmacSHA256(req.body.email, process.env.DB_CRYPTOJS)
       .toString();
-    console.log("email crypté in signupAdminFamily back", cryptedEmail);
 
-    // hacher le mot de passe
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-    // Vérifier si l'email existe dans la base de données
     const existEmail = await AdminFamily.findOne({
       where: { email: cryptedEmail },
     });
-    console.log(
-      "Vérification de l'email existant dans signupAdminFamily back",
-      existEmail
-    );
+
     if (existEmail) {
-      return res.status(409).json("Email déjà utilisé");
+      return res.status(409).json("Email déjà utilisé");
     }
-    // Creer une famille
+
     const newFamily = await Family.create({
       name: req.body.familyName,
     });
 
-    console.log(
-      "Nouvelle famille crée avec succès in signupAdminFamily back",
-      newFamily
-    );
-
-    // Rechercher le role dans la base de données
     const role = await Role.findOne({
       where: { name: "AdminFamily" },
     });
     if (!role) {
-      return res.status(404).json("Role spécifié introuvable");
+      return res.status(404).json("Rôle spécifié introuvable");
     }
     const roleId = role.id;
 
-    // Creer un adminFamily
     const newAdminFamily = await AdminFamily.create({
       name: req.body.username,
       email: cryptedEmail,
@@ -70,7 +54,7 @@ const signupAdminFamily = async (req, res) => {
       roleId,
       familyId: newFamily.id,
     });
-    // Créer un token pour l'adminFamily
+
     const token = jwt.sign(
       {
         id: newAdminFamily.id,
@@ -86,72 +70,62 @@ const signupAdminFamily = async (req, res) => {
       }
     );
 
-    // définir le token dans les cookies
     res.cookie("token", token, {
       httpOnly: true,
       secure: false,
       sameSite: "strict",
       maxAge: 3600000,
     });
-    console.log("Resultat du token JWT", token);
-    return res
-      .status(201)
-      .json({ message: "AdminFamily crée avec succès", newAdminFamily, token });
+
+    return res.status(201).json({ message: "AdminFamily créé avec succès", newAdminFamily, token });
   } catch (error) {
     console.error("Erreur lors de l'inscription de l'AdminFamily : ", error);
     return res.status(500).json({ message: "Erreur du serveur", error });
   }
 };
 
-// Inscription de l'utilisateur et  avec le mot de passe haché et l'email crypté avec envoie à l'adminFamily pour l'ajout de l'utilisateur
 const signupUser = async (req, res) => {
   console.log("req.body", req.body);
   try {
     const { error } = RegisterValidation(req.body);
-    console.log("erreur de validation", error);
     if (error) {
-      console.log("Eurrteur de validation", error);
       return res.status(400).json({ error: error.details[0].message });
     }
-    // Crypter l'email
+
     const cryptedEmail = crypto
       .HmacSHA256(req.body.email, process.env.DB_CRYPTOJS)
       .toString();
 
-    // hacher le mot de passe
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-    // Vérifier si l'email existe dans la base de données
     const existEmail = await User.findOne({
       where: { email: cryptedEmail },
     });
+
     if (existEmail) {
-      return res.status(409).json("Email déjà utilisé");
+      return res.status(409).json("Email déjà utilisé");
     }
 
-    // vérifieer si la famille existe par le nom de famille
     const family = await Family.findOne({
       where: {
         name: req.body.familyName,
       },
     });
-    console.log("nom de la famille trouvé", family);
+
     if (!family) {
       return res.status(404).json("La famille n'existe pas");
     }
 
-    // Rechercher le role dans la base de données
     const role = await Role.findOne({
       where: { name: "User" },
     });
-    console.log("role trouve", role);
+
     if (!role) {
-      return res.status(404).json("Role spécifié introuvable");
+      return res.status(404).json("Rôle spécifié introuvable");
     }
     const roleId = role.id;
 
-    // Creer un utilisateur
     const newUser = await User.create({
       email: cryptedEmail,
       password: hashedPassword,
@@ -160,7 +134,7 @@ const signupUser = async (req, res) => {
       familyId: family.id,
       roleId,
     });
-    // Créer un token pour l'utilisateur
+
     const token = jwt.sign(
       {
         id: newUser.id,
@@ -176,17 +150,16 @@ const signupUser = async (req, res) => {
       }
     );
 
-    // Définir le token dans un cookie
     res.cookie("token", token, {
       httpOnly: true,
       secure: false,
       sameSite: "strict",
       maxAge: 3600000,
     });
-    console.log("nouvel utilisateur", newUser);
+
     return res
       .status(201)
-      .json({ message: "Utilisateur créé avec succès !", newUser, token });
+      .json({ message: "Utilisateur créé avec succès !", newUser, token });
   } catch (error) {
     console.error("Erreur lors de l'inscription de l'utilisateur : ", error);
     return res.status(500).json({ message: "Erreur du serveur", error });
@@ -200,12 +173,10 @@ const loginUnified = async (req, res) => {
       return res.status(400).json({ error: error.details[0].message });
     }
 
-    // Crypter l'email
     const cryptedEmail = crypto
       .HmacSHA256(req.body.email, process.env.DB_CRYPTOJS)
       .toString();
 
-    // Vérifier si l'email existe dans la base de données pour l'adminFamily
     const userAdminFamily = await AdminFamily.findOne({
       where: { email: cryptedEmail },
     });
@@ -224,22 +195,28 @@ const loginUnified = async (req, res) => {
       return res.status(401).json("Informations d'identification invalides");
     }
 
-    // Verifier si le status de l'utilisateur est "accepté"
-    if (userType === "user" && user.status !== "accepte") {
-      return res.status(401).json("Votre compte est en attente de validation");
+    if (userType === "user") {
+      if (user.status === "en attente") {
+        console.log("user no accepted", userType);
+        console.log("user.status in no accepted", user.status);
+        return res.status(401).json("Votre compte est en attente de validation");
+      } else if (user.status === "accepté") {
+        console.log("user accepted", userType);
+        console.log("user.status in accepted", user.status);
+        return res.status(200).json("Vous êtes connecté avec succès");
+      }
     }
-
-    // Comparer le mot de passe
+        
     const isMatch = await bcrypt.compare(req.body.password, user.password);
+
     if (!isMatch) {
       return res.status(401).json("Informations d'identification invalides");
     }
 
-    // Créer un token
     const token = jwt.sign(
       {
         id: user.id,
-        name: user.name,
+        name: user.firstname,
         email: user.email,
         roleId: user.roleId,
         status: user.status,
@@ -248,20 +225,21 @@ const loginUnified = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
       );
-      // Définir le token dans un cookie
+      
       res.cookie("token", token, {
         httpOnly: true,
-        secure: true,
         sameSite: "strict",
         maxAge: 3600000,
       });
-      console.log("token", token);
-    return res.status(200).json({ token, name: user.name, userType });
+      console.log("user", user.firstname);
+
+    return res.status(200).json({ token, name: user.firstname, userType });
   } catch (error) {
     console.error("Erreur lors de la connexion de l'utilisateur : ", error);
     return res.status(500).json({ message: "Erreur du serveur", error });
   }
 };
+
 module.exports = {
   signupAdminFamily,
   signupUser,

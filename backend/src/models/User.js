@@ -78,12 +78,18 @@ const User = db.define(
         key: "id",
       },
     },
+    roleId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "Roles",
+        key: "id",
+      },
+    }
   },
   {
     timestamps: false,
   }
 );
-User.belongsTo(Family, { foreignKey: "familyId" });
-User.belongsTo(AdminFamily, { foreignKey: "adminFamilyId" });
 
 module.exports = User;
