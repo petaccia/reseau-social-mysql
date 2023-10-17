@@ -22,11 +22,7 @@ const upload = require("./services/multer");
 
 // Les middlewares
 const setStatusReadBaseOrigin = require("./middleware/StatusRead");
-const {
-  authenticateJWT,
-  requireRole,
-//   checkUserStatus,
-} = require("./middleware/auth");
+const { authenticateJWT, requireRole } = require("./middleware/auth");
 
 // Routes d'authentification
 router.post("/signupAdmin", authController.signupAdminFamily);
@@ -124,6 +120,10 @@ router.put("/adminfamily/user/accept", adminFamilyController.acceptRequest);
 
 // Route pour obtenir tous les utilisateurs en attente de validation
 router.get("/adminfamily/user/pending/", usersController.getPendingUsers);
+// route pour Obtenir tous les users acceptés
+router.get("/adminfamily/user/accepted/", usersController.getAcceptedAllUsers);
+// route pour Obtenir tous les utilisateurs refusés
+router.get("/adminfamily/user/refused/", usersController.getRefusedAllusers);
 
 // Route pour créer une famille
 router.post("/adminfamily/family", familyController.createFamily);

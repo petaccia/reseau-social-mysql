@@ -36,14 +36,13 @@
   margin-bottom: 40px;
 }
 
-.table th,
-.table td {
+ th, td {
   border: 1px solid #ddd;
   padding: 15px;
   text-align: left;
 }
 
-.table th {
+ th {
   background-color: #34495e;
   color: white;
   font-size: 18px;
@@ -66,7 +65,29 @@
 .author,
 .titleEvent,
 .time {
-  color: $secondary-color;
   font-size: 16px;
+}
+.pending {
+  color: $primary-color ;
+}
+.accepted {
+  color: $border-color;
+}
+.refused {
+  color: $secondary-color;
+}
+.buttonContainer {
+  display: flex;
+  justify-content: space-around;
+  button{
+    background-color: #34495e;
+    color: $primary-color;
+    cursor: pointer;
+    &:hover{
+      background-color: $primary-color;
+      color:#34495e;
+      transition: all 0.5s ease;
+    }
+  }
 }
 }

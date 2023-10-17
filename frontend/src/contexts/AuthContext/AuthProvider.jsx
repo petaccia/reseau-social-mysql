@@ -72,7 +72,7 @@ const AuthProvider = ({ children }) => {
       console.log("response du serveur ", res.data);
       if (res.status >= 200 && res.status < 300) {
         Cookies.set("token", res.data.token, { expires: 1 });
-        isAuthenticated(true);
+       setIsAuthenticated(true);
         navigate("/login");
       }
       return res.data;
@@ -94,7 +94,7 @@ const AuthProvider = ({ children }) => {
       console.log("response du serveur ", res.data);
       if (res.status >= 200 && res.status < 300) {
         Cookies.set("token", res.data.token, { expires: 1 });
-        isAuthenticated(true);
+        setIsAuthenticated(true);
         navigate("/login");
       }
       return res.data;

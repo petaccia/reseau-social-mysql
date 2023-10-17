@@ -80,7 +80,7 @@ const deleteAdminFamily = async (req, res) => {
 // Fonction pour accepter ou refuser une demande de user
 
 const acceptRequest = async (req, res) => {
-  const { userId, decision } = req.body;
+  const { userId, status } = req.body;
   try {
     const user = await User.findOne({
       where: { id: userId },
@@ -88,10 +88,11 @@ const acceptRequest = async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "utilisateur non trouvé" });
     }
-    user.status = decision;
+    user.status = status;
     await user.save();
-    return res.status(200).json({ message: `Demande ${decision}e` });
+    return res.status(200).json({ message: `Demande ${status}e` });
   } catch (error) {
+    console.error("Error in acceptRequest", error);
     return res.status(500).json(error);
   }
 };
