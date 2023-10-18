@@ -3,6 +3,7 @@ const db = require("../../databaseSequelize");
 
 const AdminFamily = require("./AdminFamily");
 const Family = require("./Family");
+const Roles = require("./Roles");
 
 const User = db.define(
   "users",
@@ -91,5 +92,10 @@ const User = db.define(
     timestamps: false,
   }
 );
-
+// Plusieurs user appartient à une seule famille
+Family.hasMany(User, { foreignKey: {name: "familyId"} });
+// Plusieurs user appartient à une seule adminFamily
+AdminFamily.hasMany(User, { foreignKey: {name: "adminFamilyId"} });
+// Plusieurs user appartient à un seul role
+User.belongsTo(Roles);
 module.exports = User;
