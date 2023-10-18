@@ -5,30 +5,31 @@ const User = require("../models/User");
 // Middleware d'authentification
 const authenticateJWT = async (req, res, next) => {
   const { token } = req.cookies;
-  console.log("Token dans authenticateJWT : ", token);
   if (!token) {
     return res.status(401).json({ message: "Pas de token" });
   }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
+    console.log("decoded", decoded);
     if (decoded.userType === "adminFamily") {
+
       const adminFamily = await AdminFamily.findOne({ where: { id: decoded.id }} );
       if (!adminFamily) {
         return res.status(401).json({ message: "AdminFamily introuvable" });
       }
       req.user = adminFamily;
+      req.user.userType = "adminFamily";
     } else if (decoded.userType === "user") {
       const user = await User.findOne({ where: { id: decoded.id }});
       if (!user) {
         return res.status(401).json({ message: "User introuvable" });
       }
       req.user = user;
+      req.user.userType = "user";
+      
     }
 
-    console.log("req.user", req.user);
-    console.log("decoded", decoded);
     next();
   } catch (err) {
     console.error(err);
@@ -39,13 +40,14 @@ const authenticateJWT = async (req, res, next) => {
   }
 };
 
-const requireRole = (role) => {
+const requireAdminFamilyRole = () => {
   return (req, res, next) => {
+    console.log("requireRole", req.user.userType);
     if (req.user) {
-      if ((role === "adminFamily" && req.user.roleId === 1) || (role === "user" && req.user.roleId === 3)) {
+      if ( req.user.userType === "adminFamily" && req.user.roleId === 1) {
         return next();
       } else {
-        return res.status(403).json({ message: "Pas autorisé" });
+        return res.status(403).json({ message: "Pas autorisé", reason: "Role introuvable" });
       }
     } else {
       return res.status(401).json({ message: "Utilisateur non authentifié" });
@@ -56,5 +58,5 @@ const requireRole = (role) => {
 
 module.exports = {
   authenticateJWT,
-  requireRole,
+  requireAdminFamilyRole,
 }
