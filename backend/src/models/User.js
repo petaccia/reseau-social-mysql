@@ -93,9 +93,9 @@ const User = db.define(
   }
 );
 // Plusieurs user appartient à une seule famille
-Family.hasMany(User, { foreignKey: {name: "familyId"} });
+Family.hasMany(User, { foreignKey:  "familyId"} );
 // Plusieurs user appartient à une seule adminFamily
-AdminFamily.hasMany(User, { foreignKey: {name: "adminFamilyId"} });
+AdminFamily.hasMany(User, { foreignKey: "adminFamilyId"} );
 // Plusieurs user appartient à un seul role
-User.belongsTo(Roles);
+User.belongsTo(Roles, { foreignKey: "roleId"} );
 module.exports = User;

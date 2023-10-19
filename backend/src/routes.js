@@ -23,7 +23,7 @@ const upload = require("./services/multer");
 // Les middlewares
 const setStatusReadBaseOrigin = require("./middleware/StatusRead");
 const { authenticateJWT, requireAdminFamilyRole } = require("./middleware/auth");
-const AuthorizeFamilyAccess = require("./middleware/Authorization");
+const {AuthorizeFamilyAccess} = require("./middleware/Authorization");
 
 // Routes d'authentification
 router.post("/signupAdmin", authController.signupAdminFamily);
@@ -120,14 +120,14 @@ router.post("/adminfamily", adminFamilyController.createAdminFamily);
 router.put("/adminfamily/:id", adminFamilyController.updateAdminFamily);
 router.delete("/adminfamily/:id", adminFamilyController.deleteAdminFamily);
 // pour accepter ou refuser un utilisateur de la famille
-router.put("/adminfamily/user/accept", adminFamilyController.acceptRequest);
+router.put("/adminfamily/user/accept/:userId",AuthorizeFamilyAccess, adminFamilyController.acceptRequest);
 
 // Route pour obtenir tous les utilisateurs en attente de validation
-router.get("/adminfamily/user/pending/", usersController.getPendingUsers);
+router.get("/adminfamily/user/pending/:userId",AuthorizeFamilyAccess, usersController.getPendingUsers);
 // route pour Obtenir tous les users acceptés
-router.get("/adminfamily/user/accepted/", usersController.getAcceptedAllUsers);
+router.get("/adminfamily/user/accepted/:userId",AuthorizeFamilyAccess, usersController.getAcceptedAllUsers);
 // route pour Obtenir tous les utilisateurs refusés
-router.get("/adminfamily/user/refused/", usersController.getRefusedAllusers);
+router.get("/adminfamily/user/refused/:userId",AuthorizeFamilyAccess, usersController.getRefusedAllusers);
 
 // Route pour créer une famille
 router.post("/adminfamily/family", familyController.createFamily);

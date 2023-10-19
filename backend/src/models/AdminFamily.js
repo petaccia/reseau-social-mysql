@@ -10,7 +10,7 @@ const AdminFamily = db.define("adminFamilies", {
     autoIncrement: true,
     allowNull: false,
   },
-  name: {
+  firstname: {
     type: DataTypes.STRING,
     allowNull: false,
   },
