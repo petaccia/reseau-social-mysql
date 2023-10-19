@@ -2,15 +2,28 @@ import React, { useState, useEffect, useContext } from "react";
 import UserContext from "./UserContext.jsx";
 import AuthContext from "../AuthContext/AuthContext.jsx";
 import apiConnect from "../../services/API/apiConnection.jsx";
+import Cookies from "js-cookie";
 
 const UserProvider = ({ children }) => {
   // Récupérer le contexte d'authentification
-  const { login } = useContext(AuthContext);
+  const { loginUnified } = useContext(AuthContext);
   // Etat pour tous les utilisateurs
   const [users, setUsers] = useState([]);
 
   // Etat pour l'utilisateur actuel
   const [currentUser, setCurrentUser] = useState({});
+
+// lire id de l'utilisateur dans le cookie
+  
+  // useEffect pour récupération de l'utilisateur actuel
+  useEffect(() => {
+   const userId = Cookies.get("userId");
+   console.log("userId in UserProvider : " + userId);
+    if (userId) {
+      // utiliser Id du login pour récupérer des informations sur l'utilisateur
+      getUser({ id: userId });
+    }
+  }, []);
 
   // Fonction pour récupérer tous les utilisateurs
   const getAllUsers = async () => {
@@ -36,14 +49,7 @@ const UserProvider = ({ children }) => {
     }
   };
 
-  // useEffect pour récupérer tous les utilisateurs
-  useEffect(() => {
-    getAllUsers();
-    // const userId = localStorage.getItem("userId");
-    // if (userId) {
-      getUser({ id: 1});
-    // }
-  }, []);
+
   // Fonction pour ajouter un utilisateur
   const addUser = async (user) => {
     try {
@@ -82,9 +88,9 @@ const UserProvider = ({ children }) => {
   // Fonction pour récupérer l'utilisateur actuel
   const currentUserLogin = async (credential) => {
     try {
-      const user = await login(credential.email, credential.password);
+      const user = await loginUnified(credential.email, credential.password);
       if (user && user.id) {
-        localStorage.setItem("userId", user.id);
+        Cookies.set("userId", user.id, { expires: 1 });
         setCurrentUser(user);
       }
     } catch (error) {

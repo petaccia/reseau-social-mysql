@@ -1,68 +1,60 @@
 import React, { useEffect, useState } from "react";
 import apiConnect from "../../../services/API/apiConnection.jsx";
 import styles from "./HomeAdmin.module.scss";
-import {
-  toastSuccess,
-  toastError,
-} from "../../../services/Toastify/toastConfig.jsx";
-import { faItalic } from "@fortawesome/free-solid-svg-icons";
+import { toastSuccess, toastError } from "../../../services/Toastify/toastConfig.jsx";
+import Cookies from "js-cookie";
 
 const HomeAdmin = () => {
   const [familyMembers, setFamilyMembers] = useState([]);
   const [acceptedFamilyMembers, setAcceptedFamilyMembers] = useState([]);
   const [refusedFamilyMembers, setRefusedFamilyMembers] = useState([]);
+const userId = Cookies.get('userId');
+console.log("userId in HomeAdmin in cookie: " + userId);
 
-  // récupérer  membres de la famille en attente de validation
+  // récupérer membres de la famille en attente de validation
   const getAllMemberFamily = async () => {
     try {
-      const response = await apiConnect.get("/adminfamily/user/pending");
+      const response = await apiConnect.get(`/adminfamily/user/pending/${userId}`);
       setFamilyMembers(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
       toastError("Une erreur est survenue");
     }
   };
 
-  // récupérer  membres de la famille acceptés
+  // récupérer membres de la famille acceptés
   const getAllMemberFamilyAccepted = async () => {
     try {
-      const response = await apiConnect.get("/adminfamily/user/accepted");
+      const response = await apiConnect.get(`/adminfamily/user/accepted/${userId}`);
       setAcceptedFamilyMembers(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
       toastError("Une erreur est survenue");
     }
   };
 
-  // récupérer  membres de la famille refusés
+  // récupérer membres de la famille refusés
   const getAllMemberFamilyRefused = async () => {
     try {
-      const response = await apiConnect.get("/adminfamily/user/refused");
+      const response = await apiConnect.get(`/adminfamily/user/refused/${userId}`);
       setRefusedFamilyMembers(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error(error);
       toastError("Une erreur est survenue");
     }
   };
 
-  useEffect(() => {
-    getAllMemberFamily();
-    getAllMemberFamilyAccepted();
-    getAllMemberFamilyRefused();
-  }, []);
-
-  // Changement du statut de la l'inscription d'un membre de la famille pour validation ou refuse
+  // Changement du statut de l'inscription d'un membre de la famille pour validation ou refus
   const changeStatus = async (userId, status) => {
     try {
-      const response = await apiConnect.put(`/adminfamily/user/${userId}`, {
+      const response = await apiConnect.put(`/adminfamily/user/accept/${userId}`, {
         status,
       });
-      console.log(response.data);
       if (response.status === 200) {
         toastSuccess("La demande a été traitée avec succès");
+        // Mettre à jour l'état des membres en attente
+        const updatedFamilyMembers = familyMembers.filter((member) => member.id !== userId);
+        setFamilyMembers(updatedFamilyMembers);
       } else {
         toastError("Erreur lors de la validation de la demande");
       }
@@ -73,6 +65,17 @@ const HomeAdmin = () => {
       return error;
     }
   };
+
+  useEffect(() => {
+    if (userId) {
+    getAllMemberFamily();
+    getAllMemberFamilyAccepted();
+    getAllMemberFamilyRefused();
+  } else {
+    toastError("Une erreur est survenue");
+  }
+  }, [userId]);
+
 
   return (
     <div className={styles.container}>
