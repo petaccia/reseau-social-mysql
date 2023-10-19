@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 
 const UserProvider = ({ children }) => {
   // Récupérer le contexte d'authentification
-  const { login } = useContext(AuthContext);
+  const { loginUnified } = useContext(AuthContext);
   // Etat pour tous les utilisateurs
   const [users, setUsers] = useState([]);
 
@@ -14,7 +14,17 @@ const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({});
 
 // lire id de l'utilisateur dans le cookie
-  const userId = Cookies.get("userId");
+  
+  // useEffect pour récupération de l'utilisateur actuel
+  useEffect(() => {
+   const userId = Cookies.get("userId");
+   console.log("userId in UserProvider : " + userId);
+    if (userId) {
+      // utiliser Id du login pour récupérer des informations sur l'utilisateur
+      getUser({ id: userId });
+    }
+  }, []);
+
   // Fonction pour récupérer tous les utilisateurs
   const getAllUsers = async () => {
     try {
@@ -39,13 +49,6 @@ const UserProvider = ({ children }) => {
     }
   };
 
-  // useEffect pour récupérer tous les utilisateurs
-  useEffect(() => {
-    getAllUsers();
-    if (userId) {
-      getUser({ id: userId });
-    }
-  }, [ userId ]);
 
   // Fonction pour ajouter un utilisateur
   const addUser = async (user) => {
@@ -85,7 +88,7 @@ const UserProvider = ({ children }) => {
   // Fonction pour récupérer l'utilisateur actuel
   const currentUserLogin = async (credential) => {
     try {
-      const user = await login(credential.email, credential.password);
+      const user = await loginUnified(credential.email, credential.password);
       if (user && user.id) {
         Cookies.set("userId", user.id, { expires: 1 });
         setCurrentUser(user);

@@ -12,8 +12,14 @@ const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const authStatus = !!Cookies.get("token");
+    // Vérifier si un cookie existe pour déterminer l'authentication
+    const cookie = Cookies.get("token");
+    const authStatus = !!cookie;
     setIsAuthenticated(authStatus);
+    if (cookie) {
+      // utilser le token pour récupérer des informations sur l'utilisateur
+      loginUnified();
+    }
   }, []);
 
   // gérer les erreurs
@@ -49,10 +55,15 @@ const AuthProvider = ({ children }) => {
       if (res.status === 200) {
         setUserType(res.data.userType);
         setAuthUser(res.data.user);
+        console.log("utilisateur connecté avec sucess", res.data.user);
         Cookies.set("token", res.data.token, { expires: 1 });
         setIsAuthenticated(true);
         navigate("/home");
+        console.log("utilisateur authentifié");
         return res.data;
+      } else {
+        console.log("Reponse de l'Api àprés connexion avec un status différent de 200:", res);
+        throw res;
       }
       throw res;
     } catch (error) {
