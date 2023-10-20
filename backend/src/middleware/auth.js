@@ -5,12 +5,14 @@ const User = require("../models/User");
 // Middleware d'authentification
 const authenticateJWT = async (req, res, next) => {
   const { token } = req.cookies;
+  console.log("Token:", token); // Log du token
   if (!token) {
     return res.status(401).json({ message: "Pas de token" });
   }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log("Decoded Token:", decoded); // Log du token décodé
     console.log("decoded", decoded);
     if (decoded.userType === "adminFamily") {
 

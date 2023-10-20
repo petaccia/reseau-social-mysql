@@ -10,7 +10,12 @@ const replaceBackslash = (path) => {
 // Obtenir tous les utilisateurs en attente de validation
 const getPendingUsers = async (req, res) => {
   try {
-    const users = await User.findAll({ where: { status: "en attente" } });
+    // Récupérer l'ID de l'administrateur de famille cible depuis les paramètres de la requête
+    const currentAdminFamily = req.user;
+    
+    const users = await User.findAll({ where: { status: "en attente", 
+    // Filtrer par l'id de la famille de l'adminFamily actuellement connecté
+    familyId: currentAdminFamily.familyId } });
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ error });
@@ -20,7 +25,10 @@ const getPendingUsers = async (req, res) => {
 // Obtenir tous les utilisateurs acceptés
 const getAcceptedAllUsers = async (req, res) => {
   try {
-    const users = await User.findAll({ where: { status: "accepté" } });
+    // Récupérer l'ID de l'administrateur de famille cible depuis les paramètres de la requête
+    const currentAdminFamily = req.user;
+  
+    const users = await User.findAll({ where: { status: "accepté" , familyId: currentAdminFamily.familyId } });
     res.status(200).json(users);
   } catch (error) {
     console.error(error);
@@ -31,7 +39,10 @@ const getAcceptedAllUsers = async (req, res) => {
  // Obtenir tous les utilisateurs refusés
  const getRefusedAllusers = async (req, res) => {
   try {
-    const users = await User.findAll({ where: { status: "refusé" } });
+    // Récupérer l'ID de l'administrateur de famille cible depuis les paramètres de la requête
+    const currentAdminFamily = req.user;
+
+    const users = await User.findAll({ where: { status: "refusé", familyId: currentAdminFamily.familyId } });
     res.status(200).json(users);
   } catch (error) {
     console.error(error);
