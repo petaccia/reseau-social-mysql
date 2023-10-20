@@ -79,9 +79,9 @@ const Connexion = () => {
         console.log("response du serveur ", response);
         let name;
         if (isLogin) {
-          name = response.name;
+          name = response.user.firstname;
         } else if (isFamilyAdmin) {
-          name = response.newAdminFamily.name;
+          name = response.newAdminFamily.firstname;
         } else if (response.newUser) {
           name = response.newUser.firstname;
           toastSuccess(
