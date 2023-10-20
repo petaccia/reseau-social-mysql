@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "./AuthContext.jsx";
 import apiConnect from "../../services/API/apiConnection.jsx";
-import { toastError } from "../../services/Toastify/toastConfig.jsx";
+import { toastError, toastSuccess } from "../../services/Toastify/toastConfig.jsx";
 
 const AuthProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState(null);
@@ -125,11 +125,11 @@ const AuthProvider = ({ children }) => {
     const logout = async () => {
       try {
         const res = await apiConnect.post("/logout");
-        console.log("response du serveur ", res.data);
         if (res.status >= 200 && res.status < 300) {
           Cookies.remove("token");
           Cookies.remove("userId");
           setIsAuthenticated(false);
+          toastSuccess("Déconnexion réussie");
           navigate("/login");
         }
         return res.data;

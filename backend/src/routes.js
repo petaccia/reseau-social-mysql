@@ -111,9 +111,6 @@ router.put("/message/:id/view", messageController.updateViewStatus);
 // Protéger les routes utiliser seulement par l'adminFamily
 router.use(requireAdminFamilyRole("adminFamily"));
 
-// Route pour le middleware d'autorisation pour l'adminFamily
-// router.use("/adminfamily", AuthorizeFamilyAccess);
-
 // Routes d'adminFamily
 router.get("/adminfamily", adminFamilyController.getAllAdminFamily);
 router.get("/adminfamily/:id", adminFamilyController.getOneAdminFamily);

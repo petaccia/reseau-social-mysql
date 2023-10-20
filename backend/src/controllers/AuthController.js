@@ -259,7 +259,6 @@ const loginUnified = async (req, res) => {
         sameSite: "strict",
         maxAge: 3600000,
       });
-      console.log("user", user.firstname);
 
     return res.status(200).json({ token, user, userType });
   } catch (error) {
