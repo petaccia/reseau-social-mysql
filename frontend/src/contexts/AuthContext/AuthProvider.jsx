@@ -48,6 +48,8 @@ const AuthProvider = ({ children }) => {
       toastError(error.message || "Une erreur est survenue 😡");
     }
   };
+
+  // Fonction pour se connecter
   const loginUnified = async (email, password) => {
     try {
       const res = await apiConnect.post("/login", { email, password });
@@ -57,6 +59,7 @@ const AuthProvider = ({ children }) => {
         setAuthUser(res.data.user);
         console.log("utilisateur connecté avec sucess", res.data.user);
         Cookies.set("token", res.data.token, { expires: 1 });
+        Cookies.set("userId", res.data.user.id, { expires: 1 });
         setIsAuthenticated(true);
         navigate("/home");
         console.log("utilisateur authentifié");
@@ -72,6 +75,7 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  // Fonction pour s'inscrire en tant que utilisateur
   const signupUser = async (familyName, username, email, password) => {
     try {
       const res = await apiConnect.post("/signup", {
@@ -94,6 +98,7 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  // Fonction pour s'inscrire en tant que administrateur de la famille
   const signupAdminFamily = async (familyName, username, email, password) => {
     try {
       const res = await apiConnect.post("/signupAdmin", {
@@ -115,16 +120,26 @@ const AuthProvider = ({ children }) => {
       throw error;
     }
   };
-  const logout = () => {
-    try {
-      setIsAuthenticated(false);
-      Cookies.remove("token");
-      navigate("/login");
-    } catch (error) {
-      console.error("logout error", error);
-    }
-  };
 
+  // Fonction pour la deconnexion
+    const logout = async () => {
+      try {
+        const res = await apiConnect.post("/logout");
+        console.log("response du serveur ", res.data);
+        if (res.status >= 200 && res.status < 300) {
+          Cookies.remove("token");
+          Cookies.remove("userId");
+          setIsAuthenticated(false);
+          navigate("/login");
+        }
+        return res.data;
+      } catch (error) {
+        console.error("error", error);
+        handleApiError(error);
+        throw error;
+      }
+    };
+      
   return (
     <AuthContext.Provider
       value={{
