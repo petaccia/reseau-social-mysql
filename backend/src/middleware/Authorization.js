@@ -1,38 +1,64 @@
-const User = require('../models/User');
-const AuthorizeFamilyAccess = async (req, res, next) => {
+const AdminFamily = require("../models/AdminFamily");
+const User = require("../models/User");
+
+const authorizeFamilyAccess = async (req, res, next) => {
   try {
-    // Vérifier si l'utilisateur est l'administrateur de la famille
-    if (req.user.userType === 'adminFamily') {
-      console.log("req.user.userType", req.user.userType);
-      // Récupérez l'ID de la famille de l'administrateur de la famille
-      const adminFamilyFamilyId = req.user.familyId;
+    const userId = req.params.userId; // Récupérer le paramètre userId de la requête
+    const adminFamilyId = req.params.adminFamily; // Récupérer le paramètre adminFamilyId de la requête
 
-      // Récupérez l'ID de la famille de l'utilisateur spécifié par userId
-      const userId = req.params.userId;
-      console.log('userId', userId);
-      const user = await User.findOne({ where: { id: userId } });
-      console.log('user', user);
-      const userFamilyId = user.familyId;
-      console.log('userFamilyId', userFamilyId);
+    console.log("User ID:", userId);
+    console.log("AdminFamily ID:", adminFamilyId);
 
-      // Vérifiez si l'administrateur de la famille a le droit d'accéder aux utilisateurs de cette famille
-      if (adminFamilyFamilyId === userFamilyId) {
-        // Si c'est le cas, autorisez l'accès
-        return next();
-      } else {
-        // Sinon, interdisez l'accès
-        return res.status(403).json({ message: 'Accès interdit' });
+    // Récupérer l'administrateur de famille actuellement connecté
+    const currentAdminFamily = req.user;
+
+    // Vérifier s'il s'agit d'un utilisateur
+    if (userId) {
+      // Rechercher l'utilisateur cible dans la base de données
+      const targetUser = await User.findByPk(userId);
+      console.log("Target user ID:", userId);
+
+      if (!targetUser) {
+        return res.status(404).json({ message: 'Utilisateur non trouvé' });
       }
-    } else {
-      // Si l'utilisateur n'est pas un administrateur de la famille, interdisez l'accès
-      return res.status(403).json({ message: 'Accès interdit' });
+
+      // Vérifier si l'administrateur de famille actuel appartient à la même famille que l'utilisateur cible
+      if (currentAdminFamily.familyId === targetUser.familyId) {
+        console.log("Current adminFamily ID:", currentAdminFamily.id);
+        // Si c'est le cas, autoriser l'accès
+        next();
+      } else {
+        // Sinon, interdire l'accès
+        res.status(403).json({ message: 'Accès interdit', reason: "L'administrateur de famille ne fait pas partie de la même famille que l'utilisateur" });
+      }
+    }
+
+    // Vérifier s'il s'agit d'un administrateur de famille
+    if (adminFamilyId) {
+      // Rechercher l'administrateur de famille cible dans la base de données
+      const targetAdminFamily = await AdminFamily.findByPk(adminFamilyId);
+      console.log("Target adminFamily ID:", adminFamilyId);
+
+      if (!targetAdminFamily) {
+        return res.status(404).json({ message: 'Administrateur de famille non trouvé' });
+      }
+
+      // Vérifier si l'administrateur de famille actuel appartient à la même famille que l'administrateur cible
+      if (currentAdminFamily.familyId === targetAdminFamily.familyId) {
+        console.log("Current adminFamily ID:", currentAdminFamily.id);
+        // Si c'est le cas, autoriser l'accès
+        next();
+      } else {
+        // Sinon, interdire l'accès
+        res.status(403).json({ message: 'Accès interdit', reason: "L'administrateur de famille ne fait pas partie de la même famille que l'administrateur cible" });
+      }
     }
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ message: "Erreur de token", error: err });
+    res.status(500).json({ message: 'Erreur de token', error: err });
   }
 };
 
 module.exports = {
-  AuthorizeFamilyAccess
+  authorizeFamilyAccess
 }
