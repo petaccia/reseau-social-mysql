@@ -4,7 +4,7 @@ import SelectUser from "../../SELECTS/selectUser/SelectUser.jsx";
 import {
   toastError,
   toastSuccess,
-} from "../../../services/Toastify/toastConfig";
+} from "../../../services/Toastify/toastConfig.jsx";
 
 const CreateMessage = ({
   currentUser,
@@ -50,10 +50,6 @@ const CreateMessage = ({
         receiverId: selectedReceiverId,
         statusRead: "sent",
       };
-      console.log("messageWithUser", messageWithUser),
-        console.log("receiverId", selectedReceiverId),
-        console.log("currentUserId", currentUser.id);
-
       await addMessage(messageWithUser);
       closeCreateMessage();
       toastSuccess("Votre message a bien été ajouté");
