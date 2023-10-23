@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import styles from "./LikeButton.module.scss";
 import { BsFillHeartFill } from "react-icons/bs";
-import { PropTypes } from "prop-types";
+import styles from "./LikeButton.module.scss";
 
-const LikeButton = ({ initiallikes = 0, initialliked = false }) => {
-  const [likes, setLikes] = useState(initiallikes);
-  const [liked, setLiked] = useState(initialliked);
+const LikeButton = () => {
+  const [likes, setLikes] = useState(0);
+  const [liked, setLiked] = useState(false);
 
   const handleLike = () => {
     setLiked(!liked);
@@ -21,11 +20,6 @@ const LikeButton = ({ initiallikes = 0, initialliked = false }) => {
       <span className={styles.likes}>Likes</span>
     </div>
   );
-};
-
-LikeButton.propTypes = {
-  initiallikes: PropTypes.number,
-  initialliked: PropTypes.bool,
 };
 
 export default LikeButton;

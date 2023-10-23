@@ -63,7 +63,7 @@ const Navbar = ({ famille }) => {
               <Link
                 to="/message?sort=unread"
                 className={styles.link}
-                onClick={() => console.log("click message")}
+                onClick={() => console.info("click message")}
               >
                 <BsFillEnvelopeFill className={styles.icon} />
                 {unreadMessagesCount > 0 && (

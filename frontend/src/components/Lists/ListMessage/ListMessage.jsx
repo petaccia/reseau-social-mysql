@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import NavbarMessage from "../../navbar/NavbarMessage/NavbarMessage.jsx";
 import Styles from "./ListMessage.module.scss";
 import MessageContext from "../../../contexts/MessageContext/MessageContext.jsx";
 import CardMessage from "../../Cards/cardMessages/CardMessage.jsx";
@@ -8,9 +10,7 @@ import {
   toastInfo,
 } from "../../../services/Toastify/toastConfig.jsx";
 import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
-import NavbarMessage from "@components/navbar/NavbarMessage/NavbarMessage";
 import UserContext from "../../../contexts/UserContext/UserContext.jsx";
-import { useLocation } from "react-router-dom";
 
 const MessageList = () => {
   const { authUser } = useContext(AuthContext);
@@ -47,7 +47,7 @@ const MessageList = () => {
   const deleteAllMessage = async () => {
     setDeleteAll(true);
     try {
-      await deleteAllMessages();
+      deleteAllMessages();
       if (messages.length > 0) {
         // Correction de la faute de frappe "lenght" à "length"
         toastSuccess("Tous les messages ont été supprimés");
@@ -60,18 +60,15 @@ const MessageList = () => {
   };
 
   const handleSearchChange = (e) => {
-    console.log("good to go", e.target.value);
     setSearchTerm(e.target.value);
   };
 
   const getFirstName = (id) => {
-    const user = users.find((user) => user.id === id);
-    return user.firstname + " " + user.lastname;
+    const foundUser = users.find((user) => user.id === id);
+    return `${foundUser.firstname} ${foundUser.lastname}`;
   };
 
   useEffect(() => {
-    console.log("useEffect for filteredMessages");
-    console.log("Current sortParams", sortParams);
     let filtered = [...messages];
 
     // Filtrage par terme de recherche
@@ -93,7 +90,6 @@ const MessageList = () => {
           (message.receiverId === authUser.id && message.status === false) ||
           message.statusRead === "unread"
       );
-      console.log("unread messages", filtered);
     }
 
     setSortedMessages(filtered);
