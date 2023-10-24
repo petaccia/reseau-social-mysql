@@ -14,7 +14,6 @@ const {
 
 // Fonction pour la création d'un compte administrateur de la famille
 const signupAdminFamily = async (req, res) => {
-  console.log("req.body", req.body);
   try {
     const { error } = AdminFamilyRegisterValidation(req.body);
     if (error) {
@@ -82,12 +81,14 @@ const signupAdminFamily = async (req, res) => {
     // Envoi du token de l'administrateur de la famille
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: "strict",
       maxAge: 3600000,
     });
 
-    return res.status(201).json({ message: "AdminFamily créé avec succès", newAdminFamily, token });
+    return res
+      .status(201)
+      .json({ message: "AdminFamily créé avec succès", newAdminFamily, token });
   } catch (error) {
     console.error("Erreur lors de l'inscription de l'AdminFamily : ", error);
     return res.status(500).json({ message: "Erreur du serveur", error });
@@ -96,7 +97,6 @@ const signupAdminFamily = async (req, res) => {
 
 // Fonction pour la création d'un utilisateur
 const signupUser = async (req, res) => {
-  console.log("req.body", req.body);
   try {
     const { error } = RegisterValidation(req.body);
     if (error) {
@@ -131,7 +131,7 @@ const signupUser = async (req, res) => {
     if (!family) {
       return res.status(404).json("La famille n'existe pas");
     }
-    
+
     // Trouver le rôle User
     const role = await Role.findOne({
       where: { name: "User" },
@@ -171,7 +171,7 @@ const signupUser = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: "strict",
       maxAge: 3600000,
     });
@@ -198,7 +198,7 @@ const loginUnified = async (req, res) => {
       .HmacSHA256(req.body.email, process.env.DB_CRYPTOJS)
       .toString();
 
-      // trouver l'administrateur de la famille dans la base de données par l'adresse e-mail
+    // trouver l'administrateur de la famille dans la base de données par l'adresse e-mail
     const userAdminFamily = await AdminFamily.findOne({
       where: { email: cryptedEmail },
     });
@@ -220,16 +220,15 @@ const loginUnified = async (req, res) => {
     // Vérifier le statut de l'utilisateur
     if (userType === "user") {
       if (user.status === "en attente") {
-        console.log("user no accepted", userType);
-        console.log("user.status in no accepted", user.status);
-        return res.status(401).json("Votre compte est en attente de validation");
-      } else if (user.status === "accepté") {
-        console.log("user accepted", userType);
-        console.log("user.status in accepted", user.status);
+        return res
+          .status(401)
+          .json("Votre compte est en attente de validation");
+      }
+      if (user.status === "accepté") {
         return res.status(200).json("Vous êtes connecté avec succès");
       }
     }
-     
+
     // Comparer le mot de passe
     const isMatch = await bcrypt.compare(req.body.password, user.password);
 
@@ -240,25 +239,24 @@ const loginUnified = async (req, res) => {
     // Envoi du token de l'utilisateur
     const token = jwt.sign(
       {
-        
-
-          id: user.id,
-          name: user.firstname,
-          email: user.email,
-          roleId: user.roleId,
-          status: user.status,
-          familyId: user.familyId,
-          userType,
+        id: user.id,
+        name: user.firstname,
+        email: user.email,
+        roleId: user.roleId,
+        status: user.status,
+        familyId: user.familyId,
+        userType,
       },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
-      );
-      
-      res.cookie("token", token, {
-        httpOnly: true,
-        sameSite: "strict",
-        maxAge: 3600000,
-      });
+    );
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 3600000,
+    });
 
     return res.status(200).json({ token, user, userType });
   } catch (error) {
@@ -269,15 +267,16 @@ const loginUnified = async (req, res) => {
 
 // Fonction pour la déconnexion de l'utilisateur
 const logout = async (req, res) => {
-  try{
-  res.clearCookie("token");
-  res.status(200).json({ message: "Utilisateur deconnecté avec_succès" });
-} catch (error) {
-  console.error("Erreur lors de la deconnexion de l'utilisateur : ", error);
-  return res.status(500).json({ message: "Erreur du serveur", error });
-}
+  try {
+    res.clearCookie("token");
+    return res
+      .status(200)
+      .json({ message: "Utilisateur deconnecté avec_succès" });
+  } catch (error) {
+    console.error("Erreur lors de la deconnexion de l'utilisateur : ", error);
+    return res.status(500).json({ message: "Erreur du serveur", error });
+  }
 };
-
 
 module.exports = {
   signupAdminFamily,

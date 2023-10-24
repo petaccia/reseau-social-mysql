@@ -11,7 +11,7 @@ const HomeAdmin = () => {
   const [familyMembers, setFamilyMembers] = useState([]);
   const [acceptedFamilyMembers, setAcceptedFamilyMembers] = useState([]);
   const [refusedFamilyMembers, setRefusedFamilyMembers] = useState([]);
-  const userConnectedId = Cookies.get("userConnetedId");
+  const userConnectedId = Cookies.get("userId");
   console.info(`userId in HomeAdmin in cookie: ${userConnectedId}`);
 
   // récupérer membres de la famille en attente de validation
@@ -100,7 +100,6 @@ const HomeAdmin = () => {
     toastError("Une erreur est survenue");
     return null;
   }, [userConnectedId]);
-
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Home Admin</h1>

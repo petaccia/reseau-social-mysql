@@ -8,7 +8,7 @@ const PrivateRoute = ({ exceptedRoutes }) => {
   if (!isAuthenticated) {
     return <Navigate to="/connexion/login" replace={true} />;
   }
-  if (exceptedRoutes && userType !== "adminFamily") {
+  if (exceptedRoutes &&  !["adminFamily", "user"].includes(userType)) {
     return <Navigate to="/home" replace={true} />;
   }
   return <Outlet />;
