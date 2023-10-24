@@ -14,8 +14,15 @@ import {
 } from "../../../services/Toastify/toastConfig.jsx";
 import DeleteMessage from "../../Messages/DeleteMessage/DeleteMessage.jsx";
 
-const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage, currentUser, updateViewStatus }) => {
-// Etat pour savoir si le message est ouvert
+const CardMessage = ({
+  message,
+  deleteMessage,
+  deleteAll,
+  sendMessage,
+  currentUser,
+  updateViewStatus,
+}) => {
+  // Etat pour savoir si le message est ouvert
   const [isMessageOpen, setIsMessageOpen] = useState(false);
 
   // Overture des boutons d'actions
@@ -27,10 +34,8 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage, currentUs
   // Text de Reply
   const [replyText, setReplyText] = useState("");
 
-  
-    // supprimer un message avec l'animation
-    const [deleteCard, setDeleteCard] = useState(false);
-
+  // supprimer un message avec l'animation
+  const [deleteCard, setDeleteCard] = useState(false);
 
   // Ouvrir les menu d'actions
   const toggleOpen = () => setOpen(!open);
@@ -44,20 +49,20 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage, currentUs
   const replyTextHandler = (e) => {
     setReplyText(e.target.value);
   };
-// Status pour savoir si le message est lu ou non
+  // Status pour savoir si le message est lu ou non
   const checkStatusInfo = () => {
     setIsMessageOpen(true);
     setDeleteCard(false);
     if (message.senderId !== currentUser.id && !message.status) {
-        // Mettre à jour le status de la visualisation de lecture  d'un message
-        updateViewStatus(message.id, true);
+      // Mettre à jour le status de la visualisation de lecture  d'un message
+      updateViewStatus(message.id, true);
     }
   };
 
-  //Empêcher la propagation de l'événement action sur le bouton
+  // Empêcher la propagation de l'événement action sur le bouton
   const handleActionClick = (e) => {
-    toggleOpen();
-  }
+    toggleOpen(e);
+  };
 
   // Fermeture de la modal de réponse
   const closeReplyModal = () => {
@@ -78,55 +83,51 @@ const CardMessage = ({ message, deleteMessage, deleteAll, sendMessage, currentUs
     }, 800);
   };
 
-
   return (
     // <div className={Styles.containerCardMessage}>
     <div className={Styles.containerCard} onClick={checkStatusInfo}>
-      <div className={`${Styles.card} ${
+      <div
+        className={`${Styles.card} ${
           deleteCard || deleteAll ? Styles.animateOut : ""
         }`}
       >
-        { message.senderId === currentUser.id &&
-      <ReadStatusMessageReceiver messageStatus={message.statusRead}></ReadStatusMessageReceiver>
-        }
-      <DeleteMessage
-        onDelete={handleDelete}
-      
-      />
-      {/* Composant de la card du status du message */}
-      { message.senderId !== currentUser.id &&
-        <MessageStatus 
-        check={message.status}
-        showStoast={isMessageOpen}
+        {message.senderId === currentUser.id && (
+          <ReadStatusMessageReceiver
+            messageStatus={message.statusRead}
+          ></ReadStatusMessageReceiver>
+        )}
+        <DeleteMessage onDelete={handleDelete} />
+        {/* Composant de la card du status du message */}
+        {message.senderId !== currentUser.id && (
+          <MessageStatus check={message.status} showStoast={isMessageOpen} />
+        )}
+
+        <MessageBody
+          message={message}
+          title={message.title}
+          description={message.description}
         />
-      }
-        
-      <MessageBody
-        message={message}
-        title={message.title}
-        description={message.description}
-      />
-      <MessageFooter messageUser={message} />
-      <MessageAction
-        onReply={openReplyModal}
-        toggleOpen={handleActionClick}
-        open={open}
-        onDelete={handleDelete}
-      />
-      <ReplyModal
-        isReplyModalOpen={isReplyModalOpen}
-        closeReplyModal={closeReplyModal}
-        replyTextHandler={replyTextHandler}
-        title={message.title}
-        description={message.description}
-        message={message}
-        check={message.status}
-        sender={message.senderId}
-        receiver={message.receiverId}
-        replyText={replyText}
-        sendMessage={sendMessage}
-      />
-    </div>
+        <MessageFooter messageUser={message} />
+        <MessageAction
+          onReply={openReplyModal}
+          toggleOpen={handleActionClick}
+          open={open}
+          onDelete={handleDelete}
+        />
+        <ReplyModal
+          isReplyModalOpen={isReplyModalOpen}
+          closeReplyModal={closeReplyModal}
+          replyTextHandler={replyTextHandler}
+          title={message.title}
+          description={message.description}
+          message={message}
+          check={message.status}
+          sender={message.senderId}
+          receiver={message.receiverId}
+          replyText={replyText}
+          sendMessage={sendMessage}
+        />
+      </div>
     </div>
   );
 };

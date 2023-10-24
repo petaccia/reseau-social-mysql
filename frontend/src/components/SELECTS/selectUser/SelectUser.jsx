@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import Styles from "./selectUser.module.scss";
+import Styles from "./SelectUser.module.scss";
 import UserContext from "../../../contexts/UserContext/UserContext.jsx";
 
 const SelectUser = ({ onChange, value }) => {

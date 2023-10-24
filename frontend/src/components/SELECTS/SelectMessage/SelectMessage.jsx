@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import Styles from "./SelectMessage.module.scss";
 import OptionMessageDate from "../../OPTIONSELECT/OptionMessageDate/OptionMessageDate.jsx";
 import OptionMessageInProgress from "../../OPTIONSELECT/OptionMessageInProgress/OptionMessageInProgress.jsx";
-import OptionMessageSent from "../../OPTIONSELECT/OptionMessageSent/OptionMessageSent";
-import OptionMessageReceiver from "../../OPTIONSELECT/OptionMessageReceiver/OptionMessageReceiver";
-import OptionMessageRead from "../../OPTIONSELECT/OptionMessageRead/OptionMessageRead";
-import OptionMessageUnread from "../../OPTIONSELECT/OptionMessageUnread/OptionMessageUnread.jsx";
-import OptionMessageRecipient from "../../OPTIONSELECT/OptionMessageRecipient/OptionMessageRecipient";
+import OptionMessageSent from "../../OPTIONSELECT/OptionMessageSent/OptionMessageSent.jsx";
+import OptionMessageReceiver from "../../OPTIONSELECT/OptionMessageReceiver/OptionMessageReceiver.jsx";
+import OptionMessageRead from "../../OPTIONSELECT/OptionMessageRead/OptionMessageRead.jsx";
+import OptionMessageUnread from "../../OPTIONSELECT/optionMessageUnread/OptionMessageUnread.jsx";
+import OptionMessageRecipient from "../../OPTIONSELECT/OptionMessageRecipient/OptionMessageRecipient.jsx";
 import UserContext from "../../../contexts/UserContext/UserContext.jsx";
 import OptionMessgeSender from "../../OPTIONSELECT/OptionMessageSender/OptionMessageSender.jsx";
 import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
@@ -16,13 +16,13 @@ const SelectMessage = ({ onSort, messages }) => {
   const { authUser } = useContext(AuthContext);
 
   const getRecipient = (receiverId) => {
-    const user = users.find((user) => user.id === receiverId);
-    return user.firstname + " " + user.lastname;
+    const recipientUser = users.find((user) => user.id === receiverId);
+    return `${recipientUser.firstname} ${recipientUser.lastname}`;
   };
 
   const getSender = (senderId) => {
-    const user = users.find((user) => user.id === senderId);
-    return user.firstname + " " + user.lastname;
+    const senderUser = users.find((user) => user.id === senderId);
+    return `${senderUser.firstname} ${senderUser.lastname}`;
   };
   const sortByDate = (order) => {
     let sorted = [...messages];
@@ -46,8 +46,7 @@ const SelectMessage = ({ onSort, messages }) => {
       case "received":
         sorted = sorted.filter((message) => {
           return (
-            (message.receiverId === authUser.id &&
-              message.status === false) ||
+            (message.receiverId === authUser.id && message.status === false) ||
             message.statusRead === "delivered"
           );
         });
@@ -60,8 +59,7 @@ const SelectMessage = ({ onSort, messages }) => {
       case "unread":
         sorted = sorted.filter((message) => {
           return (
-            (message.receiverId === authUser.id &&
-              message.status === false) ||
+            (message.receiverId === authUser.id && message.status === false) ||
             message.statusRead === "unread"
           );
         });
@@ -80,6 +78,8 @@ const SelectMessage = ({ onSort, messages }) => {
           return senderA.localeCompare(senderB);
         });
         break;
+      default:
+        throw new Error(`Unexpected order: ${order} `);
     }
     onSort(sorted);
   };

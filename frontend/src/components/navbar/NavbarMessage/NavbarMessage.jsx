@@ -16,20 +16,10 @@ const NavbarMessage = ({
   searchTerm,
   handleSearchChange,
 }) => {
-
-
-
-
   return (
     <div className={Styles.containerNavbar}>
       <div className={Styles.buttonContainer}>
-        <SearchInput 
-        onChange={handleSearchChange}
-        value={searchTerm}
-        
-
-
-        /> 
+        <SearchInput onChange={handleSearchChange} value={searchTerm} />
         <button className={Styles.button} onClick={openCreateMessage}>
           Ajouter un message
         </button>
@@ -37,10 +27,7 @@ const NavbarMessage = ({
           Supprimer tous les messages
         </button>
       </div>
-     <SelectMessage 
-     messages={messages}
-     onSort={onSort}
-        />
+      <SelectMessage messages={messages} onSort={onSort} />
       <CreateMessage
         addMessage={addMessage}
         currentUser={currentUser}

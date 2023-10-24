@@ -22,7 +22,6 @@ const ProfilUser = () => {
   const [isModalOpenPassword, setIsModalOpenPassword] = useState(false);
   const [isModalOpenEmail, setIsModalOpenEmail] = useState(false);
 
-
   const handleChange = (place, value) => {
     const newDataUser = { ...data };
     newDataUser[place] = value;
@@ -41,12 +40,15 @@ const ProfilUser = () => {
 
     // Ajouter les autres data de user à l'objet FormData
     for (const key in data) {
-      formData.append(key, data[key]);
+      if (Object.prototype.hasOwnProperty.call(data, key)) {
+        if (key !== "image") {
+          formData.append(key, data[key]);
+        }
+      }
     }
-
     try {
       const response = await apiConnect.put(
-        "/user/" + currentUser.id,
+        `/user/${currentUser.id}`,
         formData,
         {
           headers: {
