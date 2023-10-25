@@ -75,25 +75,29 @@ const Home = () => {
   ];
 
   return (
-    <div className={styles.home}>
-      <div className={styles.posts}>
-        <h1 className={styles.title}>Story</h1>
-        <div className={styles.carousel}>
-          <CarouselHomeStory />
+    <div className={styles.desktop}>
+      <div className={styles.home}>
+        <div className={styles.posts}>
+          <h1 className={styles.title}>Story</h1>
+          <div className={styles.carousel}>
+            <CarouselHomeStory />
+          </div>
+          {posts.map((post) => (
+            <CardPost
+              key={post.id}
+              title={post.title}
+              content={post.content}
+              image={post.image}
+            />
+          ))}
         </div>
-        {posts.map((post) => (
-          <CardPost
-            key={post.id}
-            title={post.title}
-            content={post.content}
-            image={post.image}
-          />
-        ))}
-      </div>
-      <div className={styles.userList}>
-        <ListUser users={users} />
+        <div className={styles.userList}>
+          <ListUser users={users} />
+        </div>
       </div>
     </div>
+
+
   );
 };
 

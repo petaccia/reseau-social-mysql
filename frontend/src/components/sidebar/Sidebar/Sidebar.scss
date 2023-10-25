@@ -1,0 +1,88 @@
+@import "../../../style/variables";
+
+.contSidebar {
+  background-color: #10131e;
+  border-right: 1px solid $border-color;
+  transition: all 0.5s;
+  z-index: 2;
+
+  &.open {
+    width: 14rem;
+    transition: all 0.5s;
+  }
+
+  &.close {
+    width: 5rem;
+  }
+
+  // Ajoutez vos styles pour les icônes et le menu ici
+  .toggleIcon {
+    font-size: 25px;
+  }
+
+  .logoImg {
+    width: 12rem;
+  }
+
+  .menu {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+  .link {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    transition: all 0.5s;
+    
+    &.open {
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    &.close {
+      display: flex;
+      justify-content: center;
+    }
+    
+    &:hover {
+      width: 100%;
+      background-color: #0824a1;
+      transition: all 0.8s;
+    }
+    
+    &.active {
+      background-color: #0b3fc3;
+      color: #fff;
+    
+      .link_text {
+        color: #fff;
+      }
+    }
+    
+    .icon {
+      font-size: 30px;
+    }
+    
+    .link_text {
+      color: #69c0ef;
+    }
+    
+    .logoutIcon {
+      font-size: 30px;
+      color: #0b3fc3;
+    
+      &:hover {
+        color: #69c0ef;
+      }
+    }
+    
+    .logoutText {
+      color: #0b3fc3;
+    
+      &:hover {
+        color: #69c0ef;
+      }
+    }
+  }
+}
