@@ -7,108 +7,114 @@ import {
   FcBusinessman,
 } from "react-icons/fc";
 import { IoLogOutOutline } from "react-icons/io5";
-import { NavLink, useLocation, Link } from "react-router-dom";
-import Styles from "./Sidebar.module.scss";
+import { NavLink, Link } from "react-router-dom";
+import "./Sidebar.scss";
 import logo from "../../../assets/Logo/logo_noir.png";
 import AuthContext from "../../../contexts/AuthContext/AuthContext.jsx";
 
 const Sidebar = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
   const { logout, userType } = useContext(AuthContext);
   const toggle = () => setIsOpen(!isOpen);
-  const menuItem = [
-    {
-      path: "/home",
-      name: "home",
-      icon: <FcHome />,
-    },
-    {
-      path: "/profil",
-      name: "Profile",
-      icon: <FcPortraitMode />,
-    },
-    {
-      path: "/contact",
-      name: "Contact",
-      icon: <FcFeedback />,
-    },
-    {
-      path: "/homeAdmin",
-      name: "Acceuil admin",
-      icon: <FcBusinessman />,
-      adminOnly: true,
-    },
-  ];
-  const logoutItem = {
-    path: "/connexion/logout",
-    name: "Déconnexion",
-    icon: <IoLogOutOutline />,
-  };
+
 
   const handleLogout = () => {
     logout();
   };
 
   return (
-    <div className={Styles.container}>
-      <div
-        style={{
-          width: isOpen ? "13rem" : "4rem",
-          position: isOpen ? "fixed" : "",
-        }}
-        className={Styles.sidebar}
-      >
-        <div className={Styles.top_section}>
-          <div className={Styles.logoContainer}>
+    <div
+      className={`contSidebar d-none d-md-block lg h-100 .bg-primary-subtle position-fixed z-3 top-0  ${
+        isOpen ? "open" : "close"
+      }`}
+    >
+      <div className={`sidebar   ${isOpen ? "open" : "close"}`}>
+        <div className="toggle-container w-100 d-flex justify-content-end align-items-center mb-3 p-2">
+          <FcMenu size={30} onClick={toggle} className="toggleIcon " />
+        </div>
+        <div className="topbar d-flex flex-column align-items-center ">
+          <div className="logo w-100 d-flex align-items-center flex-column-reverse top-0 pb-2  ">
             <Link to="/home">
               <img
                 src={logo}
                 style={{ display: isOpen ? "block" : "none" }}
-                className={Styles.logo}
+                className="logoImg"
                 alt="logo"
               />
             </Link>
-            <div
-              style={{ marginLeft: isOpen ? "8rem" : "0px" }}
-              className={Styles.bars}
-            >
-              <FcMenu onClick={toggle} />
-            </div>
           </div>
-          <div className={Styles.iconContainer}>
-            {menuItem.map(
-              (item, index) =>
-                (!item.adminOnly ||
-                  (item.adminOnly && userType === "adminFamily")) && (
-                  <NavLink
-                    to={item.path}
-                    key={index}
-                    className={`${Styles.link} ${
-                      location.pathname === item.path ? Styles.active : ""
-                    }`}
-                  >
-                    <div className={Styles.icon}>{item.icon}</div>
-                    <div
-                      style={{ display: isOpen ? "block" : "none" }}
-                      className={Styles.link_text}
-                    >
-                      {item.name}
-                    </div>
-                  </NavLink>
-                )
+          <div className="menu w-100 d-flex flex-column align-items-center  ">
+            <NavLink
+              to="/home"
+              className={`link link-hover bg- w-100  p-2 text-decoration-none  ${
+                isOpen ? "open" : "close"
+              }`}
+            >
+              <div className="icon">
+                <FcHome size={30} />
+              </div>
+              <div
+                style={{ display: isOpen ? "block" : "none" }}
+                className="link_text p-2"
+              >
+                Home
+              </div>
+            </NavLink>
+            <NavLink
+              to="/profil"
+              className={`link link-hover bg- w-100  p-2 text-decoration-none  ${
+                isOpen ? "open" : "close"
+              }`}
+            >
+              <div className="icon">
+                <FcPortraitMode size={30} />
+              </div>
+              <div
+                style={{ display: isOpen ? "block" : "none" }}
+                className="link_text p-2"
+              >
+                Profile
+              </div>
+            </NavLink>
+            <NavLink
+              to="/contact"
+              className={`link link-hover bg- w-100  p-2 text-decoration-none  ${
+                isOpen ? "open" : "close"
+              }`}
+            >
+              <div className="icon">
+                <FcFeedback size={30} />
+              </div>
+              <div
+                style={{ display: isOpen ? "block" : "none" }}
+                className="link_text p-2"
+              >
+                Contact
+              </div>
+            </NavLink>
+            {userType === "adminFamily" && (
+              <NavLink
+                to="/homeAdmin"
+                className={`link link-hover bg- w-100  p-2 text-decoration-none  ${
+                  isOpen ? "open" : "close"
+                }`}
+              >
+                <div className="icon">
+                  <FcBusinessman size={30} />
+                </div>
+                <div
+                  style={{ display: isOpen ? "block" : "none" }}
+                  className="link_text p-2"
+                >
+                  Acceuil admin
+                </div>
+              </NavLink>
             )}
           </div>
         </div>
-        <NavLink
-          to={logoutItem.path}
-          className={`${Styles.link_Logout}${
-            location.pathname === logoutItem.path ? Styles.active : ""
-          }`}
-          onClick={handleLogout}
-        >
+        <NavLink to="/connexion/logout" className="link" onClick={handleLogout}>
           <div
-            className={Styles.ContainerIconLogout}
+            className="logout d-flex align-items-center justify-content-center"
             style={{
               display: isOpen ? "flex" : "flex",
               flexDirection: isOpen ? "column" : "",
@@ -118,19 +124,16 @@ const Sidebar = ({ children }) => {
               width: isOpen ? "100%" : "100%",
             }}
           >
-            <div
-              className={Styles.iconLogout}
-              style={{ display: isOpen ? "30px" : "20px" }}
-            >
-              {logoutItem.icon}
+            <div className="logoutIcon">
+              <IoLogOutOutline size={30} />
             </div>
             <div
               style={{
                 display: isOpen ? "block" : "none",
               }}
-              className={Styles.link_text_Logout}
+              className="logoutText"
             >
-              {logoutItem.name}
+              Déconnexion
             </div>
           </div>
         </NavLink>

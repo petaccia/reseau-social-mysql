@@ -47,4 +47,13 @@
       display: none;
     }
   }
+
+}
+
+// element de la page home en desktop à effacer pour voir la version mobile
+@media screen and (max-width: 768px) {
+  .desktop {
+    display: none;
+  }
+  
 }

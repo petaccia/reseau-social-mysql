@@ -9,7 +9,7 @@
   border-bottom: 1px solid #594848;
   top: 0;
   color: $primary-color;
-  z-index: 3000;
+  // z-index: 3000;
   position: sticky;
   background-color: $background-fond;
 
@@ -168,6 +168,13 @@
       }
             
       }
+    }
+  }
+
+  // Supprimer la navbar en version mobile et tablette
+  @media screen and (max-width: 768px) {
+    .navbar {
+      display: none;
     }
   }
 
