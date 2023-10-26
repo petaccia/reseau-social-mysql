@@ -15,6 +15,13 @@ const CustomRightArrowStory = ({ onClick, ...rest }) => {
         color: "#ff2afb",
         cursor: "pointer",
         zIndex: "1",
+        backgroundColor: "rgba(255, 255, 255, 0.5)", // Fond semi-transparent
+        padding: "0.5rem",
+        borderRadius: "50%", // Bouton rond
+        transition: "background-color 0.3s",
+        "&:hover": {
+          backgroundColor: "rgba(255, 255, 255, 0.8)", // Fond plus opaque au survol
+        },
       }}
     />
   );

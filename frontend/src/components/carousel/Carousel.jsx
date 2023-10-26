@@ -8,7 +8,7 @@ const CustomCarousel = ({ children, customRightArrow, customLeftArrow }) => {
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
-      items: 3,
+      items: 5,
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
