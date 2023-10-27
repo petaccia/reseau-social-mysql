@@ -1,30 +1,38 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
 import { FcSearch } from "react-icons/fc";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { BsFillEnvelopeFill } from "react-icons/bs";
-import styles from "./Navbar.module.scss";
-// import userImage from "../../assets/users/laure.jpg";
-import MessageContext from "../../contexts/MessageContext/MessageContext.jsx";
+import "./Navbar.scss";
+import {
+  Navbar,
+  Container,
+  Nav,
+  InputGroup,
+  FormControl,
+  Button,
+  OverlayTrigger,
+  Tooltip,
+} from "react-bootstrap";
 import AuthContext from "../../contexts/AuthContext/AuthContext.jsx";
 import UserContext from "../../contexts/UserContext/UserContext.jsx";
+import MessageContext from "../../contexts/MessageContext/MessageContext.jsx";
 
-const Navbar = ({ famille }) => {
+const NavbarOriginal = ({ famille }) => {
   const [searchText, setSearchText] = useState("");
 
-  // Context pour recuperer le user connecté
+  // Context pour récupérer le user connecté
   const { authUser } = useContext(AuthContext);
   const { currentUser } = useContext(UserContext);
 
-  // Context pour récupérer les message de la BDD
+  // Context pour récupérer les messages de la BDD
   const { messages, getMessages } = useContext(MessageContext);
 
   useEffect(() => {
     getMessages();
   }, []);
 
-  // Calculer le nombre de message non lus
+  // Calculer le nombre de messages non lus
   const unreadMessagesCount = messages.filter(
     (message) =>
       message.receiverId === authUser.id &&
@@ -35,61 +43,71 @@ const Navbar = ({ famille }) => {
     setSearchText(e.target.value);
   };
 
+  const profileTooltip = <Tooltip id="profile-tooltip">Profil</Tooltip>;
+
+  const messageTooltip = <Tooltip id="message-tooltip">Messages</Tooltip>;
+
+  const notificationTooltip = (
+    <Tooltip id="notification-tooltip">Notifications</Tooltip>
+  );
+
   return (
-    <div className={styles.navbar}>
-      <div className={styles.container}>
-        <div className={styles.familyContainer}>
-          <span className={styles.familyName}>{famille}Petaccia</span>
-        </div>
-        <div className={styles.rightContainer}>
-          <div className={styles.searchContainer}>
-            <FcSearch alt="icon de recherche" className={styles.searchIcon} />
-            <input
+    <Navbar expand="lg" className="navbar">
+      <Container fluid className=" navContainer ">
+        <Navbar.Brand className="familyContainer d-flex justify-content-center align-items-center">
+          <span className="familyName ">{famille}Petaccia</span>
+        </Navbar.Brand>
+        <Navbar.Collapse id="basic-navbar-nav">
+          <InputGroup className="searchContainer ms-auto">
+            <FcSearch alt="icon de recherche" className="searchIcon" />
+            <FormControl
               type="search"
               value={searchText}
               onChange={handleSearch}
-              placeholder="Rechercher"
-              className={styles.searchInput}
+              placeholder="Taper votre recherche"
+              className="searchInput"
             />
-          </div>
-          <div className={styles.connectContainer}>
-            <div className={styles.iconContainer}>
-              <Link to="/notification" className={styles.link}>
+            <Button className="searchButton">Rechercher</Button>
+          </InputGroup>
+          <Nav className="ms-auto">
+            <OverlayTrigger overlay={notificationTooltip} placement="bottom">
+              <Nav.Link to="/notification" as={Link} className="link">
                 <IoMdNotificationsOutline
+                  className="icon"
+                  size={25}
                   alt="icon de notification"
-                  className={styles.icon}
                 />
-              </Link>
-              <Link
+              </Nav.Link>
+            </OverlayTrigger>
+            <OverlayTrigger overlay={messageTooltip} placement="bottom">
+              <Nav.Link
                 to="/message?sort=unread"
-                className={styles.link}
+                as={Link}
+                className="link"
                 onClick={() => console.info("click message")}
               >
-                <BsFillEnvelopeFill className={styles.icon} />
+                <BsFillEnvelopeFill className="icon" size={25} />
                 {unreadMessagesCount > 0 && (
-                  <span className={styles.bubble}>{unreadMessagesCount}</span>
+                  <span className="bubble">{unreadMessagesCount}</span>
                 )}
-              </Link>
-            </div>
-            <div className={styles.profileContainer}>
-              <div className={styles.profileTooltip}>
-                <Link to="/profilUser" className={styles.link}>
-                  <img
-                    src={`${import.meta.env.VITE_BACKEND_URL}/${
-                      currentUser.profilePicture
-                    }`}
-                    alt="avatar"
-                    className={styles.imgUser}
-                  />
-                  <div className={styles.tooltipText}>Profil</div>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+              </Nav.Link>
+            </OverlayTrigger>
+            <OverlayTrigger overlay={profileTooltip} placement="bottom">
+              <Nav.Link to="/profilUser" as={Link} className="link">
+                <img
+                  src={`${import.meta.env.VITE_BACKEND_URL}/${
+                    currentUser.profilePicture
+                  }`}
+                  alt="avatar"
+                  className="imgUser rounded-circle me-5"
+                />
+              </Nav.Link>
+            </OverlayTrigger>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };
 
-export default Navbar;
+export default NavbarOriginal;
