@@ -1,29 +1,28 @@
 import React from "react";
-import styles from "./cardUser.module.scss";
-
+import "./cardUser.scss";
+import { Card, Image, Badge, Col, Row } from "react-bootstrap";
 import oceane from "../../../assets/users/oceane.jpg";
-const CardUser = () => {
+
+const CardUser = ({ online }) => {
   return (
-    <div className={styles.container}>
-      <div className={styles.card}>
-        <div className={styles.cardImg}>
-          <img src={oceane} alt="avatar" className={styles.img} />
-          <p className={styles.textConnect}>
-            connecté
-            {/* {connected ? "connecté" : "non connecté>"} */}
-          </p>
-        </div>
-        <div className={styles.userInfo}>
-          <p className={styles.name}>Oceane</p>
-          <div
-            className={styles.indicator}
-            // style={{ backgroundColor: online ? "green" : "red" }}
-          >
-            test
+    <Card className="cardUser">
+      <Row>
+        <Col xs={12}>
+          <div className="cardImg">
+            <Image src={oceane} alt="avatar" className="img rounded-circle" />
+            <Badge bg={online ? "success" : "danger"} className="status">
+              {online ? "Connecté" : "Non Connecté"}
+            </Badge>
           </div>
-        </div>
-      </div>
-    </div>
+          <div className="userinfo">
+            <Card.Body>
+              <Card.Title className="name ">Oceane</Card.Title>
+              <Card.Text className="textConnected"></Card.Text>
+            </Card.Body>
+          </div>
+        </Col>
+      </Row>
+    </Card>
   );
 };
 
