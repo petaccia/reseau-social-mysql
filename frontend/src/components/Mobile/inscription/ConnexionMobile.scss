@@ -1,0 +1,113 @@
+@import "../../../style/variables";
+@import "../../../style/functions";
+
+.containerMobile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  .logo {
+    width: 10rem;
+    height: 10rem;
+    margin-bottom: 5px;
+    object-fit: cover;
+    display: flex;
+    justify-content: center;
+  }
+  .title {
+    color: $primary-color;
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 80%;
+    height: 20rem;
+    margin-left: 4rem;
+
+    .input {
+      width: 60%;
+      background-color: transparent;
+      outline: none;
+      border-radius: 0.5rem;
+      border: 1px solid #594848;
+      padding: 0.5rem;
+      margin-bottom: 1rem !important;
+
+      &::placeholder {
+        color: border-color;
+      }
+      color: #b9adad;
+    }
+    .checkboxAdminContainer {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      input[type="checkbox"] {
+        display: none;
+        & + label::before {
+          content: "";
+          display: inline-block;
+          width: 1rem;
+          height: 1rem;
+          border: 1px solid $border-color;
+          border-radius: 0.2rem;
+          margin-right: 0.5rem;
+          cursor: pointer;
+          vertical-align: middle;
+          background-color: transparent;
+          transition: all 0.5s;
+          position: relative;
+        }
+        &:checked + label::before {
+          background-color: transparent;
+        }
+        &:checked + label::after {
+          content: "";
+          width: 0.3rem;
+          height: 0.6rem;
+          border: solid $primary-color;
+          border-width: 0 2px 2px 0;
+          cursor: pointer;
+          transition: all 0.5s;
+          transform: rotate(45deg);
+          position: absolute;
+          top: 0.5rem;
+          left: 0.4rem;
+        }
+      }
+    }
+    .button {
+      background-color: transparent !important;
+      border: 1px solid #594848;
+      border-radius: 0.5rem;
+      padding: 0.5rem;
+      margin: 0.5rem;
+      width: 10rem;
+      margin-left: 20rem;
+      &:hover {
+        background-color: #594848;
+        color: #2aa6ff;
+      }
+    }
+  }
+  label {
+    color: $border-color;
+  }
+  .text {
+    color: $border-color;
+  }
+}
+
+.toastSuccess {
+  background-color: #2aa6ff;
+}

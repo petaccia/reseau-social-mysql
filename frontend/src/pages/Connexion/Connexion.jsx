@@ -1,206 +1,23 @@
-import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styles from "./Connexion.module.scss";
-import famille from "../../assets/illustration/famille.jpg";
-import family from "../../assets/illustration/family.jpg";
-import AuthContext from "../../contexts/AuthContext/AuthContext.jsx";
-import {
-  toastError,
-  toastSuccess,
-} from "../../services/Toastify/toastConfig.jsx";
+import React from "react";
+
+// Composant pour mobile pour la connexion
+import ConnexionMobile from "../../components/Mobile/inscription/ConnexionMobile.jsx";
+
+// Composant pour desktop pour la connexion
+import ConnexionDesktop from "../../components/Desktop/inscription/ConnexionDesktop.jsx";
 
 const Connexion = () => {
-  const { loginUnified, signupUser, signupAdminFamily } =
-    useContext(AuthContext);
-  const navigate = useNavigate();
-  const [isFamilyAdmin, setIsFamilyAdmin] = useState(false);
-  const [isLogin, setIsLogin] = useState(true);
-  const [formData, setFormData] = useState({
-    familyName: "",
-    username: "",
-    email: "",
-    password: "",
-  });
-
-  const validateFields = () => {
-    if (!formData.email || !formData.password) {
-      toastError("L'adresse mail et le mot de passe sont obligatoire 😡");
-      return false;
-    }
-    if (formData.password.length < 8) {
-      toastError("Le mot de passe doit contenir au moins 8 caractères 😡");
-      return false;
-    }
-    if (!isLogin && !formData.username) {
-      toastError("Le nom d'utilisateur est obligatoire 😡");
-      return false;
-    }
-    return true;
-  };
-
-  const handleErrors = (error) => {
-    if (error && error.status) {
-      const errorMessage = {
-        409: "Cet utilisateur existe déjà 😡",
-        400: "Email ou mot de passe incorrect 😡",
-        401: "Email ou mot de passe incorrect 😡",
-        500: "Erreur serveur",
-      };
-      toastError(errorMessage[error.status] || "Erreur serveur");
-    } else {
-      toastError(error.message);
-    }
-  };
-
-  const auth = async () => {
-    if (!validateFields()) return;
-
-    try {
-      let response;
-      if (isLogin) {
-        response = await loginUnified(formData.email, formData.password);
-      } else if (isFamilyAdmin) {
-        response = await signupAdminFamily(
-          formData.familyName,
-          formData.username,
-          formData.email,
-          formData.password
-        );
-      } else {
-        response = await signupUser(
-          formData.familyName,
-          formData.username,
-          formData.email,
-          formData.password
-        );
-      }
-
-      if (response && response.token) {
-        console.log("response du serveur ", response);
-        let name;
-        if (isLogin) {
-          name = response.user.firstname;
-        } else if (isFamilyAdmin) {
-          name = response.newAdminFamily.firstname;
-        } else if (response.newUser) {
-          name = response.newUser.firstname;
-          toastSuccess(
-            `Bienvenue ${name} ! Votre compte a été créé avec succès et en attente de validation par un administrateur familial ! 👋`
-          );
-          navigate("/login");
-          return;
-        }
-
-        toastSuccess(
-          `Bienvenue ${name} ! Vous êtes ${
-            isLogin ? "connecté" : "inscrit"
-          } ! 👋`
-        );
-        navigate("/home");
-      } else {
-        toastError("Erreur lors de la connexion ou de l'inscription 😡");
-      }
-    } catch (error) {
-      console.log("Erreur à l'auth", error);
-      handleErrors(error);
-    }
-  };
-  const switchMode = () => {
-    setIsLogin(!isLogin);
-  };
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    auth();
-  };
-
   return (
-    <div className={styles.container}>
-      <div className={styles.imageContainer}>
-        <img
-          src={isLogin ? famille : family}
-          alt="Description de l'image"
-          className={styles.image}
-        />
-        <div className={styles.buttonContainer}>
-          <button onClick={switchMode} className={styles.switchButton}>
-            {isLogin ? "S'inscrire" : "Se connecter"}
-          </button>
-          <p className={styles.switchText}>
-            {isLogin ? " Pas encore inscrit ? " : " Déja inscrit ?"}
-            <a href="#" onClick={() => setIsLogin(!isLogin)}>
-              {isLogin ? " Inscrivez-vous" : " Connectez-vous"}
-            </a>
-          </p>
-        </div>
+    <div>
+      <div className="d-md-none">
+        {" "}
+        {/* Affiche ConnexionMobile sur les écrans de petite taille */}
+        <ConnexionMobile />
       </div>
-      <div className={styles.containerCard}>
-        <h1 className={styles.title}>{isLogin ? "Login" : "Sign Up"}</h1>
-        <div className={styles.containerContact}>
-          <form onSubmit={handleSubmit} className={styles.form}>
-            {!isLogin && (
-              <>
-                <input
-                  type="text"
-                  name="familyName"
-                  placeholder="Nom de famille"
-                  onChange={handleChange}
-                  value={formData.familyName}
-                  className={styles.input}
-                  required
-                />
-                <div className={styles.checkboxAdminContainer}>
-                  <input
-                    id="adminCheckbox"
-                    type="checkbox"
-                    checked={isFamilyAdmin}
-                    onChange={() => setIsFamilyAdmin(!isFamilyAdmin)}
-                    className={styles.checkboxAdmin}
-                  />
-                  <label htmlFor="adminCheckbox">
-                    S'inscrire en tant que administrateur
-                  </label>
-                </div>
-                <input
-                  type="text"
-                  name="username"
-                  placeholder="Nom"
-                  onChange={handleChange}
-                  value={formData.username}
-                  className={styles.input}
-                />
-              </>
-            )}
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              onChange={handleChange}
-              value={formData.email}
-              className={styles.input}
-              autoComplete="current-email"
-              required
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Mot de passe"
-              onChange={handleChange}
-              value={formData.password}
-              className={styles.input}
-              autoComplete="current-password"
-              minLength="8"
-              required
-            />
-            <button type="submit" className={styles.button}>
-              {!isLogin ? "Inscrivez-vous" : "Connectez-vous"}
-            </button>
-          </form>
-        </div>
+      <div className="d-none d-md-block">
+        {" "}
+        {/* Affiche ConnexionDesktop sur les écrans de grande taille */}
+        <ConnexionDesktop />
       </div>
     </div>
   );
