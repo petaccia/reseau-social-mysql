@@ -1,34 +1,33 @@
 import React from "react";
 import { Card, Image } from "react-bootstrap";
+import "./CardStory.scss"; // Assurez-vous d'importer votre fichier CSS
+import user from "../../../assets/users/aurore.jpg";
 
 // Fonction pour écrire la 1ère lettre d'un nom en majuscule
 const capitalizeFirstLetter = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-const CardStory = ({ image, date, author }) => {
+const CardStory = ({ image, date, author, title }) => {
   return (
-    <Card
-      style={{
-        width: "15rem",
-        margin: "2.5rem",
-        borderRadius: "10px",
-        border: "1px solid #000",
-        transition: "all 0.5s",
-        cursor: "pointer",
-        boxShadow: "0px 10px 10px 3px #666565",
-        padding: "0.5rem 0.5rem 0.5rem 0.5rem",
-      }}
-    >
+    <Card className="card-story">
+      {" "}
+      {/* Ajoutez la classe card-story */}
+      <Card.Header className="card-header">
+        <img className="imgUser" src={user} alt={author} />
+        <Card.Text className="date">{date}</Card.Text>
+      </Card.Header>
       <Image
         src={image}
         className="card-img-top"
         alt="avatar"
-        style={{ height: "10rem", objectFit: "cover" }} // Ajustez la hauteur en fonction de vos besoins
+        style={{ height: "10rem", objectFit: "cover" }}
       />
-      <Card.Body>
-        <Card.Title>{capitalizeFirstLetter(author)}</Card.Title>
-        <Card.Text>{date}</Card.Text>
+      <Card.Body className="card-body">
+        <Card.Title className="author">
+          {capitalizeFirstLetter(author)}
+        </Card.Title>
+        <Card.Title className="title">{title}</Card.Title>
       </Card.Body>
     </Card>
   );
