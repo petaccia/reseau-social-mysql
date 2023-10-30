@@ -1,15 +1,15 @@
 import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 import CardStory from "../../Cards/cardStory/CardStory.jsx";
-import CustomCarousel from "../Carousel.jsx";
-import styles from "./CarouselHomeStory.module.scss";
+import "./CarouselHomeStory.scss";
 
 import chaval from "../../../assets/post/cheval.jpg";
 import requin from "../../../assets/post/requin.jpg";
 import maldive from "../../../assets/post/maldives.jpg";
 import noel from "../../../assets/post/noel.jpg";
-import CustomLeftArrowStory from "../../CustomCarousel/CustomCarouselHomeStory/CustomLeftArrowStory.jsx";
-import CustomRightArrowStory from "../../CustomCarousel/CustomCarouselHomeStory/CustomRightArrowStory .jsx";
+import CustomRightArrowComment from "../../CustomCarousel/CustomCarouselComment/CustomRightArrowComment.jsx";
+import CustomLeftArrowComment from "../../CustomCarousel/CustomCarouselComment/CustomLeftArrowComment.jsx";
 
 const CarouselHomeStory = () => {
   const stories = [
@@ -17,56 +17,97 @@ const CarouselHomeStory = () => {
       image: chaval,
       date: "12/12/2022",
       author: "Oceane",
+      title: "Histoire de cheval",
     },
     {
       image: requin,
       date: "12/12/2022",
       author: "Oceane",
+      title: "Aventure sous-marine",
     },
     {
       image: maldive,
       date: "12/12/2022",
       author: "Oceane",
+      title: "Vacances aux Maldives",
     },
     {
       image: noel,
       date: "12/12/2022",
       author: "Oceane",
+      title: "Joyeux Noël à tous!",
     },
     {
       image: chaval,
       date: "12/12/2022",
       author: "Oceane",
+      title: "Encore une histoire de cheval",
     },
     {
       image: requin,
       date: "12/12/2022",
       author: "Oceane",
+      title: "Plongée avec les requins",
     },
   ];
 
+  const responsive = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 3000 },
+      items: 6,
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1200 },
+      items: 4,
+    },
+    desktopSmall: {
+      breakpoint: { max: 1200, min: 1040 },
+      items: 2,
+    },
+    tablet: {
+      breakpoint: { max: 1040, min: 768 },
+      items: 2,
+    },
+    tabletSmall: {
+      breakpoint: { max: 768, min: 547 },
+      items: 2,
+    },
+    mobileLarge: {
+      breakpoint: { max: 546, min: 520 },
+      items: 2,
+    },
+    mobile: {
+      breakpoint: { max: 520, min: 0 },
+      items: 1,
+    },
+  };
+
   return (
-    <Container>
-      <Row>
-        <Col>
-          <div className={styles.home}>
-            <CustomCarousel
-              customLeftArrow={<CustomLeftArrowStory />}
-              customRightArrow={<CustomRightArrowStory />}
-            >
-              {stories.map((story, index) => (
-                <CardStory
-                  key={index}
-                  image={story.image}
-                  date={story.date}
-                  author={story.author}
-                />
-              ))}
-            </CustomCarousel>
-          </div>
-        </Col>
-      </Row>
-    </Container>
+    <div className="carousel-container">
+      <Carousel
+        responsive={responsive}
+        infinite={true}
+        autoPlay={true}
+        arrows={false}
+        autoPlaySpeed={4000}
+        keyBoardControl={true}
+        removeArrowOnDeviceType={["tablet", "mobile"]}
+        customRightArrow={<CustomRightArrowComment />}
+        customLeftArrow={<CustomLeftArrowComment />}
+        className="carousel"
+      >
+        {stories.map((story, index) => (
+          <CardStory
+            key={index}
+            image={story.image}
+            title={story.title}
+            date={story.date}
+            author={story.author}
+            className="card-story"
+          />
+        ))}
+      </Carousel>
+    </div>
   );
 };
 

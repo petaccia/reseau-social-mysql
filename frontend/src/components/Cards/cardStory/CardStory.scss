@@ -1,0 +1,61 @@
+/* CardStory.scss */
+@import '../../../style/variables';
+.card-story {
+  width: 100%;
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  margin: 3.5rem 2.5rem;
+  transition: all 0.5s;
+  cursor: pointer;
+  box-shadow: 0px 10px 10px 0px $primary-color;
+  background-color: $background-fond;
+  
+  &:hover {
+    transform: scale(1.1);
+  }
+  
+  .card-header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: $background-fond;
+    .imgUser {
+      width: 2rem;
+      height: 2rem;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+    }
+    .date {
+      font-size: 12px;
+      font-weight: 500;
+      color: $title-message;
+    }
+  }
+    
+    
+    .card-body{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: $background-fond;
+    .author {
+      font-size: 12px;
+      font-weight: 500;
+      color: $secondary-color;
+    }
+
+    .title {
+    font-size: 14px;
+    font-weight: bold;
+    color: $primary-color;
+    }
+  }
+}
