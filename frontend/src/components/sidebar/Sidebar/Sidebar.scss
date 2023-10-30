@@ -4,7 +4,8 @@
   background-color: #10131e;
   border-right: 1px solid $border-color;
   transition: all 0.5s;
-  z-index: 2;
+  margin-top: 6rem;
+  
 
   &.open {
     width: 14rem;

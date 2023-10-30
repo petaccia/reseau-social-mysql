@@ -1,92 +1,77 @@
-import { useState } from "react";
-import { BiComment } from "react-icons/bi";
-import { RiSendPlaneFill } from "react-icons/ri";
-import styles from "./CardPost.module.scss";
-
+import React, { useState } from "react";
+import { BiComment, BiShare } from "react-icons/bi";
+import Card from "react-bootstrap/Card";
+import InputGroup from "react-bootstrap/InputGroup";
+import FormControl from "react-bootstrap/FormControl";
+import "./CardPost.scss";
 import LikeButton from "../../CARDPOST/LikeButton/LikeButton.jsx";
-import CommentList from "../../CARDPOST/commentList/CommentList.jsx";
-import CommentInput from "../../CARDPOST/commentInput/CommentInput.jsx";
-
-import oceane from "../../../assets/users/oceane.jpg";
 
 const CardPost = ({ image }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [showComments, setShowComments] = useState("");
 
-  const [commentList, setCommentList] = useState([]);
-
-  // Change title
   const handleChangeTitle = (e) => {
     setTitle(e.target.value);
   };
 
-  // Change content
   const handleChangeContent = (e) => {
     setContent(e.target.value);
   };
 
-  // Send comment
-  const handleSendComment = (comment) => {
-    const newComment = {
-      id: commentList.length + 1,
-      user: { name: "user1", image: oceane },
-      content: comment,
-    };
-    setCommentList((prevCommentList) => [...prevCommentList, newComment]);
-  };
-
-  const handleShare = () => {
-    // implantaion de la logique de partage
-    // utiliser un systeme de permissin pour savoir si l'utilisateur peut partager ou pas
-  };
-
   return (
-    <div className={styles.card}>
-      <div
-        className={`${styles.cardContainer} ${
-          !showComments ? styles.showComments : ""
-        } `}
-      >
-        <img src={image} className={styles["card-img-top"]} alt="..." />
-        <input
-          className={styles["card-title"]}
-          type="text"
-          value={title}
-          onChange={handleChangeTitle}
-          placeholder="Taper votre Titre"
-        />
-        <textarea
-          className={styles["card-text"]}
-          type="text"
-          value={content}
-          onChange={handleChangeContent}
-          placeholder="Enter votre contenu"
-        />
-
-        <div className={styles.containerIcons}>
-          <LikeButton initiallikes={0} initialliked={false} />
-          <div
-            className={styles.containerComment}
-            onClick={() => setShowComments(!showComments)}
-          >
-            {commentList.length}
-            <BiComment className={styles.icon} />
-            <span className={styles.comment}>Comment</span>
-          </div>
-          <div className={styles.containerShare}>
-            <RiSendPlaneFill className={styles.icon} />
-            <span className={styles.share}>Share</span>
-          </div>
+    <Card className="card-post mb-5">
+      <Card.Img src={image} alt="Card-image" />
+      <div className="card-body-post d-flex justify-content-around align-items-center ">
+        <div className="button" role="button">
+          <LikeButton />
         </div>
-        {showComments && (
-          <div className={styles["card-body"]}>
-            <CommentList comments={commentList} />
-            <CommentInput onSend={handleSendComment} />
-          </div>
-        )}
+        <div className="button" role="button">
+          <BiComment size={18} />
+          <span className="title mx-2">Comment</span>
+        </div>
+        <div className="button" role="button">
+          <BiShare size={18} />
+          <span className="title mx-2">Share</span>
+        </div>
       </div>
-    </div>
+
+      <Card.Body className="card-body-post">
+        <Card.Title
+          className="
+        card-title-post
+        text-center
+        font-weight-bold
+        text-uppercase
+        mb-3
+        mt-3
+        "
+        >
+          Title
+        </Card.Title>
+        <InputGroup className="mb-3">
+          <FormControl
+            type="text"
+            value={title}
+            onChange={handleChangeTitle}
+            placeholder="Taper votre Titre"
+            style={{ width: "100%" }}
+            required
+            className="form-control"
+          />
+        </InputGroup>
+        <Card.Title className="card-title-post text-center font-weight-bold text-uppercase">
+          Content
+        </Card.Title>
+        <InputGroup>
+          <FormControl
+            as="textarea"
+            value={content}
+            onChange={handleChangeContent}
+            placeholder="Enter votre contenu"
+          />
+        </InputGroup>
+      </Card.Body>
+    </Card>
   );
 };
 
