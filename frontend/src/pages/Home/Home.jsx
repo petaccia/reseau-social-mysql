@@ -1,7 +1,7 @@
 import React from "react";
 import CarouselHomeStory from "../../components/carousel/CarouselHomeStory/CarouselHomeStory.jsx";
 import ListUser from "../../components/Lists/listUser/ListUser.jsx";
-import styles from "./Home.module.scss";
+import "./Home.scss";
 import CardPost from "../../components/Cards/cardPost/CardPost.jsx";
 import cheval from "../../assets/post/cheval.jpg";
 import requin from "../../assets/post/requin.jpg";
@@ -75,11 +75,11 @@ const Home = () => {
   ];
 
   return (
-    <div className={styles.desktop}>
-      <div className={styles.home}>
-        <div className={styles.posts}>
-          <h1 className={styles.title}>Story</h1>
-          <div className={styles.carousel}>
+    <div className="desktop">
+      <div className="home">
+        <div className="posts">
+          <h1 className="title">Story</h1>
+          <div className="carousel">
             <CarouselHomeStory />
           </div>
           {posts.map((post) => (
@@ -91,7 +91,7 @@ const Home = () => {
             />
           ))}
         </div>
-        <div className={styles.userList}>
+        <div className="usersList">
           <ListUser users={users} />
         </div>
       </div>

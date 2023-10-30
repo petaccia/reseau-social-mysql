@@ -3,7 +3,7 @@ import "react-multi-carousel/lib/styles.css";
 import CustomLeftArrowComment from "../../CustomCarousel/CustomCarouselComment/CustomLeftArrowComment.jsx";
 import CustomRightArrowComment from "../../CustomCarousel/CustomCarouselComment/CustomRightArrowComment.jsx";
 import CardComment from "../../Cards/cardComment/CardComment.jsx";
-import CustomCarousel from "../Carousel.jsx";
+// import CustomCarousel from "../Carousel.jsx";
 
 const CarouselComment = ({ comments }) => {
   // Créer un tableau unique des utilisateurs
