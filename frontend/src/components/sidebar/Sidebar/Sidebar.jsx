@@ -24,7 +24,7 @@ const Sidebar = ({ children }) => {
 
   return (
     <div
-      className={`contSidebar d-none d-md-block lg h-100 .bg-primary-subtle position-fixed z-3 top-0  ${
+      className={`contSidebar d-none d-md-block lg h-100 .bg-primary-subtle position-fixed  z-1  top-0  ${
         isOpen ? "open" : "close"
       }`}
     >
@@ -120,7 +120,7 @@ const Sidebar = ({ children }) => {
               flexDirection: isOpen ? "column" : "",
               alignItems: isOpen ? "center" : "center",
               position: isOpen ? "absolute" : "absolute",
-              bottom: isOpen ? "20px" : "20px",
+              bottom: isOpen ? "10rem" : "10rem",
               width: isOpen ? "100%" : "100%",
             }}
           >
