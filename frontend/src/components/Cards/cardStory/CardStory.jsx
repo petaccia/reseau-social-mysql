@@ -11,6 +11,8 @@ const capitalizeFirstLetter = (str) => {
 const CardStory = ({ image, date, author, title }) => {
   return (
     <Card className="card-story">
+      {" "}
+      {/* Ajoutez la classe card-story */}
       <Card.Header className="card-header">
         <img className="imgUser" src={user} alt={author} />
         <Card.Text className="date">{date}</Card.Text>
