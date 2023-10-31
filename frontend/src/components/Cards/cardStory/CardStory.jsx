@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Image } from "react-bootstrap";
-import "./CardStory.scss"; // Assurez-vous d'importer votre fichier CSS
+import "./CardStory.scss";
 import user from "../../../assets/users/aurore.jpg";
 
 // Fonction pour écrire la 1ère lettre d'un nom en majuscule

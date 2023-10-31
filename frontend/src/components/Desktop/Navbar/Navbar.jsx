@@ -11,7 +11,7 @@ import {
 import { FcSearch } from "react-icons/fc";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { BsFillEnvelopeFill } from "react-icons/bs";
-import userImage from "../../assets/users/aurore.jpg";
+import userImage from "../../../assets/users/aurore.jpg";
 import "./Navbar.scss";
 
 const NavbarOriginal = ({ famille }) => {
