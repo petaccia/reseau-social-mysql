@@ -16,7 +16,7 @@ import "./Navbar.scss";
 
 const NavbarOriginal = ({ famille }) => {
   return (
-    <Navbar className="navbar d-none d-md-block" expand="lg">
+    <Navbar className="navbar d-none d-md-block position-fixed z-3" expand="lg">
       <Container fluid className="">
         <Row className="navbarContent">
           <Col md={3} xs={12}>
