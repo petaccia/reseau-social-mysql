@@ -1,14 +1,12 @@
 import React from "react";
+import CarouselHomeStory from "../../carousel/CarouselHomeStory/CarouselHomeStory.jsx";
+import ListUser from "../../Lists/listUser/ListUser.jsx";
 import "./HomeDesktop.scss";
-
-import { Col, Container, Row } from "react-bootstrap";
+import CardPost from "../../Cards/cardPost/CardPost.jsx";
 import cheval from "../../../assets/post/cheval.jpg";
 import requin from "../../../assets/post/requin.jpg";
 import maldive from "../../../assets/post/maldives.jpg";
 import noel from "../../../assets/post/noel.jpg";
-import CarouselHomeStory from "../../carousel/CarouselHomeStory/CarouselHomeStory.jsx";
-import CardPost from "../../Cards/cardPost/CardPost.jsx";
-import ListUser from "../../Lists/listUser/ListUser.jsx";
 
 const HomeDesktop = () => {
   const posts = [
@@ -77,9 +75,9 @@ const HomeDesktop = () => {
   ];
 
   return (
-    <Container fluid className="home-desktop">
-      <Row>
-        <Col xs={12} lg={8} className="story-column">
+    <div className="desktop">
+      <div className="home">
+        <div className="posts">
           <h1 className="title">Story</h1>
           <div className="carousel">
             <CarouselHomeStory />
@@ -92,15 +90,13 @@ const HomeDesktop = () => {
               image={post.image}
             />
           ))}
-        </Col>
-        <Col xs={12} lg={4} className="users-column border">
-          <h1 className="title">Users</h1>
-          <div className="list-user">
-            <ListUser users={users} />
-          </div>
-        </Col>
-      </Row>
-    </Container>
+        </div>
+        <div className="usersList">
+          <ListUser users={users} />
+        </div>
+      </div>
+    </div>
   );
 };
+
 export default HomeDesktop;
