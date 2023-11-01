@@ -1,10 +1,11 @@
 import React from "react";
 import logo from "../../../assets/Logo/logo_noir.png";
+import "./Logo.scss";
 
 const Logo = () => {
   return (
-    <div>
-      <img src={logo} alt=" symbol du logo" />
+    <div className="logo-container">
+      <div className="logo" style={{ backgroundImage: `url(${logo})` }}></div>
     </div>
   );
 };
