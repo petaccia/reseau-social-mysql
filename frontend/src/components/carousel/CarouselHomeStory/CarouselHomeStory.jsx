@@ -54,32 +54,45 @@ const CarouselHomeStory = () => {
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
+      items: 8,
+    },
+    desktopLarge: {
+      breakpoint: { max: 3000, min: 2000 },
+      items: 7,
+    },
+    desktopMedium: {
+      breakpoint: { max: 2000, min: 1400 },
       items: 6,
     },
     desktop: {
-      breakpoint: { max: 3000, min: 1200 },
-      items: 4,
+      breakpoint: { max: 1400, min: 1200 },
+      items: 5,
     },
     desktopSmall: {
       breakpoint: { max: 1200, min: 1040 },
-      items: 2,
+      items: 4,
     },
     tablet: {
       breakpoint: { max: 1040, min: 869 },
-      items: 2,
+      items: 4,
     },
     tabletSmall: {
       breakpoint: { max: 868, min: 547 },
-      items: 1,
+      items: 3,
     },
     mobileLarge: {
-      breakpoint: { max: 546, min: 520 },
-      items: 1,
+      breakpoint: { max: 767, min: 576 },
+      items: 5,
     },
     mobile: {
-      breakpoint: { max: 520, min: 0 },
-      items: 1,
+      breakpoint: { max: 576, min: 361 },
+      items: 4,
     },
+    mobileSmall: {
+      breakpoint: { max: 360, min: 0 },
+      items: 3,
+    },
+
   };
 
   return (
