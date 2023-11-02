@@ -1,0 +1,9 @@
+@import "../../../style/variables";
+
+.listUserContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.cardMobileListUser {
+  box-shadow: 0px 20px 20px 0px $primary-color;
+}
