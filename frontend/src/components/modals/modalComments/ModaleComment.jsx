@@ -55,7 +55,7 @@ const CommentsModal = ({ handleClose }) => {
     <Modal
       show={true}
       onHide={handleClose}
-      className="w-100 h-75 top-50 start-50 translate-middle mt-5 overflow-auto"
+      className=" modal-commentUsers w-100 h-75 top-50 start-50 translate-middle mt-5 overflow-auto"
     >
       <Modal.Header
         closeButton

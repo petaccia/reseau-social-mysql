@@ -1,25 +1,32 @@
 @import "../../../style/variables";
 
-.modal-body {
-  background-color: #10131e;
-  .comment-modal {
-    background-color: $background-fond;
 
-    .containerInfoUser {
-      .container-imageUser-comment {
-        box-shadow: 0px 5px 10px 3px #0b12db;
-        background-color: $background-fond;
-        .image-modal-commentUser {
-          width: 40px !important;
-          height: 40px !important;
-          background-size: cover;
-          
+.modal-commentUsers::-webkit-scrollbar {
+  display: none;
+}
+  
+
+  .modal-body {
+    background-color: #10131e;
+    .comment-modal {
+      background-color: $background-fond;
+      
+      .containerInfoUser {
+        .container-imageUser-comment {
+          box-shadow: 0px 5px 10px 3px #0b12db;
+          background-color: $background-fond;
+          .image-modal-commentUser {
+            width: 40px !important;
+            height: 40px !important;
+            background-size: cover;
+            
+          }
         }
       }
-    }
-
+      
       .modal-footer-commentUser {
         background-color: $background-fond !important;
       }
+    }
   }
-}
+  
