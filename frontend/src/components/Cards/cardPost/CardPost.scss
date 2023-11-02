@@ -1,32 +1,39 @@
 @import "../../../style/variables";
-.card {
-  width: 50%;
-  height: 200px;
-  background-color: $background-fond;
-}
-.card-image{
- width: 100%;
-}
-
-.card-body-post {
+.cardPost {
   background-color: $background-fond !important;
-  color: $primary-color !important;
+  .cardPost-image{
+    width: 100%;
+    height: 30rem;
+    object-fit: cover;}
 
-  .button{
+  .cardPost-body {
     
-  &:hover {
-    color: $secondary-color !important;
+    .button{
+      
+      &:hover {
+        color: $secondary-color !important;
+      }
+    }
   }
+  .cardPost-title {
   }
-}
-  .card-title-post {
-    color: $title-message !important;
+  .cardPost-content {
   }
-.form-control {
-  background-color: $background-fond !important;
-  color: $primary-color !important;
-  border: 1px solid $border-color !important;
-  &::placeholder {
+  .cardPost-container-infoUser {
+    .cardPost-date {
+      color: #B658C4 !important;
+    }
+    .cardPost-user {
+      color: #B658C4 !important;
+    }
+  }
+  .form-control {
+    background-color: $background-fond !important;
     color: $primary-color !important;
+    border: 1px solid $border-color !important;
+    &::placeholder {
+      color: $primary-color !important;
+    }
   }
 }
+  

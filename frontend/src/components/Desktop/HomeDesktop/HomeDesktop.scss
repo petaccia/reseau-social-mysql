@@ -13,7 +13,7 @@
   }
   .posts{
     flex:6;
-    margin-top: 5rem;
+    margin-top: 6rem;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -28,10 +28,9 @@
 
   }
   .title{
-    font-size: 2rem;
+    // font-size: 2rem;
     font-weight: 500;
     color: $primary-color;
-    margin: 2rem;
   }
   .carousel{
     width: 100%;
@@ -55,7 +54,7 @@
 }
 
 // element de la page home en desktop à effacer pour voir la version mobile
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .desktop {
     display: none;
   }

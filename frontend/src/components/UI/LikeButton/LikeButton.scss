@@ -7,9 +7,15 @@
   justify-content: space-around;
   align-items: center;
 
-  .icon {
-    padding-left: 0.5rem;
+  .heartText {
+    padding-right: 0.5rem;
     cursor: pointer;
+  }
+
+  .heartIcon {
+    cursor: pointer;
+    transition: all 0.5s;
+   
   }
 
   .likes {
