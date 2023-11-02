@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useMediaQuery } from "react-responsive";
 import HomeDesktop from "../../components/Desktop/HomeDesktop/HomeDesktop.jsx";
 import HomeMobile from "../../components/Mobile/HomeMobile/HomeMobile.jsx";
 
 const Home = () => {
-  // Créer une condition si la page est à afficher en mobile ou desktop
-  const isMobile = window.innerWidth < 768;
-  return <div>{isMobile ? <HomeMobile /> : <HomeDesktop />}</div>;
+const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+  return isMobile ? <HomeMobile /> : <HomeDesktop />;
 };
 
 export default Home;
