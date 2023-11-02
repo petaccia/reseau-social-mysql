@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 // import { BiComment, BiShare } from "react-icons/bi";
 import Card from "react-bootstrap/Card";
 // import InputGroup from "react-bootstrap/InputGroup";
 // import FormControl from "react-bootstrap/FormControl";
 import "./CardPost.scss";
-import { FaRegCommentDots, FaRegHeart, FaShareSquare } from "react-icons/fa";
 import LikeButton from "../../UI/LikeButton/LikeButton.jsx";
+import CommentButton from "../../UI/CommentButton/CommentButton.jsx";
+import ShareButton from "../../UI/ShareButton/ShareButton.jsx";
 
 const CardPost = ({ post }) => {
   // const [title, setTitle] = useState("");
@@ -20,13 +21,13 @@ const CardPost = ({ post }) => {
   // };
 
   return (
-    <Card className="cardPost w-50 mb-4 border ">
-      <Card.Img variant="top" className="cardPost-image" src={post.image} />
+    <Card className="cardPost w-50  border rounded-4  ">
+      <Card.Img variant="top" className="cardPost-image rounded-top-4" src={post.image} />
       <Card.Body className="cardPost-body border-bottom border-top ">
-        <Card.Title className="cardPost-title text-primary ">
+        <Card.Title className="cardPost-title text-primary fs-2 text-center ">
           {post.title}
         </Card.Title>
-        <Card.Text className="cardPost-content text-secondary">
+        <Card.Text className="cardPost-content text-secondary fs-4 text-center">
           {post.content}
         </Card.Text>
         <Card.Text className="cardPost-container-infoUser d-flex justify-content-around text-">
@@ -40,11 +41,8 @@ const CardPost = ({ post }) => {
       </Card.Body>
       <Card.Footer className="d-flex justify-content-around text-primary">
         <LikeButton />
-        <FaRegCommentDots
-          size={20}
-          onClick={() => console.log("Comment on post")}
-        />
-        <FaShareSquare size={20} onClick={() => console.log("Share post")} />
+        <CommentButton />
+        <ShareButton />
       </Card.Footer>
     </Card>
   );
