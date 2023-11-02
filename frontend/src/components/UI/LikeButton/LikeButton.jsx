@@ -14,7 +14,7 @@ const LikeButton = () => {
   return (
     <div className="containerHeart" onClick={handleLike}>
       <span className="heartText">Likes</span>
-      <FaRegHeart size={20} color={liked ? "#ff2afb" : " #3d4a5e"} />
+      <FaRegHeart size={20} color={liked ? "#FF6465EB" : " #3d4a5e"} />
         <span className="likes">{likeCount}</span>
     </div>
   );
