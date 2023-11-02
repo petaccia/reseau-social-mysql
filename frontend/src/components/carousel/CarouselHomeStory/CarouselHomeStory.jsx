@@ -107,7 +107,7 @@ const CarouselHomeStory = () => {
         removeArrowOnDeviceType={["tablet", "mobile"]}
         customRightArrow={<CustomRightArrowComment />}
         customLeftArrow={<CustomLeftArrowComment />}
-        className="carousel"
+        className="carousel ms-md-3"
       >
         {stories.map((story, index) => (
           <CardStory
