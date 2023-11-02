@@ -12,6 +12,12 @@
     cursor: pointer;
   }
 
+  .heartIcon {
+    cursor: pointer;
+    transition: all 0.5s;
+   
+  }
+
   .likes {
     margin-left: 0.5rem;
     color: $primary-color;
