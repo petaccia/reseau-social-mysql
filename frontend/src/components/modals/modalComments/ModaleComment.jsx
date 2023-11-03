@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
+import { FaRegCommentDots, FaThumbsUp } from "react-icons/fa";
 import oceane from "../../../assets/users/oceane.jpg";
 import nicolas from "../../../assets/users/nicolas.jpg";
 import laure from "../../../assets/users/laure.jpg";
@@ -7,6 +8,9 @@ import laure from "../../../assets/users/laure.jpg";
 import "./ModaleComment.scss";
 
 const CommentsModal = ({ handleClose }) => {
+  // Suivre les likes pour chaque commentaire
+  const [commentLikes, setCommentLikes] = useState({});
+
   const commentUsers = [
     {
       id: 1,
@@ -51,6 +55,25 @@ const CommentsModal = ({ handleClose }) => {
       date: "12/12/2022",
     },
   ];
+
+  // fonction pour incrementer le nombre de like à chaque commentaire
+  const handleLike = (id) => {
+    setCommentLikes((prevCommentLikes) => ({
+      // copie des likes existants
+      ...prevCommentLikes,
+      // ajout du like à l'id correspondant
+      [id]: (prevCommentLikes[id] || 0) + 1,
+    }));
+  };
+  // gestionnaire pour click sur lr bouton répondre
+  const handleReply = (id) => {
+    const replyText = prompt("Enter your reply:");
+    if (replyText) {
+      console.log(`Reply to comment ${id}: ${replyText}`);
+      // Add your reply logic here
+    }
+  };
+
   return (
     <Modal
       show={true}
@@ -64,7 +87,7 @@ const CommentsModal = ({ handleClose }) => {
         <Modal.Title className="modal-title fs-5">Comments</Modal.Title>
       </Modal.Header>
       <Modal.Body className="modal-body">
-        {commentUsers.map((comment) => (
+        {commentUsers.map((comment, id) => (
           <div
             key={comment.id}
             className="comment-modal d-flex flex-column border border-primary rounded-4 p-2 mb-4 mt-2"
@@ -90,6 +113,16 @@ const CommentsModal = ({ handleClose }) => {
             <p className="content-modal-commentUser text-secondary fw-bold">
               {comment.content}
             </p>
+            <div className="container-like-commentUser d-flex align-items-center justify-content-around">
+              <FaRegCommentDots
+                className="icon-modal"
+                onClick={() => handleReply(id)}
+              />
+              <FaThumbsUp
+                className="icon-modal"
+                onClick={() => handleLike(id)}
+              />
+            </div>
           </div>
         ))}
       </Modal.Body>
