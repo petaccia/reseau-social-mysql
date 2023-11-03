@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { FaRegCommentDots, FaThumbsUp } from "react-icons/fa";
 import oceane from "../../../assets/users/oceane.jpg";
@@ -6,10 +6,19 @@ import nicolas from "../../../assets/users/nicolas.jpg";
 import laure from "../../../assets/users/laure.jpg";
 
 import "./ModaleComment.scss";
+import ReplyModal from "../ReplyModal/ReplyModal.jsx";
+import UserContext from "../../../contexts/UserContext/UserContext.jsx";
 
 const CommentsModal = ({ handleClose }) => {
+  // récupérer dans le context user de l'utilisateur
+  const { currentUser } = useContext(UserContext);
+  console.log("currentUser in CommentsModal", currentUser);
+
   // Suivre les likes pour chaque commentaire
   const [commentLikes, setCommentLikes] = useState({});
+
+  // Etat pour ouvir la modale de reponse au commentaire
+  const [isReplyOpen, setIsReplyOpen] = useState(false);
 
   const commentUsers = [
     {
@@ -67,11 +76,8 @@ const CommentsModal = ({ handleClose }) => {
   };
   // gestionnaire pour click sur lr bouton répondre
   const handleReply = (id) => {
-    const replyText = prompt("Enter your reply:");
-    if (replyText) {
-      console.log(`Reply to comment ${id}: ${replyText}`);
-      // Add your reply logic here
-    }
+    setIsReplyOpen(true);
+    // Add your reply logic here
   };
 
   return (
@@ -122,6 +128,7 @@ const CommentsModal = ({ handleClose }) => {
                 className="icon-modal"
                 onClick={() => handleLike(id)}
               />
+              <span>{commentLikes[id] || 0}</span>
             </div>
           </div>
         ))}
@@ -131,6 +138,12 @@ const CommentsModal = ({ handleClose }) => {
           Close
         </Button>
       </Modal.Footer>
+      {isReplyOpen && (
+        <ReplyModal
+          commentId={currentUser}
+          handleClose={() => setIsReplyOpen(false)}
+        />
+      )}
     </Modal>
   );
 };

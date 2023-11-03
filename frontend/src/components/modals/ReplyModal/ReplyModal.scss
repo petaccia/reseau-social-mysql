@@ -1,0 +1,25 @@
+@import "../../../style/variables";
+.modal-reply-comment {
+  width: 50rem !important;
+  height: 30rem !important;
+  background-color: $background-fond !important;
+  border: 1px solid $primary-color;
+  border-radius: 15px;
+  box-shadow: 0px 0px 5px 0px #0b12db;
+  top: 10rem !important;
+  left: 50rem !important;
+
+  .modal-reply-comment-header {
+    background-color: $background-fond;
+    border: 1px solid $primary-color;
+
+    .modal-reply-comment-title {
+      color: $primary-color;
+    }
+    .modal-header .close {
+      color: $primary-color ! important;
+    }
+
+    
+    }
+  }

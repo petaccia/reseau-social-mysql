@@ -14,9 +14,36 @@ const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({});
 
   // lire id de l'utilisateur dans le cookie
+  const userId = Cookies.get("userId");
 
   // useEffect pour récupération de l'utilisateur actuel
+  // useEffect pour récupération de l'utilisateur actuel
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      let userData = null;
+      let adminData = null;
 
+      try {
+        const resUser = await apiConnect.get(`/user/${userId}`);
+        userData = resUser.data;
+      } catch (error) {
+        console.error(error);
+      }
+
+      try {
+        const resAdmin = await apiConnect.get(`/adminfamily/${userId}`);
+        adminData = resAdmin.data;
+      } catch (error) {
+        console.error(error);
+      }
+
+      setCurrentUser(userData || adminData);
+    };
+
+    if (userId) {
+      fetchCurrentUser();
+    }
+  }, [userId]);
   // Fonction pour récupérer tous les utilisateurs
   const getAllUsers = async () => {
     try {
@@ -40,14 +67,6 @@ const UserProvider = ({ children }) => {
       console.error("Erreur lors de la récupération de l'utilisateur:", error);
     }
   };
-  useEffect(() => {
-    const userId = Cookies.get("userId");
-    console.info(`userId in UserProvider : ${userId}`);
-    if (userId) {
-      // utiliser Id du login pour récupérer des informations sur l'utilisateur
-      getUser({ id: userId });
-    }
-  }, []);
 
   // Fonction pour ajouter un utilisateur
   const addUser = async (user) => {
