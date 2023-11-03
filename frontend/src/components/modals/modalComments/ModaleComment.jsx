@@ -1,92 +1,138 @@
-import React, { useEffect, useState } from "react";
-import { Modal } from "react-bootstrap";
-import { BsFillHeartFill } from "react-icons/bs";
-import { RiSendPlaneFill } from "react-icons/ri";
-import { BiComment } from "react-icons/bi";
-import Styles from "./ModaleComment.module.scss";
+import React, { useState } from "react";
+import { Modal, Button } from "react-bootstrap";
+import { FaRegCommentDots, FaThumbsUp } from "react-icons/fa";
+import oceane from "../../../assets/users/oceane.jpg";
+import nicolas from "../../../assets/users/nicolas.jpg";
+import laure from "../../../assets/users/laure.jpg";
 
-const ModalComment = ({ show, handleClose, comments, user }) => {
-  const [selectedComment, setSelectedComment] = useState([]);
+import "./ModaleComment.scss";
 
-  useEffect(() => {
-    const userComments = comments.filter(
-      (comment) => comment.user.name === user.name
-    );
-    setSelectedComment(userComments);
-  }, [comments, user]);
+const CommentsModal = ({ handleClose }) => {
+  // Suivre les likes pour chaque commentaire
+  const [commentLikes, setCommentLikes] = useState({});
 
-  console.info("------------->comments", comments);
+  const commentUsers = [
+    {
+      id: 1,
+      image: oceane,
+      name: "Oceane",
+      content: "la balade en cheval au pays des chevaux",
+      date: "12/12/2022",
+    },
+    {
+      id: 2,
+      image: nicolas,
+      name: "Oceane",
+      content: "la balade en cheval au pays des chevaux",
+      date: "12/12/2022",
+    },
+    {
+      id: 3,
+      image: laure,
+      name: "Oceane",
+      content: "la balade en cheval au pays des chevaux",
+      date: "12/12/2022",
+    },
+    {
+      id: 4,
+      image: oceane,
+      name: "Oceane",
+      content: "la balade en cheval au pays des chevaux",
+      date: "12/12/2022",
+    },
+    {
+      id: 5,
+      image: oceane,
+      name: "Oceane",
+      content: "la balade en cheval au pays des chevaux",
+      date: "12/12/2022",
+    },
+    {
+      id: 6,
+      image: oceane,
+      name: "Oceane",
+      content: "la balade en cheval au pays des chevaux",
+      date: "12/12/2022",
+    },
+  ];
 
-  const handleLike = (commentId) => {
-    console.info("commentId", commentId);
+  // fonction pour incrementer le nombre de like à chaque commentaire
+  const handleLike = (id) => {
+    setCommentLikes((prevCommentLikes) => ({
+      // copie des likes existants
+      ...prevCommentLikes,
+      // ajout du like à l'id correspondant
+      [id]: (prevCommentLikes[id] || 0) + 1,
+    }));
   };
-
-  const handleShare = (commentId) => {
-    console.info("commentId", commentId);
-  };
-
-  const handleReply = (commentId) => {
-    console.info("commentId", commentId);
+  // gestionnaire pour click sur lr bouton répondre
+  const handleReply = (id) => {
+    const replyText = prompt("Enter your reply:");
+    if (replyText) {
+      console.log(`Reply to comment ${id}: ${replyText}`);
+      // Add your reply logic here
+    }
   };
 
   return (
     <Modal
-      show={show && selectedComment.length > 0}
+      show={true}
       onHide={handleClose}
-      className={Styles.modal}
+      className=" modal-commentUsers w-100 h-75 top-50 start-50 translate-middle mt-5 overflow-auto"
     >
-      <Modal.Header className={Styles.header}>
-        <div className={Styles.containerImg}>
-          <img src={user.image} alt={user.name} className={Styles.img} />
-          <h5 className={Styles.user}>{user.name}</h5>
-        </div>
-        <Modal.Title className={Styles.title}>Commentaires</Modal.Title>
+      <Modal.Header
+        closeButton
+        className="modal-header  bg-primary-subtle d-flex align-items-center border border-primary "
+      >
+        <Modal.Title className="modal-title fs-5">Comments</Modal.Title>
       </Modal.Header>
-      <Modal.Body className={Styles.body}>
-        {selectedComment.map((comment, index) => (
-          <div key={index} className={Styles.containerComment}>
-            <div className={Styles.containerText}>
-              <p className={Styles.content}>{comment.content}</p>
-              <div className={Styles.containerDateIcon}>
-                <div className={Styles.date}>
-                  {new Date(comment.createdAt).toLocaleDateString("fr-FR", {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </div>
-                <div className={Styles.containerIcons}>
-                  <BsFillHeartFill
-                    className={Styles.icon}
-                    // eslint-disable-next-line
-                    onClick={() => handleLike(comment._id)}
-                  />
-                  <RiSendPlaneFill
-                    className={Styles.icon}
-                    // eslint-disable-next-line
-                    onClick={() => handleShare(comment._id)}
-                  />
-                  <BiComment
-                    className={Styles.icon}
-                    // eslint-disable-next-line
-                    onClick={() => handleReply(comment._id)}
-                  />
-                </div>
+      <Modal.Body className="modal-body">
+        {commentUsers.map((comment, id) => (
+          <div
+            key={comment.id}
+            className="comment-modal d-flex flex-column border border-primary rounded-4 p-2 mb-4 mt-2"
+            // style={{ boxShadow: "0px 10px 20px 0px #2aa6ff" }}
+          >
+            <div className=" containerInfoUser d-flex align-items-center justify-content-between bg-primary-subtle border border-primary mt-3 mb-3">
+              <div className=" container-imageUser-comment border rounded w-25 d-flex align-items-center justify-content-center">
+                <div
+                  className="image-modal-commentUser rounded-circle d-flex align-items-center justify-content-center"
+                  style={{
+                    backgroundImage: `url(${comment.image})`,
+                  }}
+                ></div>
+                <div />
+                <h5 className="name-modal-commentUser text-primary fs-6 ms-2">
+                  {comment.name}
+                </h5>
               </div>
+              <small className="date-modal-commentUserb fw-bold">
+                {comment.date}
+              </small>
+            </div>
+            <p className="content-modal-commentUser text-secondary fw-bold">
+              {comment.content}
+            </p>
+            <div className="container-like-commentUser d-flex align-items-center justify-content-around">
+              <FaRegCommentDots
+                className="icon-modal"
+                onClick={() => handleReply(id)}
+              />
+              <FaThumbsUp
+                className="icon-modal"
+                onClick={() => handleLike(id)}
+              />
             </div>
           </div>
         ))}
       </Modal.Body>
-      <Modal.Footer className={Styles.footer}>
-        <button className={Styles.button} onClick={handleClose}>
-          Fermer
-        </button>
+      <Modal.Footer className="modal-footer-commentUser  bg-primary-subtle">
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
       </Modal.Footer>
     </Modal>
   );
 };
 
-export default ModalComment;
+export default CommentsModal;

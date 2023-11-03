@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // import { BiComment, BiShare } from "react-icons/bi";
 import Card from "react-bootstrap/Card";
 // import InputGroup from "react-bootstrap/InputGroup";
@@ -7,22 +7,34 @@ import "./CardPost.scss";
 import LikeButton from "../../UI/LikeButton/LikeButton.jsx";
 import CommentButton from "../../UI/CommentButton/CommentButton.jsx";
 import ShareButton from "../../UI/ShareButton/ShareButton.jsx";
+import CommentsModal from "../../modals/modalComments/ModaleComment.jsx";
 
 const CardPost = ({ post }) => {
+  // Etat pour ouvrir la modale de commentaire
+  const [isOpen, setIsOpen] = useState(false);
   // const [title, setTitle] = useState("");
   // const [content, setContent] = useState("");
 
-  // const handleChangeTitle = (e) => {
-  //   setTitle(e.target.value);
-  // };
+ // Fonction pour ouvrir et fermer la modale de commentaire
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+  const handleClose = () => {
+    setIsOpen(false);
+  };
 
   // const handleChangeContent = (e) => {
   //   setContent(e.target.value);
   // };
 
   return (
-    <Card className="cardPost w-50  border rounded-4  ">
-      <Card.Img variant="top" className="cardPost-image rounded-top-4" src={post.image} />
+    <>
+    <Card className="cardPost w-50  border rounded-4" onClick={handleOpen}>
+      <Card.Img
+        variant="top"
+        className="cardPost-image rounded-top-4"
+        src={post.image}
+      />
       <Card.Body className="cardPost-body border-bottom border-top ">
         <Card.Title className="cardPost-title text-primary fs-2 text-center ">
           {post.title}
@@ -45,6 +57,8 @@ const CardPost = ({ post }) => {
         <ShareButton />
       </Card.Footer>
     </Card>
+    {isOpen && <CommentsModal comments={post.comments} handleClose={handleClose} />}
+    </>
   );
 };
 
