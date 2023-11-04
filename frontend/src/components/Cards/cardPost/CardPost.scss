@@ -2,10 +2,8 @@
 .cardPost {
   background-color: $background-fond !important;
   box-shadow: 0px 20px 20px 0px $primary-color !important;
-  margin : 4rem 0 !important;
+  // margin : 4rem 0 !important;
   .cardPost-image{
-    width: 100%;
-    height: 30rem;
     object-fit: cover;}
 
   .cardPost-body {

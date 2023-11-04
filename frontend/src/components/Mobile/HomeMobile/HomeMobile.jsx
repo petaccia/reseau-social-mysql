@@ -4,7 +4,49 @@ import CarouselHomeStory from "../../carousel/CarouselHomeStory/CarouselHomeStor
 import ListUser from "../../Lists/listUser/ListUser.jsx";
 import oceane from "../../../assets/users/oceane.jpg";
 
+import cheval from "../../../assets/post/cheval.jpg";
+import requin from "../../../assets/post/requin.jpg";
+import maldive from "../../../assets/post/maldives.jpg";
+import noel from "../../../assets/post/noel.jpg";
+import CardPost from "../../Cards/cardPost/CardPost.jsx";
+
 const HomeMobile = () => {
+
+  const posts = [
+    {
+      id: 1,
+      title: "balade en cheval",
+      content: "la balade en cheval au pays des chevaux",
+      image: cheval,
+      user: "Oceane",
+      date: "12/12/2022",
+    },
+    {
+      id: 2,
+      title: "balade en mer",
+      content: "la balade en mer au pays des requins",
+      image: requin,
+      user: "Oceane",
+      date: "12/12/2022",
+    },
+    {
+      id: 3,
+      title: "Les vacances aux Maldives",
+      content: "Super vacances aux Maldives",
+      image: maldive,
+      user: "Oceane",
+      date: "12/12/2022",
+    },
+    {
+      id: 4,
+      title: "Joyeux Noël à tous!",
+      content: "C'est bon c'est parfait le Noël en famille",
+      image: noel,
+      user: "Oceane",
+      date: "12/12/2022",
+    },
+  ];
+
 
   const users = [
     {
@@ -73,6 +115,11 @@ const HomeMobile = () => {
       </div>
       <CarouselHomeStory />
       {isLoggedIn && <ListUser users={users} />}
+      <div className="card-post-container-mobile w-100 d-flex flex-column align-items-center justify-content-center">
+        {posts.map((post) => (
+          <CardPost key={post.id} post={post} />
+        ))}
+      </div>
     </div>
   );
 };
