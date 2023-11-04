@@ -16,7 +16,7 @@ const SidebarMobile = () => {
     logout();
   };
   return (
-    <div className="mobile-sidebar d-lg-none fixed-bottom d-flex justify-content-around border-top pt-3">
+    <div className="sidebar-mobile d-md-none fixed-bottom d-flex justify-content-around border-top pt-3 ">
       <div className="sidebar-icon mb-3">
         <Link to="/home">
           <FcHome size={30} />
