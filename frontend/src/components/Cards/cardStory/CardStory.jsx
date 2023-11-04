@@ -6,7 +6,7 @@ import {
   CardContainerStory,
   CardImg,
   CardTitle,
-} from "@components/Accessories/styledCardStory/styledCardStory";
+} from "../../Accessories/styledCards/styledCardStory.jsx";
 
 // Fonction pour écrire la 1ère lettre d'un nom en majuscule
 const capitalizeFirstLetter = (str) => {

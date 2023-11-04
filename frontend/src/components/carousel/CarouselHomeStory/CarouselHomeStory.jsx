@@ -77,7 +77,7 @@ const CarouselHomeStory = () => {
       items: 4,
     },
     tabletSmall: {
-      breakpoint: { max: 868, min: 547 },
+      breakpoint: { max: 868, min: 768 },
       items: 3,
     },
     mobileLarge: {

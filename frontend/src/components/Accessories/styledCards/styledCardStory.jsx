@@ -5,11 +5,11 @@ import { Card } from "react-bootstrap";
 export const CardTitle = styled(Card.Title)`
   font-size: 1rem;
 
-  @media screen and (min-width: 769px) {
+  @media screen and (min-width: 768px) {
     font-size: 0.8rem;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     font-size: 0.5rem;
   }
 `;
@@ -22,9 +22,9 @@ export const CardContainerStory = styled(Card)`
     width: 100%; /* Largeur pour les écrans plus petits */
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (min-width: 768px) {
     height: 100%; /* Hauteur pour les écrans plus petits */
-    width: 100%; /* Largeur pour les écrans plus petits */
+    width: 80%; /* Largeur pour les écrans plus petits */
   }
 
   @media screen and (max-width: 576px) {

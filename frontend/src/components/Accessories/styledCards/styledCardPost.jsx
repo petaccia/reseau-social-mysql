@@ -29,12 +29,18 @@ export const CardTextPost = styled(Card.Text)`
 
 // Créer un composant card reactif avec Styled-Components
 export const CardContainerPost = styled(Card)`
-  @media screen and (min-width: 769px) {
+@media screen and (min-width: 768px) and (max-width: 768px) {
+     width: 30rem; /* Largeur pour les écrans plus petits */
+   margin-top: 3rem;
+   margin-left: 15rem;
+  }
+
+  @media screen and (min-width: 981px) {
     width: 40rem; /* Largeur pour les écrans plus petits */
     margin-top: 3rem;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 767px) {
     height: 100%; /* Hauteur pour les écrans plus petits */
     width: 100%; /* Largeur pour les écrans plus petits */
     margin-top: 3rem;
