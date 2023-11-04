@@ -4,11 +4,11 @@ import "./ListUser.scss";
 
 const ListUser = ({ users }) => {
   return (
-    <div className=" listUserContainer d-flex flex-sm-row flex-md-column overflow-auto py-2 px-1 w-100">
+    <div className=" listUserContainer d-flex flex-sm-row flex-lg-column overflow-auto py-2 px-1 w-100">
       {users.map((user) => (
         <React.Fragment key={user.id}>
           <div
-            className="cardMobileListUser  d-flex align-items-center ms-5 mr-3 p-1 bg-subtle border rounded-3 d-sm-flex d-md-none"
+            className="cardMobileListUser  d-flex align-items-center ms-5 mr-3 p-1 bg-subtle border rounded-3 d-sm-flex d-lg-none"
             style={{ boxShadow: "0px 10px 20px 0px #2aa6ff" }}
           >
             <div
@@ -38,7 +38,7 @@ const ListUser = ({ users }) => {
               {user.name}
             </h2>
           </div>
-          <div className="d-none d-md-flex">
+          <div className="d-none d-lg-flex">
             <CardUser user={user} />
           </div>
         </React.Fragment>
