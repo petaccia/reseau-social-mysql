@@ -10,10 +10,38 @@ import noel from "../../../assets/post/noel.jpg";
 
 const HomeDesktop = () => {
   const posts = [
-    { id: 1, title: "balade en cheval", content: "Content 1", image: cheval },
-    { id: 2, title: "Post 2", content: "Content 2", image: requin },
-    { id: 3, title: "Post 3", content: "Content 3", image: maldive },
-    { id: 4, title: "Post 4", content: "Content 4", image: noel },
+    {
+      id: 1,
+      title: "balade en cheval",
+      content: "la balade en cheval au pays des chevaux",
+      image: cheval,
+      user: "Oceane",
+      date: "12/12/2022",
+    },
+    {
+      id: 2,
+      title: "balade en mer",
+      content: "la balade en mer au pays des requins",
+      image: requin,
+      user: "Oceane",
+      date: "12/12/2022",
+    },
+    {
+      id: 3,
+      title: "Les vacances aux Maldives",
+      content: "Super vacances aux Maldives",
+      image: maldive,
+      user: "Oceane",
+      date: "12/12/2022",
+    },
+    {
+      id: 4,
+      title: "Joyeux Noël à tous!",
+      content: "C'est bon c'est parfait le Noël en famille",
+      image: noel,
+      user: "Oceane",
+      date: "12/12/2022",
+    },
   ];
 
   const users = [
@@ -83,12 +111,7 @@ const HomeDesktop = () => {
             <CarouselHomeStory />
           </div>
           {posts.map((post) => (
-            <CardPost
-              key={post.id}
-              title={post.title}
-              content={post.content}
-              image={post.image}
-            />
+            <CardPost key={post.id} post={post} />
           ))}
         </div>
         <div className="usersList">
