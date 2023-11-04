@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CarouselHomeStory from "../../carousel/CarouselHomeStory/CarouselHomeStory.jsx";
 import ListUser from "../../Lists/listUser/ListUser.jsx";
 import oceane from "../../../assets/users/oceane.jpg";
-import imgProfil from "../../../assets/illustration/profil_test.jpg";
+import profil from "../../../assets/illustration/profil_test.jpg";
 
 import cheval from "../../../assets/post/cheval.jpg";
 import requin from "../../../assets/post/requin.jpg";
@@ -111,7 +111,7 @@ const PageProfilMobile = () => {
   return (
     <div className="page-profil-mobile d-flex w-100 justify-content-center flex-column align-items-center ">
         <div className="w-100 d-flex justify-content-center">
-        <img className=" profil w-100" src={imgProfil} alt="profil" />
+        <img className=" profil w-100" src={profil} alt="profil" />
       </div>
       <CarouselHomeStory />
       {isLoggedIn && <ListUser users={users} />}
