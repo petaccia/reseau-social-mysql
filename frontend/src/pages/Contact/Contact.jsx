@@ -31,15 +31,21 @@ const Contact = () => {
       toastInfo("Votre message a déjà été envoyé !");
     } else if (!data.name || !data.email || !data.message) {
       toastError("Veuillez remplir tous les champs du formulaire");
+      setNameError("");
+      setEmailError("");
+      setMessageError("");
     } else {
       if (!data.name) {
         toastError("Veuillez renseigner votre nom");
+        setNameError("");
       }
       if (!data.email) {
         toastError("Veuillez renseigner votre email");
+        setEmailError("");
       }
       if (!data.message) {
         toastError("Veuillez renseigner votre message");
+        setMessageError("");
       } else {
         toastSuccess("Votre message a été envoyé avec succès");
         setMessageSent(true);
@@ -59,6 +65,9 @@ const Contact = () => {
       setNameError("Nom invalide (au moins 3 caractères requis)");
       setIsValidName(false);
     }
+    if (!name) {
+      setNameError("");
+    }
   };
 
   // Fonction pour voir si l'email est valide
@@ -72,6 +81,9 @@ const Contact = () => {
       setEmailError("Email invalide");
       setIsValidEmail(false);
     }
+    if (!email) {
+      setEmailError("");
+    }
   };
 
   // Fonction pour voir si le message est valide
@@ -83,6 +95,9 @@ const Contact = () => {
     } else {
       setMessageError("Message invalide (au moins 10 caractères requis)");
       setIsValidMessage(false);
+    }
+    if (!message) {
+      setMessageError("");
     }
   };
 
