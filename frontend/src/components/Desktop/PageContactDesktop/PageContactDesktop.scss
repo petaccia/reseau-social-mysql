@@ -1,0 +1,36 @@
+.form-contact-container {
+  .title {
+    color: #2aa6ff;
+  }
+  .form-contact {
+    width: 60rem;
+    height: 40rem;
+    margin-top: 10rem;
+    .form-group {
+      .form-label {
+        color: #2aa6ff;
+      }
+      .form-input {
+        .form-control {
+          border: 1px solid #594848 !important;
+
+          &::placeholder {
+            color: #b9adad;
+            font-size: 1.2rem;
+            font-weight: 500;
+          }
+        }
+        .messageError {
+          color: red;
+        }
+
+        .invalid {
+          color: red;
+        }
+        .valid {
+          color: green;
+        }
+      }
+    }
+  }
+}
