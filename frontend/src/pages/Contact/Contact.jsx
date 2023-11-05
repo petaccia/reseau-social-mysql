@@ -1,149 +1,155 @@
-import React, { useEffect, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import apiConnect from "../../services/API/apiConnection.jsx";
-import styles from "./Contact.module.scss";
-
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import {
+  toastError,
+  toastInfo,
+  toastSuccess,
+} from "../../services/Toastify/toastConfig.jsx";
 import "react-toastify/dist/ReactToastify.css";
+import "./Contact.scss";
 
 const Contact = () => {
-  const [sentMessage, setSentMessage] = useState("");
+  const [messageSent, setMessageSent] = useState(false);
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  // Etats pour voir si le nom, l'email et le message sont valides
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [messageError, setMessageError] = useState("");
+  const [isValidName, setIsValidName] = useState(false);
+  const [isValidEmail, setIsValidEmail] = useState(false);
+  const [isValidMessage, setIsValidMessage] = useState(false);
 
-  // Envoyer les données du formulaire dans l'API
-  const formSubmit = async () => {
-    try {
-      const response = await apiConnect.post("/contact", formData);
-      if (response.status === 201) {
-        toast.success("Votre message a bien été envoyé", {
-          className: styles.toastSuccess,
-          style: {
-            top: "100px",
-            right: "100px",
-            boxShadow: "5px 5px 10px green",
-            backgroundColor: "#10131e",
-            color: "green",
-          },
-        });
-        setSentMessage(formData.message);
-      } else {
-        toast.error("Votre message n'a pas pu être envoyé", {
-          className: styles.toastSuccess,
-          style: {
-            top: "100px",
-            right: "100px",
-            boxShadow: "5px 5px 10px red",
-            backgroundColor: "#10131e",
-            color: "red",
-          },
-        });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
+
+  const onSubmit = (data) => {
+    if (messageSent) {
+      toastInfo("Votre message a déjà été envoyé !");
+    } else if (!data.name || !data.email || !data.message) {
+      toastError("Veuillez remplir tous les champs du formulaire");
+    } else {
+      if (!data.name) {
+        toastError("Veuillez renseigner votre nom");
       }
-    } catch (error) {
-      toast.error("Votre message n'a pas pu être envoyé", {
-        className: styles.toastSuccess,
-        style: {
-          top: "100px",
-          right: "100px",
-          boxShadow: "5px 5px 10px red",
-          backgroundColor: "#10131e",
-          color: "red",
-        },
-      });
+      if (!data.email) {
+        toastError("Veuillez renseigner votre email");
+      }
+      if (!data.message) {
+        toastError("Veuillez renseigner votre message");
+      } else {
+        toastSuccess("Votre message a été envoyé avec succès");
+        setMessageSent(true);
+        // Réinitialiser les champs du formulaire
+        reset();
+      }
     }
   };
 
-  const handleSumbit = (e) => {
-    e.preventDefault();
-    // Vérifier si le message actuel est le même que celui envoyé
-    if (formData.message === sentMessage) {
-      toast.error("Vous ne pouvez pas envoyer le même message", {
-        className: styles.toastSuccess,
-        style: {
-          top: "100px",
-          right: "100px",
-          boxShadow: "5px 5px 10px red",
-          backgroundColor: "#10131e",
-          color: "red",
-        },
-      });
+  // Fonction pour voir si le nom est valide
+  const handleChangeName = (e) => {
+    const name = e.target.value;
+    if (name.length >= 3) {
+      setNameError("Nom valide");
+      setIsValidName(true);
     } else {
-      formSubmit();
+      setNameError("Nom invalide (au moins 3 caractères requis)");
+      setIsValidName(false);
+    }
+  };
+
+  // Fonction pour voir si l'email est valide
+  const handleChangeEmail = (e) => {
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const email = e.target.value;
+    if (isValid.test(email)) {
+      setEmailError("Email valide");
+      setIsValidEmail(true);
+    } else {
+      setEmailError("Email invalide");
+      setIsValidEmail(false);
+    }
+  };
+
+  // Fonction pour voir si le message est valide
+  const handleChangeMessage = (e) => {
+    const message = e.target.value;
+    if (message.length >= 10) {
+      setMessageError("Message valide");
+      setIsValidMessage(true);
+    } else {
+      setMessageError("Message invalide (au moins 10 caractères requis)");
+      setIsValidMessage(false);
     }
   };
 
   return (
-    <div className={styles.container}>
-      <div className={`${styles.containerCard}`}>
-        <div className={styles.containerContact}>
-          <h1 className={styles.title}>Contact</h1>
-          <form onSubmit={handleSumbit} className={styles.form}>
-            <div className={styles.formGroup}>
-              <label className={styles.label}>Nom</label>
-              <input
-                className={styles.input}
-                type="text"
-                placeholder="Entrez votre nom"
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-                required
-              />
-            </div>
-
-            <div className={styles.formGroup}>
-              <label className={styles.label}>Email</label>
-              <input
-                className={styles.input}
-                type="email"
-                placeholder="Entrez votre email"
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-                required
-                autoComplete="nope"
-              />
-            </div>
-
-            <div className={styles.formGroup}>
-              <label className={styles.label}>Message</label>
-              <textarea
-                className={styles.input}
-                type="text"
-                placeholder="Entrez votre message"
-                rows={3}
-                value={formData.message}
-                onChange={(e) =>
-                  setFormData({ ...formData, message: e.target.value })
-                }
-                required
-              />
-            </div>
-
-            <div className={styles.buttonContainer}>
-              <button type="submit" className={styles.button}>
-                Envoyer
-              </button>
-            </div>
-          </form>
+    <div className="form-contact-container">
+      <h1 className="title">Contact</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="form-contact">
+        <div className="form-group">
+          <div className="form-label">
+            <label htmlFor="name">Name</label>
+          </div>
+          <div className="form-input">
+            <input
+              id="name"
+              className="form-control"
+              {...register("name", { required: false })}
+              aria-invalid={errors.name ? "true" : "false"}
+              placeholder="Votre nom"
+              onChange={handleChangeName}
+            />
+            <p className={`messageError ${isValidName ? "valid" : "invalid"}`}>
+              {nameError}
+            </p>
+          </div>
         </div>
-      </div>{" "}
-      <ToastContainer
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        toastStyle={{ backgroundColor: "#10131e" }}
-      />
+        <div className="form-group">
+          <div className="form-label">
+            <label htmlFor="email">Email</label>
+          </div>
+          <div className="form-input">
+            <input
+              id="email"
+              className="form-control"
+              {...register("email", { required: false })}
+              aria-invalid={errors.email ? "true" : "false"}
+              placeholder="Votre email"
+              onChange={handleChangeEmail}
+            />
+            <p className={`messageError ${isValidEmail ? "valid" : "invalid"}`}>
+              {emailError}
+            </p>
+          </div>
+        </div>
+        <div className="form-group">
+          <div className="form-label">
+            <label htmlFor="message">Message</label>
+          </div>
+          <div className="form-input">
+            <textarea
+              className="form-control"
+              id="message"
+              {...register("message", { required: false })}
+              aria-invalid={errors.message ? "true" : "false"}
+              placeholder="Votre message"
+              onChange={handleChangeMessage}
+            />
+            <p
+              className={`messageError ${isValidMessage ? "valid" : "invalid"}`}
+            >
+              {messageError}
+            </p>
+          </div>
+        </div>
+        <div className="form-group-button">
+          <input type="submit" className="btn btn-primary" />
+        </div>
+      </form>
     </div>
   );
 };
