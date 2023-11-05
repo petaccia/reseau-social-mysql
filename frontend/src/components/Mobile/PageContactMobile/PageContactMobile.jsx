@@ -6,9 +6,9 @@ import {
   toastSuccess,
 } from "../../../services/Toastify/toastConfig.jsx";
 import "react-toastify/dist/ReactToastify.css";
-import "./PageContactDesktop.scss";
+import "./PageContactMobile.scss";
 
-const PageContactDesktop = () => {
+const PageContactMobile = () => {
   const [messageSent, setMessageSent] = useState(false);
 
   // Etats pour voir si le nom, l'email et le message sont valides
@@ -106,13 +106,10 @@ const PageContactDesktop = () => {
       <h1 className="title">Contact</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="form-contact col-md-6 d-flex flex-column justify-content-center mt-5 border border-primary"
+        className="form-contact col-12 col-md-8 d-flex w-75 flex-column justify-content-center mt-1 "
       >
         <div className="form-group d-flex flex-column justify-content-center align-items-center">
-          <div className="form-label">
-            <label htmlFor="name">Name</label>
-          </div>
-          <div className="form-input w-50 mb-3">
+          <div className="form-input w-100  p-3">
             <input
               id="name"
               className="form-control w-100  bg-transparent text-white border border-secondary-subtle rounded-3"
@@ -128,10 +125,7 @@ const PageContactDesktop = () => {
           </div>
         </div>
         <div className="form-group d-flex flex-column justify-content-center align-items-center">
-          <div className="form-label">
-            <label htmlFor="email">Email</label>
-          </div>
-          <div className="form-input w-50 mb-3">
+          <div className="form-input w-100  p-3">
             <input
               id="email"
               className="form-control w-100 text-white border border-secondary-subtle rounded-3 bg-transparent"
@@ -146,10 +140,7 @@ const PageContactDesktop = () => {
           </div>
         </div>
         <div className="form-group d-flex flex-column justify-content-center align-items-center">
-          <div className="form-label">
-            <label htmlFor="message">Message</label>
-          </div>
-          <div className="form-input w-50 mt-3 ">
+          <div className="form-input w-100 p-3 ">
             <textarea
               className="form-control h-100 w-100 text-white border border-secondary-subtle rounded-3 bg-transparent"
               id="message"
@@ -173,4 +164,4 @@ const PageContactDesktop = () => {
   );
 };
 
-export default PageContactDesktop;
+export default PageContactMobile;
