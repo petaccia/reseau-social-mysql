@@ -1,0 +1,105 @@
+/* CustomDatePicker.scss */
+@import "../../../style/variables.scss";
+
+.custom-calendar {
+  background-color: $background-fond;
+}
+.react-datepicker {
+  font-family: Arial, sans-serif;
+  background-color: black;
+  color: white;
+  border-radius: 4px;
+}
+
+.react-datepicker__header {
+  background-color: #2aa6ff;
+  color: white;
+  border-bottom: 1px solid $secondary-color;
+  border-radius: 4px 4px 0 0;
+  padding: 8px 20px;
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.react-datepicker__day {
+  color: white;
+  transition: all 0.2s;
+}
+
+.react-datepicker__day:hover {
+  background-color: $secondary-color;
+  color: white;
+}
+
+.react-datepicker__day--selected {
+  background-color: #2aa6ff ;
+  color: white;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: #2aa6ff ;
+  color: white;
+}
+
+.react-datepicker__day--today {
+  background-color: #2aa6ff ;
+}
+
+// Couleur pour la liste des années
+.react-datepicker__year-container {
+  background-color: #2aa6ff ;
+  color: white;
+}
+
+.react-datepicker__year-select {
+  font-family: Arial, sans-serif;
+  margin-right: 2rem;
+  background-color: $background-fond !important; /* Couleur de fond */
+  color: $primary-color; /* Couleur du texte */
+  border: none; /* Retirer la bordure */
+  border-radius: 4px; /* Coins arrondis */
+  cursor: pointer; /* Curseur au survol */
+  padding: 3px;
+}
+
+.react-datepicker__month-select{
+  font-family: Arial, sans-serif;
+  padding: 3px;
+  background-color: $background-fond !important; /* Couleur de fond */
+  color: $primary-color; /* Couleur du texte */
+  border: none; /* Retirer la bordure */
+  border-radius: 4px; /* Coins arrondis */
+  cursor: pointer; /* Curseur au survol */
+
+}
+
+//la couleur des flèches
+.react-datepicker__navigation--previous {
+  margin-right: 1rem;
+  background-color:$background-fond; /* Couleur de fond personnalisée */
+  color: white; /* Couleur du texte personnalisée */
+  border-radius: 4px; /* Coins arrondis */
+  padding: 2px; /* Espacement intérieur */
+  cursor: pointer; /* Curseur au survol */
+}
+
+.react-datepicker__navigation--next {
+  margin-left: 1rem;
+  background-color: $background-fond; /* Couleur de fond personnalisée */
+  color: white; /* Couleur du texte personnalisée */
+  border-radius: 4px; /* Coins arrondis */
+  padding: 2px; /* Espacement intérieur */
+  cursor: pointer; /* Curseur au survol */
+}
+
+.react-datepicker__navigation--previous:hover{
+  background-color: #2aa6ff ; /* Couleur de fond personnalisée */
+  color: $background-fond
+};
+
+.react-datepicker__navigation--next:hover{
+  background-color: #2aa6ff ; /* Couleur de fond personnalisée */
+  color: $background-fond
+};
