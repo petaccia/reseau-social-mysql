@@ -1,5 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
-import styles from "./ProfilUser.module.scss";
+import React, { useContext, useState } from "react";
 import UserContext from "../../contexts/UserContext/UserContext.jsx";
 import ModalPassword from "../../components/modals/ModalPassword/ModalPassword.jsx";
 import ModalEmail from "../../components/modals/ModalEmail/ModalEmail.jsx";
@@ -8,195 +7,234 @@ import {
   toastSuccess,
 } from "../../services/Toastify/toastConfig.jsx";
 import apiConnect from "../../services/API/apiConnection.jsx";
+import "./ProfilUser.scss";
+import CustomCalendar from "../../components/Accessories/Calendar/CustomCalendar.jsx";
 
 const ProfilUser = () => {
   const { currentUser } = useContext(UserContext);
-  console.info("Données de l'utilisateur actuel dans profilUser", currentUser);
-  console.info(
-    "image de l'utilisateur actuel dans profilUser",
-    currentUser.profilePicture
-  );
+
+  const initialFormData = {
+    firstname: currentUser.firstname,
+    lastname: currentUser.lastname,
+    email: currentUser.email,
+    numberPhone: currentUser.numberPhone,
+    adress: currentUser.adress,
+    city: currentUser.city,
+    postalCode: currentUser.postalCode,
+    country: currentUser.country,
+  };
 
   const [file, setFile] = useState(null);
-  const [data, setData] = useState(currentUser);
+  const [data, setData] = useState(initialFormData);
   const [isModalOpenPassword, setIsModalOpenPassword] = useState(false);
   const [isModalOpenEmail, setIsModalOpenEmail] = useState(false);
+  const [dateOfBirthInput, setDateOfBirthInput] = useState(
+    currentUser.dateOfBirth
+  );
 
   const handleChange = (place, value) => {
     const newDataUser = { ...data };
     newDataUser[place] = value;
     setData(newDataUser);
   };
-  // Mettre à jour le formulaire
+
+  const handleFileUpload = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   const handleUpdateForm = async (e) => {
     e.preventDefault();
-    // Creer un objet FormData
     const formData = new FormData();
 
-    // Alouter le fichier au formData pour le transfert vers le serveur
     if (file) {
       formData.append("image", file);
     }
 
-    // Ajouter les autres data de user à l'objet FormData
     for (const key in data) {
-      if (Object.prototype.hasOwnProperty.call(data, key)) {
-        if (key !== "image") {
-          formData.append(key, data[key]);
-        }
+      if (Object.prototype.hasOwnProperty.call(data, key) && key !== "image") {
+        formData.append(key, data[key]);
       }
     }
+
     try {
-      const response = await apiConnect.put(
-        `/user/${currentUser.id}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      console.info(
-        "Données de l'utilisateur enregistré dans le serveur du fichier ProfilUser",
-        response
-      );
+      let updateRoute;
+
+      if (currentUser.userType === "adminFamily") {
+        updateRoute = `/adminfamily/${currentUser.id}`;
+      } else {
+        updateRoute = `/user/${currentUser.id}`;
+      }
+      const response = await apiConnect.put(updateRoute, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
       if (response.status === 200) {
         toastSuccess("Profil mis à jour avec succès");
+        // Réinitialise les données du formulaire après la mise à jour réussie
+        setData(initialFormData);
       } else {
-        toastError("Veuillez Vérifier vos champs");
+        toastError("Veuillez vérifier vos champs");
       }
     } catch (error) {
-      toastError("Error lors de la mise à jour du profil");
-      console.error(" Erreur lors de la mise à jour du profil", error.response);
+      toastError("Erreur lors de la mise à jour du profil");
+      console.error("Erreur lors de la mise à jour du profil", error.response);
     }
-  };
-
-  // Utilisation de Use ref
-  const fileInput = useRef(null);
-  const handleFileUpload = (event) => {
-    const uploadedFile = event.target.files[0];
-    setFile(uploadedFile);
   };
 
   return (
-    <div
-      className={`${styles.containerPageProfilUser} ${
-        isModalOpenPassword || isModalOpenEmail ? styles.blurred : ""
-      }`}
-    >
-      <h1 className={styles.titleProfilUser}>Page de profil</h1>
-      <div className={styles.containerProfilUser}>
-        <div className={styles.containerImgUser}>
-          <h2 className={styles.titleImgProfilUser}>Photo de profil</h2>
+    <div className="containerPageProfilUser">
+      <h1 className="titleProfilUser">Page de profil</h1>
+      <div className="profil-container">
+        <div className="image-container">
+          <h2 className="image-title">Photo de profil</h2>
           <img
-            src={`${import.meta.env.VITE_BACKEND_URL}/${
-              currentUser.profilePicture
-            }`}
+            src={
+              file
+                ? URL.createObjectURL(file)
+                : `${import.meta.env.VITE_BACKEND_URL}/${
+                    currentUser.profilePicture
+                  }`
+            }
             alt="Profil de l'utilisateur"
+            className="image"
+          />
+          <input
+            className="input"
+            id="image"
+            type="file"
+            onChange={handleFileUpload}
           />
         </div>
-        <div className={styles.containerFormUser}>
-          <form
-            action=""
-            className={styles.formUser}
-            onSubmit={handleUpdateForm}
-          >
-            <input
-              id="image"
-              type="file"
-              onChange={handleFileUpload}
-              className={styles.input}
-              ref={fileInput}
-            />
-            <input
-              id="firstname"
-              type="text"
-              placeholder="Nom"
-              name="firstname"
-              value={data.firstname}
-              onChange={(e) => handleChange("lastname", e.target.value)}
-              className={styles.input}
-            />
-            <input
-              id="lastname"
-              type="text"
-              placeholder="Prénom"
-              name="lastname"
-              value={data.lastname}
-              onChange={(e) => handleChange("firstname", e.target.value)}
-              className={styles.input}
-            />
-            <input
-              id="birthday"
-              type="date"
-              placeholder="Date de naissance"
-              name="dateOfBirth"
-              value={data.dateOfBirth}
-              onChange={(e) => handleChange("dateOfBirth", e.target.value)}
-              className={styles.input}
-            />
-            <input
-              id="phone"
-              type="text"
-              placeholder="Téléphone"
-              name="numberPhone"
-              value={data.numberPhone}
-              onChange={(e) => handleChange("numberPhone", e.target.value)}
-              className={styles.input}
-            />
-            <input
-              id="adress"
-              type="text"
-              placeholder="Adresse"
-              name="adress"
-              value={data.adress}
-              onChange={(e) => handleChange("adress", e.target.value)}
-              className={styles.input}
-            />
-            <input
-              id="city"
-              type="text"
-              placeholder="Ville"
-              name="city"
-              value={data.city}
-              onChange={(e) => handleChange("city", e.target.value)}
-              className={styles.input}
-            />
-            <input
-              id="postalCode"
-              type="text"
-              placeholder="Code postal"
-              name="postalCode"
-              value={data.postalCode}
-              onChange={(e) => handleChange("postalCode", e.target.value)}
-              className={styles.input}
-            />
-            <input
-              id="country"
-              type="text"
-              placeholder="pays"
-              name="Country"
-              value={data.country}
-              onChange={(e) => handleChange("country", e.target.value)}
-              className={styles.input}
-            />
-            <input
-              id="familyName"
-              type="text"
-              placeholder="Famille"
-              name="NameFamily"
-              value={data.NameFamily}
-              className={styles.input}
-            />
-            <button type="submit" className={styles.updateButton}>
+        <div className="form-container-user">
+          <form action="" className="user-form" onSubmit={handleUpdateForm}>
+            <div className="form-group">
+              <label className="label" htmlFor="lastname">
+                Nom
+              </label>
+              <input
+                className="input"
+                id="lastname"
+                type="text"
+                name="lastname"
+                value={data.lastname}
+                onChange={(e) => handleChange("lastname", e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label className="label" htmlFor="firstname">
+                Prénom
+              </label>
+              <input
+                className="input"
+                id="firstname"
+                type="text"
+                name="firstname"
+                value={data.firstname}
+                onChange={(e) => handleChange("firstname", e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label className="label" htmlFor="birthday">
+                Date de naissance
+              </label>
+              <div className="input">
+                <CustomCalendar
+                  value={dateOfBirthInput}
+                  onChange={(date) => setDateOfBirthInput(date)}
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <label className="label" htmlFor="phone">
+                Téléphone
+              </label>
+              <input
+                className="input"
+                id="phone"
+                type="text"
+                name="numberPhone"
+                value={data.numberPhone}
+                onChange={(e) => handleChange("numberPhone", e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label className="label" htmlFor="adress">
+                Adresse
+              </label>
+              <input
+                className="input"
+                id="adress"
+                type="text"
+                name="adress"
+                value={data.adress}
+                onChange={(e) => handleChange("adress", e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label className="label" htmlFor="city">
+                Ville
+              </label>
+              <input
+                className="input"
+                id="city"
+                type="text"
+                name="city"
+                value={data.city}
+                onChange={(e) => handleChange("city", e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label className="label" htmlFor="postalCode">
+                Code postal
+              </label>
+              <input
+                className="input"
+                id="postalCode"
+                type="text"
+                name="postalCode"
+                value={data.postalCode}
+                onChange={(e) => handleChange("postalCode", e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label className="label" htmlFor="country">
+                Pays
+              </label>
+              <input
+                className="input"
+                id="country"
+                type="text"
+                name="country"
+                value={data.country}
+                onChange={(e) => handleChange("country", e.target.value)}
+              />
+            </div>
+            {currentUser.userType === "adminFamily" && (
+              <div className="form-group">
+                <label className="label" htmlFor="familyName">
+                  Famille
+                </label>
+                <input
+                  className="input"
+                  id="familyName"
+                  type="text"
+                  name="familyName"
+                  value={data.familyName}
+                  onChange={(e) => handleChange("familyName", e.target.value)}
+                />
+              </div>
+            )}
+            <button type="submit" className="update-button">
               Mettre à jour
             </button>
           </form>
         </div>
-        <div className={styles.containerButtonUser}>
+        <div className="button-container">
           <button
             type="button"
-            className={styles.button}
+            className="button"
             onClick={() => setIsModalOpenPassword(true)}
           >
             Modifier mot de passe
@@ -207,7 +245,7 @@ const ProfilUser = () => {
           />
           <button
             type="button"
-            className={styles.button}
+            className="button"
             onClick={() => setIsModalOpenEmail(true)}
           >
             Modifier email
