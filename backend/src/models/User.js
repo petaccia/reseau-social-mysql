@@ -44,7 +44,7 @@ const User = db.define(
       allowNull: true,
     },
     postalCode: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     country: {
@@ -73,7 +73,7 @@ const User = db.define(
     },
     adminFamilyId: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: AdminFamily,
         key: "id",
