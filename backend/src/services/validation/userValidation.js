@@ -11,13 +11,13 @@ const userValidation = (data) => {
       .presence("required"),
     firstName: Joi.string().alphanum().min(3).max(30).presence("required"),
     lastName: Joi.string().alphanum().min(3).max(30).presence("required"),
-    dateOfBirth: Joi.date().presence("required"),
+    dateOfBirth: Joi.date().presence("optional"),
     numberPhone: Joi.string().presence("optional"),
     adress: Joi.string().presence("optional"),
     city: Joi.string().presence("optional"),
-    postalCode: Joi.number().integer().presence("optional"),
+    postalCode: Joi.string().allow(null, "").presence("optional"),
     country: Joi.string().presence("optional"),
-    profilePicture: Joi.string().allow(null, ""),
+    profilePicture: Joi.string().presence("optional"),
     familyId: Joi.number().integer().presence("required"),
   });
   return userSchema.validate(data, { abortEarly: false }).error;
