@@ -15,7 +15,7 @@
   font-size: 2rem;
   font-weight: 500;
   text-transform: uppercase;
-  margin-top: 2rem;
+  margin-top: 7rem;
 }
 
 .profil-container {
@@ -70,7 +70,7 @@
 }
 
 .form-group {
-  width: 100%;
+  width: 40%;
   display: flex;
   // flex-direction: column;
   align-items: center;
@@ -108,6 +108,20 @@
   font-weight: 500;
   cursor: pointer;
 }
+ .input-file{
+  width: 30%;
+  height: 3rem;
+  background-color: transparent;
+  color: $primary-color;
+  outline: none;
+  border-radius: 0.5rem;
+  border: 1px solid #594848;
+  padding: 0.5rem;
+  margin: 0.5rem; /* Marge autour des champs ajustée */
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+ }
 
 .input::placeholder {
   color: $primary-color;
@@ -208,13 +222,17 @@
   .image-title {
     display: none;
   }
+  .input-file{
+    width: 90%;
+  }
   .button-container {
     display: flex;
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-
+    margin-top: 4rem;
+    margin-right: 2rem;
   
   }
 }
