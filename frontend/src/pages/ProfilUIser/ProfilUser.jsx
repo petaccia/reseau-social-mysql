@@ -101,7 +101,7 @@ const ProfilUser = () => {
             className="image"
           />
           <input
-            className="input"
+            className="input-file"
             id="image"
             type="file"
             onChange={handleFileUpload}
