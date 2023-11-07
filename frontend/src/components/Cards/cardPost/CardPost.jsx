@@ -4,9 +4,9 @@ import { Card } from "react-bootstrap";
 // import InputGroup from "react-bootstrap/InputGroup";
 // import FormControl from "react-bootstrap/FormControl";
 import "./CardPost.scss";
-import LikeButton from "../../UI/LikeButton/LikeButton.jsx";
-import CommentButton from "../../UI/CommentButton/CommentButton.jsx";
-import ShareButton from "../../UI/ShareButton/ShareButton.jsx";
+import LikeButton from "../../UI/ButtonComponent/LikeButton/LikeButton.jsx";
+import CommentButton from "../../UI/ButtonComponent/CommentButton/CommentButton.jsx";
+import ShareButton from "../../UI/ButtonComponent/ShareButton/ShareButton.jsx";
 import CommentsModal from "../../modals/modalComments/ModaleComment.jsx";
 import {
   CardContainerPost,
