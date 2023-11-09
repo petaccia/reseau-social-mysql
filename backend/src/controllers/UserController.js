@@ -1,7 +1,6 @@
 const User = require("../models/User");
 const userValidation = require("../services/validation/userValidation");
 
-
 // Remplacer le backslash par un slash
 const replaceBackslash = (path) => {
   return path.replace(/\\/g, "/");
@@ -12,10 +11,14 @@ const getPendingUsers = async (req, res) => {
   try {
     // Récupérer l'ID de l'administrateur de famille cible depuis les paramètres de la requête
     const currentAdminFamily = req.user;
-    
-    const users = await User.findAll({ where: { status: "en attente", 
-    // Filtrer par l'id de la famille de l'adminFamily actuellement connecté
-    familyId: currentAdminFamily.familyId } });
+
+    const users = await User.findAll({
+      where: {
+        status: "en attente",
+        // Filtrer par l'id de la famille de l'adminFamily actuellement connecté
+        familyId: currentAdminFamily.familyId,
+      },
+    });
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ error });
@@ -27,8 +30,10 @@ const getAcceptedAllUsers = async (req, res) => {
   try {
     // Récupérer l'ID de l'administrateur de famille cible depuis les paramètres de la requête
     const currentAdminFamily = req.user;
-  
-    const users = await User.findAll({ where: { status: "accepté" , familyId: currentAdminFamily.familyId } });
+
+    const users = await User.findAll({
+      where: { status: "accepté", familyId: currentAdminFamily.familyId },
+    });
     res.status(200).json(users);
   } catch (error) {
     console.error(error);
@@ -36,13 +41,15 @@ const getAcceptedAllUsers = async (req, res) => {
   }
 };
 
- // Obtenir tous les utilisateurs refusés
- const getRefusedAllusers = async (req, res) => {
+// Obtenir tous les utilisateurs refusés
+const getRefusedAllusers = async (req, res) => {
   try {
     // Récupérer l'ID de l'administrateur de famille cible depuis les paramètres de la requête
     const currentAdminFamily = req.user;
 
-    const users = await User.findAll({ where: { status: "refusé", familyId: currentAdminFamily.familyId } });
+    const users = await User.findAll({
+      where: { status: "refusé", familyId: currentAdminFamily.familyId },
+    });
     res.status(200).json(users);
   } catch (error) {
     console.error(error);
@@ -98,10 +105,11 @@ const updateUser = async (req, res) => {
   const { body } = req;
   const { error } = userValidation(body);
   if (error) {
-    console.log(" Avant d'envoyer les données", error);
-    return res.status(400).json(error.details[0].message);
-    console.log(" Après d'envoyer les données", error);
+    console.log("Avant d'envoyer les données", error); // Utilisez console.log ici pour le débogage
+    return res.status(400).json({ error: error.details[0].message });
+    console.log("Apres d'envoyer les données", error);
   }
+
   try {
     await User.update(
       { ...body, profilePicture: req.file ? req.file.path : null },
@@ -111,14 +119,16 @@ const updateUser = async (req, res) => {
     if (user && user.profilePicture) {
       user.profilePicture = replaceBackslash(user.profilePicture);
     }
-    console.log(" Données reçu de l'API", user);
+    console.info("Données reçues de l'API", user); // Utilisez console.info pour afficher les données récupérées
     if (user) {
-      return res.status(200).json({ message: " Utilsateur modifié avec succès", user});
+      return res
+        .status(200)
+        .json({ message: "Utilisateur modifié avec succès", user });
     }
     return res.status(404).json({ error: "User not found" });
   } catch (err) {
-    console.error("Erreur du serveur ", err.response);
-    return res.status(500).json({ err });
+    console.error("Erreur du serveur ", err.response); // Utilisez console.error pour afficher les erreurs du serveur
+    return res.status(500).json({ error: "Erreur du serveur" });
   }
 };
 

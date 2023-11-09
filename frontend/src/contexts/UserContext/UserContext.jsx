@@ -7,6 +7,7 @@ const UserContext = createContext({
   getUser: () => {},
   addUser: () => {},
   updateUser: () => {},
+  updateUserImage: () => {},
   deleteUser: () => {},
   currentUserLogin: () => {},
 });

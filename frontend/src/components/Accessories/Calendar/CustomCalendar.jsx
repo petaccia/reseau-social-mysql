@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
-import { getYear, getMonth } from "date-fns";
+import { format, getMonth, getYear } from "date-fns";
 import "react-datepicker/dist/react-datepicker.css";
 import "./CustomCalendar.scss";
 import CustomDateInput from "./CustomDateInput/CustomDateInput.jsx";
 
 const CustomCalendar = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const currentYear = getYear(new Date());
+  const currentYear = new Date().getFullYear();
   const years = Array.from({ length: currentYear - 1989 }, (_, i) => 1990 + i); // Génère un tableau d'années de 1990 à l'année actuelle
 
   const months = [
@@ -24,6 +24,9 @@ const CustomCalendar = () => {
     "November",
     "December",
   ];
+
+  const formattedDate = format(selectedDate, "yyyy-MM-dd"); // Format de la date
+console.log("formattedDate", formattedDate);
 
   return (
     <div className="custom-calendar">
@@ -85,7 +88,7 @@ const CustomCalendar = () => {
         customInput={
           <CustomDateInput
             onClick={() => setSelectedDate(new Date())}
-            value={selectedDate}
+            value={formattedDate}
           />
         }
       />
