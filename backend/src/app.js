@@ -3,31 +3,47 @@ const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
 const cookie = require("cookie-parser");
-const router = require("./router");
+const morgan = require("morgan");
+// const pusher = require("pusher"); // Ajoutez cette ligne pour importer Pusher
+
+const router = require("./routes");
+
+const Db = require("../databaseSequelize");
+
+Db.sync({ alter: true })
+  .then(() => {
+    console.log("Connexion à la base de données réussie");
+  })
+  .catch((err) => console.error(err));
 
 const app = express();
+
+app.use(morgan("dev"));
 app.use(cookie());
-// use some application-level middlewares
+// Utilisez quelques middlewares au niveau de l'application
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL ?? "http://localhost:3000",
+    origin: process.env.FRONTEND_URL ?? "http://localhost:5173",
     optionsSuccessStatus: 200,
-    redentials: true,
+    credentials: true,
   })
 );
 
 app.use(express.json());
 
-// Serve the public folder for public resources
+// Servez le dossier public pour les ressources publiques
 app.use(express.static(path.join(__dirname, "../public")));
 
-// Serve REACT APP
+// Uploadez des fichiers dans le réseau social MySQL
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
+// Servez l'application REACT
 app.use(express.static(path.join(__dirname, "..", "..", "frontend", "dist")));
 
 // API routes
 app.use(router);
 
-// Redirect all requests to the REACT app
+// Redirigez toutes les requêtes vers l'application REACT
 const reactIndexFile = path.join(
   __dirname,
   "..",
@@ -43,5 +59,4 @@ if (fs.existsSync(reactIndexFile)) {
   });
 }
 
-// ready to export
 module.exports = app;

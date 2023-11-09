@@ -1,0 +1,10 @@
+@import "../../../style/variables";
+
+.commentList {
+  // border: 1px solid $border-color;
+  width: 790px;
+  height: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,31 @@
+@import "../../../style/variables";
+
+.cardUser {
+  cursor: pointer;
+  background-color: transparent !important;
+  box-shadow: 0px 20px 20px 0px $primary-color;
+
+  @media (min-width: 576px) {
+    width: 85% !important;
+  }
+
+  @media (min-width: 768px) {
+    width: 60% !important;
+  }
+
+  @media (min-width: 992px) {
+    width: 45% !important;
+  }
+
+  @media (min-width: 1200px) {
+    width: 55% !important;
+  }
+
+
+  .userInfo {
+
+    .name {
+      color: $primary-color !important;
+    }
+  }
+}

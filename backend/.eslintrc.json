@@ -9,13 +9,25 @@
     "sourceType": "module"
   },
   "rules": {
+    "prettier/prettier": ["error", {
+      "endOfLine": "auto"
+    }],
+    "no-enderscores": "off",
+    "no-unused-vars": "off",
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "no-console": "off",
+    "func-style": ["error", "expression"],
     "no-restricted-syntax": [
       "error",
       {
-        "selector": "CallExpression[callee.object.name='console'][callee.property.name!=/^(error|warn)$/]",
-        "message": "You can only call the error() and warn() functions from the console object"
+        "selector": "CallExpression[callee.object.name='console'][callee.property.name=/^(log)$/][arguments.0.value=/^ERROR:/]",
+        "message": "Use console.error for error messages"
+      },
+      {
+        "selector": "CallExpression[callee.object.name='console'][callee.property.name=/^(log)$/]:not([arguments.0.value=/^ERROR:/])",
+        "message": "Use console.info instead of console.log"
       }
     ]
   }
 }
+

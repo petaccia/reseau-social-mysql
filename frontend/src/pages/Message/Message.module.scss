@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  color: #34495e;
+
+  .title {
+    font-size: 2em;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+
+  }
+}

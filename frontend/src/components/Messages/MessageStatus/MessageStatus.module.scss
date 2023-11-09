@@ -1,0 +1,14 @@
+@import "../../../style/variables";
+
+.containerIconStatus{
+  font-size: 1.5rem;
+  position: absolute;
+  top: 1rem;
+  .iconStatusValid {
+    color: $success-color;
+  }
+  .iconStatusInvalid {
+    color: $error-color;
+  }
+}
+

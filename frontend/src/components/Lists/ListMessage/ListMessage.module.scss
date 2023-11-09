@@ -1,0 +1,22 @@
+@import "../../../style/variables";
+
+.containerList {
+  width: 100%;
+  height: 100%;
+  margin-top: 3rem;
+
+  .containerNavbar{
+    display: flex;
+    justify-content: center;
+  }
+
+ 
+  .cardContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    
+  }
+}
+
+

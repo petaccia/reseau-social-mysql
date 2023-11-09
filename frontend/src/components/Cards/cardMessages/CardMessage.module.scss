@@ -1,0 +1,46 @@
+@import "../../../style/variables";
+
+.containerCard {
+  position: relative;
+    .card {
+    // perspective: 1000px;
+    width: 40rem;
+    height: 20rem;
+    padding: 4rem 1rem 0rem 1rem;
+    border-radius: 10px;
+    border: 1px solid $border-color;
+    transition: all 0.5s;
+    background-color: $background-fond;
+    color: $primary-color;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    margin: 3rem;
+    transition: all 0.5s;
+    box-shadow: 0px 10px 10px 3px $primary-color;
+    position: relative;
+
+
+
+  }
+}
+
+.animateOut {
+  animation: rotateOut 1s forwards;
+}
+
+@keyframes rotateOut {
+  from {
+    transform: rotateY(0deg);
+    opacity: 1;
+    transition: all 0.5s;
+
+  }
+  to {
+    transform: rotateY(180deg);
+    opacity: 0;
+    transition: all 0.5s;
+  }
+}
+
+

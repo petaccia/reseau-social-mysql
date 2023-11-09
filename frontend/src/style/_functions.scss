@@ -1,0 +1,31 @@
+@function getColor($type) {
+  @if $type == "success" {
+    @return green;
+  } @else if $type == "error" {
+    @return red;
+  }
+}
+
+// Déterminer la taille de police minimum en fonction de la taille d'écran
+$font-size: null;
+
+@media screen and (max-width: 768px) {
+  $font-size: 14px; // "large"
+}
+
+@media screen and (max-width: 576px) {
+  $font-size: 12px; // "medium"
+}
+
+@media screen and (max-width: 320px) {
+  $font-size: 8px; // "small"
+}
+
+@media screen and (max-width: 240px) {
+  $font-size: 6px; // "tiny"
+}
+
+// Utilisez la variable $font-size dans vos propriétés CSS
+.my-element {
+  font-size: $font-size;
+}

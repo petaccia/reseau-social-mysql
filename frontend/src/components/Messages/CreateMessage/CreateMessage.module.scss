@@ -1,0 +1,129 @@
+@import "../../../style/variables";
+.containerCreateMessage {
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10000;
+  .modal {
+    width: 50rem;
+    height: 30rem;
+    padding: 1rem;
+    border-radius: 10px;
+    background-color: $background-fond;
+    border: 3px solid $border-color;
+    box-shadow: 0px 10px 10px 0px $primary-color;
+
+    .buttonClose {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      cursor: pointer;
+      background-color: transparent;
+      outline: none;
+      border: none;
+      border-radius: 5px;
+      color: $primary-color;
+      transition: all 0.5s;
+      &:hover {
+        background-color: $primary-color;
+        color: $background-fond;
+        border: 1px solid $primary-color;
+      }
+    }
+
+    .containerModalInput {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 1rem;
+      gap: 1rem;
+      padding: 1rem;
+
+      .inputTitle {
+        width: 80%;
+        padding: 0.5rem;
+        color: $primary-color;
+        text-align: center;
+        background-color: transparent;
+        border: 1px solid $border-color;
+        border-radius: 10px;
+        outline: none;
+        color: $title-message;
+        font-weight: bold;
+        &::placeholder {
+          color: $title-message;
+        }
+      }
+      .textareaDescription {
+        width: 80%;
+        padding: 0.8rem;
+        color: $primary-color;
+        background-color: transparent;
+        border-radius: 10px;
+        outline: none;
+        color: $primary-color;
+        font-weight: bold;
+        &::placeholder {
+          color: $primary-color;
+        }
+      }
+      .textareaMessage {
+        width: 80%;
+        padding: 0.8rem;
+        color: $border-color;
+        background-color: transparent;
+        border: 1px solid $border-color;
+        border-radius: 10px;
+        outline: none;
+        color: $primary-color;
+        font-weight: bold;
+        &::placeholder {
+          color: $border-color;
+        }
+      }
+    }
+
+    .containerModalButton {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      // gap: 1rem;
+      // margin: 1rem;
+      .buttonCreateMessage {
+        margin-right: 1rem;
+        padding: 0.5rem;
+        background-color: $primary-color;
+        border: 1px solid $primary-color;
+        border-radius: 10px;
+        color: $background-fond;
+        font-weight: bold;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.5s;
+        &:hover {
+          background-color: $background-fond;
+          color: $primary-color;
+          border: 1px solid $primary-color;
+        }
+      }
+      .buttonCancel {
+        padding: 0.5rem;
+        background-color: $background-fond;
+        border: 1px solid $primary-color;
+        border-radius: 10px;
+        color: $primary-color;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.5s;
+        &:hover {
+          background-color: $primary-color;
+          color: $background-fond;
+          border: 1px solid $primary-color;
+        }
+      }
+    }
+
+
+  }
+}

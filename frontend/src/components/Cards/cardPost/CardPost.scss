@@ -1,0 +1,39 @@
+@import "../../../style/variables";
+.cardPost {
+  background-color: $background-fond !important;
+  box-shadow: 0px 20px 20px 0px $primary-color !important;
+  // margin : 4rem 0 !important;
+  .cardPost-image{
+    object-fit: cover;}
+
+  .cardPost-body {
+    
+    .button{
+      
+      &:hover {
+        color: $secondary-color !important;
+      }
+    }
+  }
+  .cardPost-title {
+  }
+  .cardPost-content {
+  }
+  .cardPost-container-infoUser {
+    .cardPost-date {
+      color: #FF6465EB !important;
+    }
+    .cardPost-user {
+      color: #FF6465EB !important;
+    }
+  }
+  .form-control {
+    background-color: $background-fond !important;
+    color: $primary-color !important;
+    border: 1px solid $border-color !important;
+    &::placeholder {
+      color: $primary-color !important;
+    }
+  }
+}
+  
