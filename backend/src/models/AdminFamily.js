@@ -34,7 +34,7 @@ const AdminFamily = db.define("adminFamilies", {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  PostalCode: {
+  postalCode: {
     type: DataTypes.STRING,
     allowNull: true,
   },
