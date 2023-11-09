@@ -47,6 +47,17 @@ const createAdminFamily = async (req, res) => {
 const updateAdminFamily = async (req, res) => {
   try {
     const { id } = req.params;
+    const updateDatas = req.body;
+
+    const validationError = adminFamilyValidation(updateDatas);
+    if (validationError) {
+      console.error(
+        "Erreur de validation des données",
+        validationError.details
+      );
+      res.status(400).send({ message: "Données invalides" });
+      return;
+    }
     const {
       firstname,
       lastname,
