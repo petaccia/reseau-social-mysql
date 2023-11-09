@@ -1,18 +1,21 @@
 const Joi = require("joi");
 
 const userValidation = (data) => {
-  const schema = Joi.object({
+  const Schema = Joi.object({
     firstname: Joi.string().alphanum().min(3).max(30).required(),
-    lastname: Joi.string().alphanum().min(3).max(30).allow(null, "").optional(),
+    lastname: Joi.string().alphanum().min(3).max(30).optional(),
     dateOfBirth: Joi.date().optional(),
-    numberPhone: Joi.string().allow(null, "").optional(),
-    adress: Joi.string().allow(null, "").optional(),
-    city: Joi.string().allow(null, "").optional(),
-    postalCode: Joi.string().allow(null, "").optional(),
-    country: Joi.string().allow(null, "").optional(),
-    profilePicture: Joi.string().allow(null, "").optional(),
+    numberPhone: Joi.string().required(),
+    adress: Joi.string().required(),
+    city: Joi.string().required(),
+    postalCode: Joi.string().required(),
+    country: Joi.string().required(),
   });
-
-  return schema.validate(data, { abortEarly: false });
+  const { error } = Schema.validate(data, { abortEarly: false });
+  if (error) {
+    console.info("Erreurs de validation des données", error.details);
+  }
+  return error;
 };
+
 module.exports = userValidation;

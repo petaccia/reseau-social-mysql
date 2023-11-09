@@ -100,36 +100,99 @@ const createUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  console.info(req.body);
-  console.info(req.file);
   const { body } = req;
-  const { error } = userValidation(body);
-  if (error) {
-    console.log("Avant d'envoyer les données", error); // Utilisez console.log ici pour le débogage
-    return res.status(400).json({ error: error.details[0].message });
-    console.log("Apres d'envoyer les données", error);
-  }
-
+  console.log("Données envoyées au serveur", body);
   try {
-    await User.update(
-      { ...body, profilePicture: req.file ? req.file.path : null },
-      { where: { id: req.params.id } }
-    );
-    const user = await User.findOne({ where: { id: req.params.id } });
-    if (user && user.profilePicture) {
-      user.profilePicture = replaceBackslash(user.profilePicture);
+    const { id } = req.params;
+    const updateDatas = req.body;
+
+    const validationError = userValidation(updateDatas);
+    if (validationError) {
+      console.error(
+        "Erreur de validation des données",
+        validationError.details
+      );
+      res.status(400).send({ message: "Données invalides" });
+      return;
     }
-    console.info("Données reçues de l'API", user); // Utilisez console.info pour afficher les données récupérées
-    if (user) {
+    const {
+      firstname,
+      lastname,
+      dateOfBirth,
+      numberPhone,
+      adress,
+      city,
+      postalCode,
+      country,
+    } = req.body;
+
+    const updateData = {
+      firstname,
+      lastname,
+      dateOfBirth,
+      numberPhone,
+      adress,
+      city,
+      postalCode,
+      country,
+    };
+    console.log("Données envoyées au serveur", updateData);
+
+
+    const updatedUser = await User.update(updateData, {
+      where: { id },
+    });
+    console.log("updatedUser in updateUser", updatedUser);
+
+    if (updatedUser[0] === 1) {
+      res.status(200).send({ message: "Utilisateur mis à jour avec succès" });
+    } else {
+      res
+        .status(400)
+        .send({ message: "Impossible de mettre à jour l'utilisateur" });
+    }
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour du utilisateur", error);
+    res
+      .status(500)
+      .send({ message: "Erreur lors de la mise à jour de l'utilisateur" });
+  }
+};
+// fonction pour mettre a jour l'image de profile d'un adminfamily
+const updateUserImage = async (req, res) => {
+  try {
+    const user = await User.findOne({
+      where: { id: req.params.id },
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: "Utilisateur non enregistré" });
+    }
+
+    if (req.file) {
+      if (user.profilePicture) {
+        const filePath = user.profilePicture;
+        if (filePath) {
+          const file = req.file.path;
+          user.profilePicture = file; // Mise à jour du chemin de l'image
+          await user.save();
+        }
+      } else {
+        user.profilePicture = req.file.path; // Nouveau chemin de l'image
+        await user.save();
+      }
+
+      user.profilePicture = replaceBackslash(user.profilePicture);
+
       return res
         .status(200)
-        .json({ message: "Utilisateur modifié avec succès", user });
+        .json({ message: "Image de profil mise à jour avec succès" });
     }
-    return res.status(404).json({ error: "User not found" });
   } catch (err) {
-    console.error("Erreur du serveur ", err.response); // Utilisez console.error pour afficher les erreurs du serveur
-    return res.status(500).json({ error: "Erreur du serveur" });
+    console.error("Erreur du serveur ", err);
+    return res.status(500).json({ error: "Erreur du serveur", err });
   }
+  return null
 };
 
 const deleteUser = async (req, res) => {
@@ -153,5 +216,6 @@ module.exports = {
   getOneUser,
   createUser,
   updateUser,
+  updateUserImage,
   deleteUser,
 };

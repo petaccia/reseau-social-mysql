@@ -52,7 +52,12 @@ router.get("/user", usersController.getAllUser);
 router.get("/user/:id", usersController.getOneUser);
 
 router.post("/user", upload.single("image"), usersController.createUser);
-router.put("/user/:id", upload.single("image"), usersController.updateUser);
+router.put("/user/:id", usersController.updateUser);
+router.put(
+  "/user/:id/image/profil/user",
+  upload.single("image"),
+  usersController.updateUserImage
+);
 router.delete("/user/:id", usersController.deleteUser);
 
 // Routes de password
@@ -119,7 +124,7 @@ router.get("/adminfamily/:id", adminFamilyController.getOneAdminFamily);
 router.post("/adminfamily", adminFamilyController.createAdminFamily);
 router.put("/adminfamily/:id", adminFamilyController.updateAdminFamily);
 router.put(
-  "/adminfamily/:id/image/profile/admin",
+  "/adminfamily/:id/image/profil/admin",
   upload.single("image"),
   adminFamilyController.updateAdminFamilyImage
 );
