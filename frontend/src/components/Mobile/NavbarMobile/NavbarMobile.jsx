@@ -7,14 +7,14 @@ import UserContext from "../../../contexts/UserContext/UserContext.jsx";
 
 const NavbarMobile = () => {
   const { currentUser } = useContext(UserContext);
-  const [userProfilPicture, setUserProfilPicture] = useState("");
+  // const [userProfilPicture, setUserProfilPicture] = useState("");
 
-  useEffect(() => {
-    if (currentUser.profilePicture) {
-      const imageUrl = currentUser.profilePicture;
-      setUserProfilPicture(imageUrl);
-    }
-  }, [currentUser]);
+  // useEffect(() => {
+  //   if (currentUser.profilePicture) {
+  //     const imageUrl = currentUser.profilePicture;
+  //     setUserProfilPicture(imageUrl);
+  //   }
+  // }, [currentUser]);
 
   console.log("currentUser in NavbarMobile", currentUser.profilePicture);
   return (
@@ -24,7 +24,7 @@ const NavbarMobile = () => {
       </Link>
       <Link to="/ProfilUser">
         <img
-          src={`${import.meta.env.VITE_BACKEND_URL}/${userProfilPicture}`}
+          src={currentUser.profilePicture}
           alt="profil de l'utilisateur"
           className="imgAvatar"
         />

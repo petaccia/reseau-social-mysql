@@ -1,25 +1,18 @@
 const Joi = require("joi");
 
 const userValidation = (data) => {
-  const userSchema = Joi.object({
-    username: Joi.string().alphanum().min(3).max(30).presence("required"),
-    email: Joi.string()
-      .email({ minDomainSegments: 2, tlds: { allow: ["com", "fr", "net"] } })
-      .presence("required"),
-    password: Joi.string()
-      .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
-      .presence("required"),
-    firstName: Joi.string().alphanum().min(3).max(30).presence("required"),
-    lastName: Joi.string().alphanum().min(3).max(30).presence("required"),
-    dateOfBirth: Joi.date().presence("optional"),
-    numberPhone: Joi.string().presence("optional"),
-    adress: Joi.string().presence("optional"),
-    city: Joi.string().presence("optional"),
-    postalCode: Joi.string().allow(null, "").presence("optional"),
-    country: Joi.string().presence("optional"),
-    profilePicture: Joi.string().presence("optional"),
-    familyId: Joi.number().integer().presence("required"),
+  const schema = Joi.object({
+    firstname: Joi.string().alphanum().min(3).max(30).required(),
+    lastname: Joi.string().alphanum().min(3).max(30).allow(null, "").optional(),
+    dateOfBirth: Joi.date().optional(),
+    numberPhone: Joi.string().allow(null, "").optional(),
+    adress: Joi.string().allow(null, "").optional(),
+    city: Joi.string().allow(null, "").optional(),
+    postalCode: Joi.string().allow(null, "").optional(),
+    country: Joi.string().allow(null, "").optional(),
+    profilePicture: Joi.string().allow(null, "").optional(),
   });
-  return userSchema.validate(data, { abortEarly: false }).error;
+
+  return schema.validate(data, { abortEarly: false });
 };
 module.exports = userValidation;

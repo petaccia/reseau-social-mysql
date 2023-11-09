@@ -22,8 +22,11 @@ const upload = require("./services/multer");
 
 // Les middlewares
 const setStatusReadBaseOrigin = require("./middleware/StatusRead");
-const { authenticateJWT, requireAdminFamilyRole } = require("./middleware/auth");
-const {authorizeFamilyAccess} = require("./middleware/Authorization");
+const {
+  authenticateJWT,
+  requireAdminFamilyRole,
+} = require("./middleware/auth");
+const { authorizeFamilyAccess } = require("./middleware/Authorization");
 
 // Routes d'authentification
 router.post("/signupAdmin", authController.signupAdminFamily);
@@ -47,7 +50,6 @@ router.delete("/family/:id", familyController.deleteFamily);
 // Routes de user
 router.get("/user", usersController.getAllUser);
 router.get("/user/:id", usersController.getOneUser);
-
 
 router.post("/user", upload.single("image"), usersController.createUser);
 router.put("/user/:id", upload.single("image"), usersController.updateUser);
@@ -116,16 +118,37 @@ router.get("/adminfamily", adminFamilyController.getAllAdminFamily);
 router.get("/adminfamily/:id", adminFamilyController.getOneAdminFamily);
 router.post("/adminfamily", adminFamilyController.createAdminFamily);
 router.put("/adminfamily/:id", adminFamilyController.updateAdminFamily);
+router.put(
+  "/adminfamily/:id/image/profile/admin",
+  upload.single("image"),
+  adminFamilyController.updateAdminFamilyImage
+);
 router.delete("/adminfamily/:id", adminFamilyController.deleteAdminFamily);
 // pour accepter ou refuser un utilisateur de la famille
-router.put("/adminfamily/user/accept/:userId",authorizeFamilyAccess, adminFamilyController.acceptRequest);
+router.put(
+  "/adminfamily/user/accept/:userId",
+  authorizeFamilyAccess,
+  adminFamilyController.acceptRequest
+);
 
 // Route pour obtenir tous les utilisateurs en attente de validation
-router.get("/adminfamily/user/pending/:adminFamily",authorizeFamilyAccess, usersController.getPendingUsers);
+router.get(
+  "/adminfamily/user/pending/:adminFamily",
+  authorizeFamilyAccess,
+  usersController.getPendingUsers
+);
 // route pour Obtenir tous les users acceptés
-router.get("/adminfamily/user/accepted/:adminFamily",authorizeFamilyAccess, usersController.getAcceptedAllUsers);
+router.get(
+  "/adminfamily/user/accepted/:adminFamily",
+  authorizeFamilyAccess,
+  usersController.getAcceptedAllUsers
+);
 // route pour Obtenir tous les utilisateurs refusés
-router.get("/adminfamily/user/refused/:adminFamily",authorizeFamilyAccess, usersController.getRefusedAllusers);
+router.get(
+  "/adminfamily/user/refused/:adminFamily",
+  authorizeFamilyAccess,
+  usersController.getRefusedAllusers
+);
 
 // Route pour créer une famille
 router.post("/adminfamily/family", familyController.createFamily);

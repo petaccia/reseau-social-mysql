@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { format } from "date-fns";
 import UserContext from "../../contexts/UserContext/UserContext.jsx";
 import ModalPassword from "../../components/modals/ModalPassword/ModalPassword.jsx";
 import ModalEmail from "../../components/modals/ModalEmail/ModalEmail.jsx";
@@ -14,63 +15,101 @@ const ProfilUser = () => {
   const { currentUser } = useContext(UserContext);
 
   const initialFormData = {
-    firstname: currentUser.firstname,
-    lastname: currentUser.lastname,
-    email: currentUser.email,
-    numberPhone: currentUser.numberPhone,
-    adress: currentUser.adress,
-    city: currentUser.city,
-    postalCode: currentUser.postalCode,
-    country: currentUser.country,
+    firstname: currentUser.firstname || "",
+    lastname: currentUser.lastname || "",
+    dateOfBirth: currentUser.dateOfBirth || new Date(),
+    numberPhone: currentUser.numberPhone || "",
+    adress: currentUser.adress || "",
+    city: currentUser.city || "",
+    postalCode: currentUser.postalCode || "",
+    country: currentUser.country || "",
   };
 
   const [file, setFile] = useState(null);
   const [data, setData] = useState(initialFormData);
   const [isModalOpenPassword, setIsModalOpenPassword] = useState(false);
   const [isModalOpenEmail, setIsModalOpenEmail] = useState(false);
-  const [dateOfBirthInput, setDateOfBirthInput] = useState(
-    currentUser.dateOfBirth
-  );
 
   const handleChange = (place, value) => {
+    console.log("voila la valeur de place");
     const newDataUser = { ...data };
     newDataUser[place] = value;
+    console.log("---------------newDataUser", newDataUser);
     setData(newDataUser);
+    console.log("voila la valeur de newDataUser", data);
   };
 
   const handleFileUpload = (e) => {
     setFile(e.target.files[0]);
   };
 
-  const handleUpdateForm = async (e) => {
+  const handleImageForm = async (e) => {
+    console.log("me voici au niveau de la requête" );
     e.preventDefault();
-    const formData = new FormData();
+    const formDataImage = new FormData();
 
     if (file) {
-      formData.append("image", file);
+      formDataImage.append("image", file);
     }
 
     for (const key in data) {
       if (Object.prototype.hasOwnProperty.call(data, key) && key !== "image") {
-        formData.append(key, data[key]);
+        formDataImage.append(key, data[key]);
       }
     }
 
-    try {
-      let updateRoute;
+    // Format de la date au format YYYY-MM-DD
+    formDataImage.append("dateOfBirth", format(data.dateOfBirth, "yyyy-MM-dd"));
 
-      if (currentUser.userType === "adminFamily") {
-        updateRoute = `/adminfamily/${currentUser.id}`;
-      } else {
-        updateRoute = `/user/${currentUser.id}`;
+    // Mise à jour de l'image de profil
+    if (file) {
+      const imageFormData = new FormData();
+      imageFormData.append("image", file);
+      const imageRoute = `/adminfamily/${currentUser.id}/image/profile/admin`;
+
+      try {
+        const imageResponse = await apiConnect.put(imageRoute, imageFormData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        if (imageResponse.status === 200 && imageResponse.data) {
+          toastSuccess("Image de profil mise à jour avec succès");
+        } else {
+          toastError("Erreur lors de la mise à jour de l'image de profil");
+        }
+      } catch (error) {
+        toastError("Erreur lors de la mise à jour de l'image de profil");
+        console.error("Erreur lors de la mise à jour de l'image de profil", error.response);
       }
-      const response = await apiConnect.put(updateRoute, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+    }
+  };
 
-      if (response.status === 200) {
+  const handleUpdateForm = async (e) => {
+    e.preventDefault();
+  
+    const formattedDateOfBirth = format(data.dateOfBirth, "yyyy-MM-dd");
+  
+    const updateData = {
+      ...data,
+      dateOfBirth: formattedDateOfBirth,
+    };
+  
+    let updateRoute;
+  
+    if (currentUser.roleId === 1) {
+      updateRoute = `/adminfamily/${currentUser.id}`;
+    } else if (currentUser.roleId === 3) {
+      updateRoute = `/user/${currentUser.id}`;
+    }
+  console.log(("données envoyer au serveur", updateData));
+    try {
+      const response = await apiConnect.put(updateRoute, updateData);
+  
+      if (response.status === 200 && response.data) {
+        console.log("response.data", response.data);
+        console.log("response", response);
         toastSuccess("Profil mis à jour avec succès");
         // Réinitialise les données du formulaire après la mise à jour réussie
         setData(initialFormData);
@@ -82,7 +121,6 @@ const ProfilUser = () => {
       console.error("Erreur lors de la mise à jour du profil", error.response);
     }
   };
-
   return (
     <div className="containerPageProfilUser">
       <h1 className="titleProfilUser">Page de profil</h1>
@@ -106,6 +144,9 @@ const ProfilUser = () => {
             type="file"
             onChange={handleFileUpload}
           />
+          <button type="button" className="button" onClick={handleImageForm}>
+            Mettre à jour l'image
+          </button>
         </div>
         <div className="form-container-user">
           <form action="" className="user-form" onSubmit={handleUpdateForm}>
@@ -141,8 +182,8 @@ const ProfilUser = () => {
               </label>
               <div className="input">
                 <CustomCalendar
-                  value={dateOfBirthInput}
-                  onChange={(date) => setDateOfBirthInput(date)}
+                  value={data.dateOfBirth}
+                  onChange={(date) => setData({ ...data, dateOfBirth: date })}
                 />
               </div>
             </div>
