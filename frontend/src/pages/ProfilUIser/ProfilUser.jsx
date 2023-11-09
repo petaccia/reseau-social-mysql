@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { format } from "date-fns";
+// import { format, parseISO } from "date-fns";
 import UserContext from "../../contexts/UserContext/UserContext.jsx";
 import ModalPassword from "../../components/modals/ModalPassword/ModalPassword.jsx";
 import ModalEmail from "../../components/modals/ModalEmail/ModalEmail.jsx";
@@ -31,12 +31,9 @@ const ProfilUser = () => {
   const [isModalOpenEmail, setIsModalOpenEmail] = useState(false);
 
   const handleChange = (place, value) => {
-    console.log("voila la valeur de place");
     const newDataUser = { ...data };
     newDataUser[place] = value;
-    console.log("---------------newDataUser", newDataUser);
     setData(newDataUser);
-    console.log("voila la valeur de newDataUser", data);
   };
 
   const handleFileUpload = (e) => {
@@ -44,7 +41,6 @@ const ProfilUser = () => {
   };
 
   const handleImageForm = async (e) => {
-    console.log("me voici au niveau de la requête" );
     e.preventDefault();
     const formDataImage = new FormData();
 
@@ -57,9 +53,6 @@ const ProfilUser = () => {
         formDataImage.append(key, data[key]);
       }
     }
-
-    // Format de la date au format YYYY-MM-DD
-    formDataImage.append("dateOfBirth", format(data.dateOfBirth, "yyyy-MM-dd"));
 
     // Mise à jour de l'image de profil
     if (file) {
@@ -81,38 +74,33 @@ const ProfilUser = () => {
         }
       } catch (error) {
         toastError("Erreur lors de la mise à jour de l'image de profil");
-        console.error("Erreur lors de la mise à jour de l'image de profil", error.response);
+        console.error(
+          "Erreur lors de la mise à jour de l'image de profil",
+          error.response
+        );
       }
     }
   };
 
   const handleUpdateForm = async (e) => {
     e.preventDefault();
-  
-    const formattedDateOfBirth = format(data.dateOfBirth, "yyyy-MM-dd");
-  
+
     const updateData = {
       ...data,
-      dateOfBirth: formattedDateOfBirth,
     };
-  
+
     let updateRoute;
-  
+
     if (currentUser.roleId === 1) {
       updateRoute = `/adminfamily/${currentUser.id}`;
     } else if (currentUser.roleId === 3) {
       updateRoute = `/user/${currentUser.id}`;
     }
-  console.log(("données envoyer au serveur", updateData));
     try {
       const response = await apiConnect.put(updateRoute, updateData);
-  
+
       if (response.status === 200 && response.data) {
-        console.log("response.data", response.data);
-        console.log("response", response);
         toastSuccess("Profil mis à jour avec succès");
-        // Réinitialise les données du formulaire après la mise à jour réussie
-        setData(initialFormData);
       } else {
         toastError("Veuillez vérifier vos champs");
       }
