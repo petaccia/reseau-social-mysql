@@ -58,8 +58,14 @@ const ProfilUser = () => {
     if (file) {
       const imageFormData = new FormData();
       imageFormData.append("image", file);
-      const imageRoute = `/adminfamily/${currentUser.id}/image/profile/admin`;
 
+      let imageRoute;
+      if (currentUser.roleId === 1) {
+        imageRoute = `/adminfamily/${currentUser.id}/image/profil/admin`;
+      } else if (currentUser.roleId === 3) {
+        imageRoute = `/user/${currentUser.id}/image/profil/user`;
+      }
+      // Log the imageRoute and file
       try {
         const imageResponse = await apiConnect.put(imageRoute, imageFormData, {
           headers: {
