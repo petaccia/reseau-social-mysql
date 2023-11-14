@@ -120,6 +120,7 @@ const UserProvider = ({ children }) => {
       value={{
         users,
         currentUser,
+        setCurrentUser,
         getUser,
         getAllUsers,
         addUser,
