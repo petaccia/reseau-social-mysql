@@ -9,7 +9,7 @@ const NavbarMobile = () => {
   const { currentUser } = useContext(UserContext);
 
   return (
-    <div className="navbar_mobile d-flex justify-content-around mt-3 d-lg-none ">
+    <div className="navbar_mobile d-flex justify-content-around mt-3 d-md-none ">
       <Link to="/notification">
         <IoMdNotificationsOutline size={25} className="icon" />
       </Link>
