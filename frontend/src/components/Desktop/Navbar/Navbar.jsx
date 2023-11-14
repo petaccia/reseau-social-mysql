@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import {
   Navbar,
   Container,
@@ -18,14 +18,7 @@ import UserContext from "../../../contexts/UserContext/UserContext.jsx";
 const NavbarOriginal = ({ famille }) => {
   const { currentUser } = useContext(UserContext);
   console.log("currentUser in NavbarOriginal", currentUser.profilePicture);
-  const [userProfilPicture, setUserProfilPicture] = useState("");
 
-  useEffect(() => {
-    if (currentUser.profilePicture) {
-      const imageUrl = currentUser.profilePicture;
-      setUserProfilPicture(imageUrl);
-    }
-  }, [currentUser]);
   return (
     <Navbar className="navbar d-none d-md-block position-fixed z-3" expand="lg">
       <Container fluid className="">
@@ -58,7 +51,9 @@ const NavbarOriginal = ({ famille }) => {
               </div>
               <Link to="/profilUser" className="userAvatarContainer">
                 <img
-                  src={`${import.meta.env.VITE_BACKEND_URL}/${userProfilPicture}`}
+                  src={`${import.meta.env.VITE_BACKEND_URL}/${
+                    currentUser.profilePicture
+                  }`}
                   alt="profil de l'utilisateur"
                   className="imgAvatar"
                 />

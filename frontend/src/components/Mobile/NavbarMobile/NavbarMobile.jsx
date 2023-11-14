@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "./NavbarMobile.scss";
 import { IoMdNotificationsOutline } from "react-icons/io";
@@ -7,16 +7,7 @@ import UserContext from "../../../contexts/UserContext/UserContext.jsx";
 
 const NavbarMobile = () => {
   const { currentUser } = useContext(UserContext);
-  // const [userProfilPicture, setUserProfilPicture] = useState("");
 
-  // useEffect(() => {
-  //   if (currentUser.profilePicture) {
-  //     const imageUrl = currentUser.profilePicture;
-  //     setUserProfilPicture(imageUrl);
-  //   }
-  // }, [currentUser]);
-
-  console.log("currentUser in NavbarMobile", currentUser.profilePicture);
   return (
     <div className="navbar_mobile d-flex justify-content-around mt-3 d-lg-none ">
       <Link to="/notification">
@@ -24,7 +15,9 @@ const NavbarMobile = () => {
       </Link>
       <Link to="/ProfilUser">
         <img
-          src={currentUser.profilePicture}
+          src={`${import.meta.env.VITE_BACKEND_URL}/${
+            currentUser.profilePicture
+          }`}
           alt="profil de l'utilisateur"
           className="imgAvatar"
         />

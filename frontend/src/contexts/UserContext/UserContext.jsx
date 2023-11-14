@@ -3,6 +3,7 @@ import { createContext } from "react";
 const UserContext = createContext({
   users: [],
   currentUser: {},
+  setCurrentUser: () => {},
   getAllUsers: () => {},
   getUser: () => {},
   addUser: () => {},

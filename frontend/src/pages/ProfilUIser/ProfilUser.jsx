@@ -12,7 +12,7 @@ import "./ProfilUser.scss";
 import CustomCalendar from "../../components/Accessories/Calendar/CustomCalendar.jsx";
 
 const ProfilUser = () => {
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
 
   const initialFormData = {
     firstname: currentUser.firstname || "",
@@ -42,49 +42,44 @@ const ProfilUser = () => {
 
   const handleImageForm = async (e) => {
     e.preventDefault();
-    const formDataImage = new FormData();
-
-    if (file) {
-      formDataImage.append("image", file);
+    if (!file) {
+      toastError("Veuillez sélectionner une image à uploader.");
+      return;
     }
 
-    for (const key in data) {
-      if (Object.prototype.hasOwnProperty.call(data, key) && key !== "image") {
-        formDataImage.append(key, data[key]);
-      }
+    const formData = new FormData();
+    formData.append("image", file); // Ajoutez uniquement le fichier image
+
+    let imageRoute;
+    if (currentUser.roleId === 1) {
+      imageRoute = `/adminfamily/${currentUser.id}/image/profil/admin`;
+    } else if (currentUser.roleId === 3) {
+      imageRoute = `/user/${currentUser.id}/image/profil/user`;
     }
 
-    // Mise à jour de l'image de profil
-    if (file) {
-      const imageFormData = new FormData();
-      imageFormData.append("image", file);
+    try {
+      const imageResponse = await apiConnect.put(imageRoute, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
-      let imageRoute;
-      if (currentUser.roleId === 1) {
-        imageRoute = `/adminfamily/${currentUser.id}/image/profil/admin`;
-      } else if (currentUser.roleId === 3) {
-        imageRoute = `/user/${currentUser.id}/image/profil/user`;
-      }
-      // Log the imageRoute and file
-      try {
-        const imageResponse = await apiConnect.put(imageRoute, imageFormData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+      if (imageResponse.status === 200 && imageResponse.data) {
+        toastSuccess("Image de profil mise à jour avec succès");
 
-        if (imageResponse.status === 200 && imageResponse.data) {
-          toastSuccess("Image de profil mise à jour avec succès");
-        } else {
-          toastError("Erreur lors de la mise à jour de l'image de profil");
-        }
-      } catch (error) {
-        toastError("Erreur lors de la mise à jour de l'image de profil");
-        console.error(
-          "Erreur lors de la mise à jour de l'image de profil",
-          error.response
-        );
+        // Mettre à jour l'état currentUser avec le nouveau chemin de l'image de profil
+        const updatedUser = {
+          ...currentUser,
+          profilePicture: imageResponse.data.profilePicture,
+        };
+        setCurrentUser(updatedUser); //  cette fonction est définie pour mettre à jour l'utilisateur courant dans le contexte
       }
+    } catch (error) {
+      toastError("Erreur lors de la mise à jour de l'image de profil");
+      console.error(
+        "Erreur lors de la mise à jour de l'image de profil",
+        error
+      );
     }
   };
 

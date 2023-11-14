@@ -80,8 +80,6 @@ const updateAdminFamily = async (req, res) => {
       country,
     };
 
-    console.log("Données envoyées au serveur", updateData);
-
     const updatedAdminFamily = await AdminFamily.update(updateData, {
       where: { id },
     });
@@ -108,7 +106,7 @@ const updateAdminFamilyImage = async (req, res) => {
     });
 
     if (!adminFamily) {
-      return res.status(404).json({ error: "Admin not found" });
+      return res.status(404).json({ error: "Administrateur non trouvé" });
     }
 
     if (req.file) {
@@ -126,14 +124,16 @@ const updateAdminFamilyImage = async (req, res) => {
 
       adminFamily.profilePicture = replaceBackslash(adminFamily.profilePicture);
 
-      return res
-        .status(200)
-        .json({ message: "Image de profil mise à jour avec succès" });
+      return res.status(200).json({
+        message: "Image de profil mise à jour avec succès",
+        profilePicture: adminFamily.profilePicture,
+      });
     }
   } catch (err) {
     console.error("Erreur du serveur ", err);
     return res.status(500).json({ error: "Erreur du serveur", err });
   }
+  return null;
 };
 
 const deleteAdminFamily = async (req, res) => {
