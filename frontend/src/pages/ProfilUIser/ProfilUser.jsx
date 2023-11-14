@@ -171,15 +171,14 @@ const ProfilUser = () => {
                   onChange={(e) => handleChange("firstname", e.target.value)}
                 />
               </Form.Group>
-              <Form.Group className="form-group mb-4">
-                <Form.Label className="Form.Label" htmlFor="birthday">
-                  Date de naissance
-                </Form.Label>
-                <Form.Control className="input" />
-                <CustomCalendar
-                  value={data.dateOfBirth}
-                  onChange={(date) => setData({ ...data, dateOfBirth: date })}
-                />
+              <Form.Group className="mb-4" controlId="birthday">
+                <Form.Label>Date de naissance</Form.Label>
+                <div className="custom-calendar-container">
+                  <CustomCalendar
+                    value={data.dateOfBirth}
+                    onChange={(date) => setData({ ...data, dateOfBirth: date })}
+                  />
+                </div>
               </Form.Group>
               <Form.Group className="form-group mb-4">
                 <Form.Label className="Form.Label" htmlFor="phone">
