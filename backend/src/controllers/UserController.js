@@ -101,7 +101,6 @@ const createUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const { body } = req;
-  console.log("Données envoyées au serveur", body);
   try {
     const { id } = req.params;
     const updateDatas = req.body;
@@ -136,13 +135,10 @@ const updateUser = async (req, res) => {
       postalCode,
       country,
     };
-    console.log("Données envoyées au serveur", updateData);
-
 
     const updatedUser = await User.update(updateData, {
       where: { id },
     });
-    console.log("updatedUser in updateUser", updatedUser);
 
     if (updatedUser[0] === 1) {
       res.status(200).send({ message: "Utilisateur mis à jour avec succès" });
@@ -184,15 +180,16 @@ const updateUserImage = async (req, res) => {
 
       user.profilePicture = replaceBackslash(user.profilePicture);
 
-      return res
-        .status(200)
-        .json({ message: "Image de profil mise à jour avec succès" });
+      return res.status(200).json({
+        message: "Image de profil mise à jour avec succès",
+        profilePicture: user.profilePicture,
+      });
     }
   } catch (err) {
     console.error("Erreur du serveur ", err);
     return res.status(500).json({ error: "Erreur du serveur", err });
   }
-  return null
+  return null;
 };
 
 const deleteUser = async (req, res) => {
