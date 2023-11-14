@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-// import { format, parseISO } from "date-fns";
+import { Col, Container, Row, Form, Button } from "react-bootstrap";
 import UserContext from "../../contexts/UserContext/UserContext.jsx";
 import ModalPassword from "../../components/modals/ModalPassword/ModalPassword.jsx";
 import ModalEmail from "../../components/modals/ModalEmail/ModalEmail.jsx";
@@ -111,182 +111,191 @@ const ProfilUser = () => {
     }
   };
   return (
-    <div className="containerPageProfilUser">
-      <h1 className="titleProfilUser">Page de profil</h1>
-      <div className="profil-container">
-        <div className="image-container">
-          <h2 className="image-title">Photo de profil</h2>
-          <img
-            src={
-              file
-                ? URL.createObjectURL(file)
-                : `${import.meta.env.VITE_BACKEND_URL}/${
-                    currentUser.profilePicture
-                  }`
-            }
-            alt="Profil de l'utilisateur"
-            className="image"
-          />
-          <input
-            className="input-file"
-            id="image"
-            type="file"
-            onChange={handleFileUpload}
-          />
-          <button type="button" className="button" onClick={handleImageForm}>
-            Mettre à jour l'image
-          </button>
-        </div>
-        <div className="form-container-user">
-          <form action="" className="user-form" onSubmit={handleUpdateForm}>
-            <div className="form-group">
-              <label className="label" htmlFor="lastname">
-                Nom
-              </label>
-              <input
-                className="input"
-                id="lastname"
-                type="text"
-                name="lastname"
-                value={data.lastname}
-                onChange={(e) => handleChange("lastname", e.target.value)}
+    <Container className="profil-user ">
+      <Row className="rowProfilUser justify-content-center">
+        <Col sm={12} md={10} lg={8} className="colProfilUser ms-md-5 mb-5 ">
+          <div className="profil p-5 border border rounded-5 mb-5 ">
+            <h2 className="image-title mb-5 text-center">Photo de profil</h2>
+            <div className="image-container d-flex flex-column flex-md-row  justify-content-around align-items-center ">
+              <Button
+                type="button"
+                className="button d-flex mb-4 mb-md-0 mx-4"
+                onClick={handleImageForm}
+              >
+                Mettre à jour l'image
+              </Button>
+              <img
+                src={
+                  file
+                    ? URL.createObjectURL(file)
+                    : `${import.meta.env.VITE_BACKEND_URL}/${
+                        currentUser.profilePicture
+                      }`
+                }
+                alt="Profil de l'utilisateur"
+                className="image  rounded-circle w-50 h-50 d-flex justify-content-center align-items-center"
               />
             </div>
-            <div className="form-group">
-              <label className="label" htmlFor="firstname">
-                Prénom
-              </label>
-              <input
-                className="input"
-                id="firstname"
-                type="text"
-                name="firstname"
-                value={data.firstname}
-                onChange={(e) => handleChange("firstname", e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label className="label" htmlFor="birthday">
-                Date de naissance
-              </label>
-              <div className="input">
+
+            <Form.Control
+              className="input-file mt-3 mb-5"
+              id="image"
+              type="file"
+              onChange={handleFileUpload}
+            />
+            {/* <div className="form-container-user"> */}
+            <Form onSubmit={handleUpdateForm} className="user-form ">
+              <Form.Group className="form-group mb-4">
+                <Form.Label className="Form.Label" htmlFor="lastname">
+                  Nom
+                </Form.Label>
+                <Form.Control
+                  className="input"
+                  id="lastname"
+                  type="text"
+                  name="lastname"
+                  value={data.lastname}
+                  onChange={(e) => handleChange("lastname", e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group className="form-group mb-4">
+                <Form.Label className="Form.Label" htmlFor="firstname">
+                  Prénom
+                </Form.Label>
+                <Form.Control
+                  className="input"
+                  id="firstname"
+                  type="text"
+                  name="firstname"
+                  value={data.firstname}
+                  onChange={(e) => handleChange("firstname", e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group className="form-group mb-4">
+                <Form.Label className="Form.Label" htmlFor="birthday">
+                  Date de naissance
+                </Form.Label>
+                <Form.Control className="input" />
                 <CustomCalendar
                   value={data.dateOfBirth}
                   onChange={(date) => setData({ ...data, dateOfBirth: date })}
                 />
-              </div>
-            </div>
-            <div className="form-group">
-              <label className="label" htmlFor="phone">
-                Téléphone
-              </label>
-              <input
-                className="input"
-                id="phone"
-                type="text"
-                name="numberPhone"
-                value={data.numberPhone}
-                onChange={(e) => handleChange("numberPhone", e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label className="label" htmlFor="adress">
-                Adresse
-              </label>
-              <input
-                className="input"
-                id="adress"
-                type="text"
-                name="adress"
-                value={data.adress}
-                onChange={(e) => handleChange("adress", e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label className="label" htmlFor="city">
-                Ville
-              </label>
-              <input
-                className="input"
-                id="city"
-                type="text"
-                name="city"
-                value={data.city}
-                onChange={(e) => handleChange("city", e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label className="label" htmlFor="postalCode">
-                Code postal
-              </label>
-              <input
-                className="input"
-                id="postalCode"
-                type="text"
-                name="postalCode"
-                value={data.postalCode}
-                onChange={(e) => handleChange("postalCode", e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <label className="label" htmlFor="country">
-                Pays
-              </label>
-              <input
-                className="input"
-                id="country"
-                type="text"
-                name="country"
-                value={data.country}
-                onChange={(e) => handleChange("country", e.target.value)}
-              />
-            </div>
-            {currentUser.userType === "adminFamily" && (
-              <div className="form-group">
-                <label className="label" htmlFor="familyName">
-                  Famille
-                </label>
-                <input
+              </Form.Group>
+              <Form.Group className="form-group mb-4">
+                <Form.Label className="Form.Label" htmlFor="phone">
+                  Téléphone
+                </Form.Label>
+                <Form.Control
                   className="input"
-                  id="familyName"
+                  id="phone"
                   type="text"
-                  name="familyName"
-                  value={data.familyName}
-                  onChange={(e) => handleChange("familyName", e.target.value)}
+                  name="numberPhone"
+                  value={data.numberPhone}
+                  onChange={(e) => handleChange("numberPhone", e.target.value)}
                 />
+              </Form.Group>
+              <Form.Group className="form-group mb-4">
+                <Form.Label className="Form.Label" htmlFor="adress">
+                  Adresse
+                </Form.Label>
+                <Form.Control
+                  className="input"
+                  id="adress"
+                  type="text"
+                  name="adress"
+                  value={data.adress}
+                  onChange={(e) => handleChange("adress", e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group className="form-group mb-4">
+                <Form.Label className="Form.Label" htmlFor="city">
+                  Ville
+                </Form.Label>
+                <Form.Control
+                  className="input"
+                  id="city"
+                  type="text"
+                  name="city"
+                  value={data.city}
+                  onChange={(e) => handleChange("city", e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group className="form-group mb-4">
+                <Form.Label className="Form.Label" htmlFor="postalCode">
+                  Code postal
+                </Form.Label>
+                <Form.Control
+                  className="input"
+                  id="postalCode"
+                  type="text"
+                  name="postalCode"
+                  value={data.postalCode}
+                  onChange={(e) => handleChange("postalCode", e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group className="form-group mb-4">
+                <Form.Label className="Form.Label" htmlFor="country">
+                  Pays
+                </Form.Label>
+                <Form.Control
+                  className="input"
+                  id="country"
+                  type="text"
+                  name="country"
+                  value={data.country}
+                  onChange={(e) => handleChange("country", e.target.value)}
+                />
+              </Form.Group>
+              {currentUser.userType === "adminFamily" && (
+                <Form.Group className="form-group mb-4">
+                  <Form.Label className="Form.Label" htmlFor="familyName">
+                    Famille
+                  </Form.Label>
+                  <Form.Control
+                    className="input"
+                    id="familyName"
+                    type="text"
+                    name="familyName"
+                    value={data.familyName}
+                    onChange={(e) => handleChange("familyName", e.target.value)}
+                  />
+                </Form.Group>
+              )}
+              <div className="button-container d-flex justify-content-center">
+                <Button type="submit" className="update-button w-50 ">
+                  Mettre à jour
+                </Button>
               </div>
-            )}
-            <button type="submit" className="update-button">
-              Mettre à jour
-            </button>
-          </form>
-        </div>
-        <div className="button-container">
-          <button
-            type="button"
-            className="button"
-            onClick={() => setIsModalOpenPassword(true)}
-          >
-            Modifier mot de passe
-          </button>
-          <ModalPassword
-            isOpen={isModalOpenPassword}
-            onClose={() => setIsModalOpenPassword(false)}
-          />
-          <button
-            type="button"
-            className="button"
-            onClick={() => setIsModalOpenEmail(true)}
-          >
-            Modifier email
-          </button>
-          <ModalEmail
-            isOpen={isModalOpenEmail}
-            onClose={() => setIsModalOpenEmail(false)}
-          />
-        </div>
-      </div>
-    </div>
+            </Form>
+          </div>
+          <div className="button-container mt-5 mb-5 d-flex justify-content-around">
+            <Button
+              type="button"
+              className="button w-25"
+              onClick={() => setIsModalOpenPassword(true)}
+            >
+              Modifier mot de passe
+            </Button>
+            <ModalPassword
+              isOpen={isModalOpenPassword}
+              onClose={() => setIsModalOpenPassword(false)}
+            />
+            <Button
+              type="button"
+              className="button w-25"
+              onClick={() => setIsModalOpenEmail(true)}
+            >
+              Modifier email
+            </Button>
+            <ModalEmail
+              isOpen={isModalOpenEmail}
+              onClose={() => setIsModalOpenEmail(false)}
+            />
+          </div>
+          {/* </div> */}
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
