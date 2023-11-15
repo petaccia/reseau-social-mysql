@@ -14,10 +14,16 @@ import { BsFillEnvelopeFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import "./Navbar.scss";
 import UserContext from "../../../contexts/UserContext/UserContext.jsx";
+import { RxAvatar } from "react-icons/rx";
 
 const NavbarOriginal = ({ famille }) => {
   const { currentUser } = useContext(UserContext);
   console.log("currentUser in NavbarOriginal", currentUser.profilePicture);
+
+  // Vérifier si l'image du profil existe ou sinon afficher un avatar par defaut
+  const profilePicture = currentUser.profilePicture
+    ? `${import.meta.env.VITE_BACKEND_URL}/${currentUser.profilePicture}`
+    : null;
 
   return (
     <Navbar className="navbar d-none d-md-block position-fixed z-3" expand="lg">
@@ -50,13 +56,15 @@ const NavbarOriginal = ({ famille }) => {
                 <BsFillEnvelopeFill className="icon" />
               </div>
               <Link to="/profilUser" className="userAvatarContainer">
-                <img
-                  src={`${import.meta.env.VITE_BACKEND_URL}/${
-                    currentUser.profilePicture
-                  }`}
-                  alt="profil de l'utilisateur"
-                  className="imgAvatar"
-                />
+                {profilePicture ? (
+                  <img
+                    src={profilePicture}
+                    alt="profil de l'utilisateur"
+                    className="imgAvatar"
+                  />
+                ) : (
+                  <RxAvatar size={50} className="icon" />
+                )}
               </Link>
             </div>
           </Col>

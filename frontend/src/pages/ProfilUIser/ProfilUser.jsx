@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Col, Container, Row, Form, Button } from "react-bootstrap";
+import { RxAvatar } from "react-icons/rx";
 import UserContext from "../../contexts/UserContext/UserContext.jsx";
 import ModalPassword from "../../components/modals/ModalPassword/ModalPassword.jsx";
 import ModalEmail from "../../components/modals/ModalEmail/ModalEmail.jsx";
@@ -29,6 +30,11 @@ const ProfilUser = () => {
   const [data, setData] = useState(initialFormData);
   const [isModalOpenPassword, setIsModalOpenPassword] = useState(false);
   const [isModalOpenEmail, setIsModalOpenEmail] = useState(false);
+
+  // Vérifier si l'image du profil existe ou sinon afficher un avatar par defaut
+  const profilePicture = currentUser.profilePicture
+    ? `${import.meta.env.VITE_BACKEND_URL}/${currentUser.profilePicture}`
+    : null;
 
   const handleChange = (place, value) => {
     const newDataUser = { ...data };
@@ -124,17 +130,15 @@ const ProfilUser = () => {
               >
                 Mettre à jour l'image
               </Button>
-              <img
-                src={
-                  file
-                    ? URL.createObjectURL(file)
-                    : `${import.meta.env.VITE_BACKEND_URL}/${
-                        currentUser.profilePicture
-                      }`
-                }
-                alt="Profil de l'utilisateur"
-                className="image  rounded-circle w-50 h-50 d-flex justify-content-center align-items-center"
-              />
+              {profilePicture ? (
+                <img
+                  src={profilePicture}
+                  alt="Profil de l'utilisateur"
+                  className="image  rounded-circle w-50 h-50 d-flex justify-content-center align-items-center"
+                />
+              ) : (
+                <RxAvatar className="avatar rounded-circle w-50 h-50 d-flex justify-content-center align-items-center" />
+              )}
             </div>
 
             <Form.Control
