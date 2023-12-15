@@ -109,7 +109,7 @@ const HomeMobile = () => {
   // Etat pour savoir si l'utilisateur est connecté ou non
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   return (
-    <div className="home-mobile d-flex w-100 justify-content-center flex-column align-items-center ">
+    <div className="home-mobile d-flex w-100 justify-content-center flex-column align-items-center  mb-5 ">
       <div className="logo-container d-flex ">
         <Logo className="img" />
       </div>
@@ -117,7 +117,7 @@ const HomeMobile = () => {
       {isLoggedIn && <ListUser users={users} />}
       <div className="card-post-container-mobile w-100 d-flex flex-column align-items-center justify-content-center">
         {posts.map((post) => (
-          <CardPost key={post.id} post={post} />
+          <CardPost key={post.id} post={post} showShareButton={false} />
         ))}
       </div>
     </div>

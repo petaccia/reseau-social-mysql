@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-// import { BiComment, BiShare } from "react-icons/bi";
 import { Card } from "react-bootstrap";
-// import InputGroup from "react-bootstrap/InputGroup";
-// import FormControl from "react-bootstrap/FormControl";
 import "./CardPost.scss";
 import LikeButton from "../../UI/ButtonComponent/LikeButton/LikeButton.jsx";
 import CommentButton from "../../UI/ButtonComponent/CommentButton/CommentButton.jsx";
@@ -14,11 +11,9 @@ import {
   CardTextPost,
 } from "../../Accessories/styledCards/styledCardPost.jsx";
 
-const CardPost = ({ post }) => {
+const CardPost = ({ post, showShareButton }) => {
   // Etat pour ouvrir la modale de commentaire
   const [isOpen, setIsOpen] = useState(false);
-  // const [title, setTitle] = useState("");
-  // const [content, setContent] = useState("");
 
   // Fonction pour ouvrir et fermer la modale de commentaire
   const handleOpen = () => {
@@ -28,12 +23,9 @@ const CardPost = ({ post }) => {
     setIsOpen(false);
   };
 
-  // const handleChangeContent = (e) => {
-  //   setContent(e.target.value);
-  // };
 
   return (
-    <CardContainerPost>
+    <CardContainerPost className="cardPost-container  rounded-4 mb-5">
       <Card className="cardPost  border rounded-4" onClick={handleOpen}>
         <Card.Img
           variant="top"
@@ -59,7 +51,7 @@ const CardPost = ({ post }) => {
         <Card.Footer className="d-flex justify-content-around text-primary">
           <LikeButton />
           <CommentButton />
-          <ShareButton />
+          {showShareButton && <ShareButton />}
         </Card.Footer>
       </Card>
       {isOpen && (
