@@ -83,7 +83,7 @@ const PageProfilDesktop = () => {
           <h1 className="profileName">Oceane</h1>
         </div>
         {posts.map((post) => (
-          <CardPost key={post.id} post={post} />
+          <CardPost key={post.id} post={post} showShareButton={true} />
         ))}
       </div>
       <div className="users">
