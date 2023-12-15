@@ -111,7 +111,7 @@ const HomeDesktop = () => {
             <CarouselHomeStory />
           </div>
           {posts.map((post) => (
-            <CardPost key={post.id} post={post} />
+            <CardPost key={post.id} post={post} showShareButton={false} />
           ))}
         </div>
         <div className="usersList">

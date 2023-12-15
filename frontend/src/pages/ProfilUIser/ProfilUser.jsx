@@ -117,7 +117,7 @@ const ProfilUser = () => {
     }
   };
   return (
-    <Container className="profil-user ">
+    <Container className="profil-user  ">
       <Row className="rowProfilUser justify-content-center">
         <Col sm={12} md={10} lg={8} className="colProfilUser ms-md-5 mb-5 ">
           <div className="profil p-5 border border rounded-5 mb-5 ">

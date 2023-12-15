@@ -109,7 +109,7 @@ const PageProfilMobile = () => {
   // Etat pour savoir si l'utilisateur est connecté ou non
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   return (
-    <div className="page-profil-mobile d-flex w-100 justify-content-center flex-column align-items-center ">
+    <div className="page-profil-mobile d-flex w-100 justify-content-center flex-column align-items-center mb-5">
         <div className="w-100 d-flex justify-content-center">
         <img className=" profil w-100" src={profil} alt="profil" />
       </div>
