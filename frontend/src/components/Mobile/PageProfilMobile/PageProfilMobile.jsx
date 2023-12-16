@@ -9,10 +9,22 @@ import requin from "../../../assets/post/requin.jpg";
 import maldive from "../../../assets/post/maldives.jpg";
 import noel from "../../../assets/post/noel.jpg";
 import CardPost from "../../Cards/cardPost/CardPost.jsx";
+import CreatePostForm from "../../Post/CreatePostForm.jsx";
 
 const PageProfilMobile = () => {
+  const [posts, setPosts] = useState([]);
+  const [showCreatePostForm, setShowCreatePostForm] = useState(false);
 
-  const posts = [
+  const addNewPost = (newPost) => {
+    setPosts([...posts, newPost]);
+    setShowCreatePostForm(false);
+  };
+
+  const toggleAddPost = () => {
+    setShowCreatePostForm(!showCreatePostForm);
+  };
+
+  const postes = [
     {
       id: 1,
       title: "balade en cheval",
@@ -46,7 +58,6 @@ const PageProfilMobile = () => {
       date: "12/12/2022",
     },
   ];
-
 
   const users = [
     {
@@ -108,15 +119,31 @@ const PageProfilMobile = () => {
 
   // Etat pour savoir si l'utilisateur est connecté ou non
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+
   return (
     <div className="page-profil-mobile d-flex w-100 justify-content-center flex-column align-items-center mb-5">
-        <div className="w-100 d-flex justify-content-center">
+      <div className="w-100 d-flex justify-content-center ">
         <img className=" profil w-100" src={profil} alt="profil" />
       </div>
+
       <CarouselHomeStory />
+      <div className="w-75  mt-5 mb-5 rounded-3 bg-dark border border-white  ">
+        <button
+          className="button-add-post d-flex justify-content-center align-items-center w-100 bg-dark border-0 text-white rounded-3 mt-3"
+          onClick={toggleAddPost}
+        >
+          {showCreatePostForm ? (
+            <p className="text-white">Annuler</p>
+          ) : (
+            <p className="text-white  ">Ajouter un post</p>
+          )}
+        </button>
+
+        {showCreatePostForm && <CreatePostForm onAddpost={addNewPost} />}
+      </div>
       {isLoggedIn && <ListUser users={users} />}
       <div className="card-post-container-mobile w-100 d-flex flex-column align-items-center justify-content-center">
-        {posts.map((post) => (
+        {postes.map((post) => (
           <CardPost key={post.id} post={post} />
         ))}
       </div>
