@@ -25,6 +25,7 @@ import Message from "./pages/Message/Message.jsx";
 import MessageProvider from "./contexts/MessageContext/MessageProvider.jsx";
 import ProfilUser from "./pages/ProfilUIser/ProfilUser.jsx";
 import PostAddProvider from "./contexts/postAddContext/PostAddProvider.jsx";
+import CreatePostPage from "./pages/Posts/CreatePostPage.jsx";
 
 const App = () => {
   return (
@@ -90,6 +91,14 @@ const App = () => {
                         element={
                           <MainLayout>
                             <Profil />
+                          </MainLayout>
+                        }
+                      />
+                      <Route
+                        path="/createPost"
+                        element={
+                          <MainLayout>
+                            <CreatePostPage />
                           </MainLayout>
                         }
                       />

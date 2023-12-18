@@ -1,0 +1,24 @@
+@import "../../style/variables";
+
+
+.create-post{
+    background-color: $background-fond;
+    color: $primary-color;
+    padding: 3rem;
+    form {
+        .form-control {
+            background-color: darken($background-fond, 5%);
+            color: $border-color;
+            &::placeholder {
+                color: $border-color;
+            }
+            &:focus {
+                background-color: $background-fond;
+                color: $primary-color;
+            }
+            
+        }
+    }
+    
+}
+    

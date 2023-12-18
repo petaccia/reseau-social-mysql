@@ -1,15 +1,17 @@
 import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import CarouselHomeStory from "../../carousel/CarouselHomeStory/CarouselHomeStory.jsx";
 import ListUser from "../../Lists/listUser/ListUser.jsx";
 import oceane from "../../../assets/users/oceane.jpg";
 import profil from "../../../assets/illustration/profil_test.jpg";
 
 import CardPost from "../../Cards/cardPost/CardPost.jsx";
-import CreatePostForm from "../../Post/CreatePostForm.jsx";
 import PostAddContext from "../../../contexts/postAddContext/PostAddContext.jsx";
 
 const PageProfilMobile = () => {
-  const { posts, addPosts } = useContext(PostAddContext);
+  // Récupération des posts
+  const { posts } = useContext(PostAddContext);
+  // Etat pour ouvrir le formulaire de création de post
   const [showCreatePostForm, setShowCreatePostForm] = useState(false);
 
   const toggleAddPost = () => {
@@ -86,26 +88,20 @@ const PageProfilMobile = () => {
       <CarouselHomeStory />
       <div className="w-75  mt-5 mb-5 rounded-3 bg-dark border border-white  ">
         {/* boutons pour afficher le formulaire de création d'un post */}
-        <button
+        <Link
+          to="/createPost"
           className="button-add-post d-flex justify-content-center align-items-center w-100 bg-dark border-0 text-white rounded-3 mt-3"
           onClick={toggleAddPost}
         >
-          {showCreatePostForm ? (
-            <p className="text-white">Annuler</p>
-          ) : (
-            <p className="text-white  ">Ajouter un post</p>
-          )}
-        </button>
-
-        {/* Formulaire de création d'un post */}
-        {showCreatePostForm && <CreatePostForm onAddPost={addPosts} />}
+          Ajouter un post
+        </Link>
       </div>
       {/* Liste des utilisateurs */}
       {isLoggedIn && <ListUser key={users.id} users={users} />}
       {/* Card de chaque post */}
       <div className="card-post-container-mobile w-100 d-flex flex-column align-items-center justify-content-center">
         {posts.map((post) => (
-          <CardPost key={post.id} post={post} showShareButton={true}/>
+          <CardPost key={post.id} post={post} showShareButton={true} />
         ))}
       </div>
     </div>
