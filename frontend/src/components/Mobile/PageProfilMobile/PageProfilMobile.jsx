@@ -80,9 +80,9 @@ const PageProfilMobile = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
-    <div className="page-profil-mobile d-flex w-100 justify-content-center flex-column align-items-center mb-5">
+    <div className="page-profil-mobile d-flex w-100 justify-content-center flex-column align-items-center mt-5">
       <div className="w-100 d-flex justify-content-center ">
-        <img className=" profil w-100" src={profil} alt="profil" />
+        <img className=" profil w-100 mb-5" src={profil} alt="profil" />
       </div>
 
       <CarouselHomeStory />
@@ -90,7 +90,7 @@ const PageProfilMobile = () => {
         {/* boutons pour afficher le formulaire de création d'un post */}
         <Link
           to="/createPost"
-          className="button-add-post d-flex justify-content-center align-items-center w-100 bg-dark border-0 text-white rounded-3 mt-3"
+          className="button-add-post d-flex justify-content-center align-items-center w-100  bg-dark border-0 text-white rounded-3 text-decoration-none p-2 "
           onClick={toggleAddPost}
         >
           Ajouter un post
