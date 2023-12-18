@@ -105,7 +105,7 @@ const PageProfilMobile = () => {
       {/* Card de chaque post */}
       <div className="card-post-container-mobile w-100 d-flex flex-column align-items-center justify-content-center">
         {posts.map((post) => (
-          <CardPost key={post.id} post={post} showShareButton={true} />
+          <CardPost key={post.id} post={post} showShareButton={true}/>
         ))}
       </div>
     </div>
