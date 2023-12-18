@@ -24,7 +24,7 @@ import Notification from "./pages/Notification/Notification.jsx";
 import Message from "./pages/Message/Message.jsx";
 import MessageProvider from "./contexts/MessageContext/MessageProvider.jsx";
 import ProfilUser from "./pages/ProfilUIser/ProfilUser.jsx";
-// import TokenProvider from "./contexts/TokenContext/TokenProvider.jsx";
+import PostAddProvider from "./contexts/postAddContext/PostAddProvider.jsx";
 
 const App = () => {
   return (
@@ -35,102 +35,104 @@ const App = () => {
         <AuthProvider>
           <UserProvider>
             <NotificationProvider>
-              <MessageProvider>
-                <Routes>
-                  <Route path="/connexion/:mode" element={<Connexion />} />
-                  <Route
-                    element={<PrivateRoute exceptedRoutes="adminFamily" />}
-                  >
+              <PostAddProvider>
+                <MessageProvider>
+                  <Routes>
+                    <Route path="/connexion/:mode" element={<Connexion />} />
                     <Route
-                      path="/homeAdmin"
-                      element={
-                        <DashBoardLayout>
-                          <HomeAdmin />
-                        </DashBoardLayout>
-                      }
-                    />
+                      element={<PrivateRoute exceptedRoutes="adminFamily" />}
+                    >
+                      <Route
+                        path="/homeAdmin"
+                        element={
+                          <DashBoardLayout>
+                            <HomeAdmin />
+                          </DashBoardLayout>
+                        }
+                      />
+                      <Route
+                        path="/profilAdmin"
+                        element={
+                          <DashBoardLayout>
+                            <ProfilAdmin />
+                          </DashBoardLayout>
+                        }
+                      />
+                      <Route
+                        path="/contactAdmin"
+                        element={
+                          <DashBoardLayout>
+                            <ContactAdmin />
+                          </DashBoardLayout>
+                        }
+                      />
+                      <Route
+                        path="/settings"
+                        element={
+                          <DashBoardLayout>
+                            <Settings />
+                          </DashBoardLayout>
+                        }
+                      />
+                    </Route>
+                    {/* Route pour les users */}
+                    <Route element={<PrivateRoute exceptedRoutes="user" />}>
+                      <Route
+                        path="/home"
+                        element={
+                          <MainLayout>
+                            <Home />
+                          </MainLayout>
+                        }
+                      />
+                      <Route
+                        path="/profil"
+                        element={
+                          <MainLayout>
+                            <Profil />
+                          </MainLayout>
+                        }
+                      />
+                      <Route
+                        path="/profilUser"
+                        element={
+                          <MainLayout>
+                            <ProfilUser />
+                          </MainLayout>
+                        }
+                      />
+                      <Route
+                        path="/contact"
+                        element={
+                          <MainLayout>
+                            <Contact />
+                          </MainLayout>
+                        }
+                      />
+                      <Route
+                        path="/notification"
+                        element={
+                          <MainLayout>
+                            <Notification />
+                          </MainLayout>
+                        }
+                      />
+                      <Route
+                        path="/message"
+                        element={
+                          <MainLayout>
+                            <Message />
+                          </MainLayout>
+                        }
+                      />
+                    </Route>
                     <Route
-                      path="/profilAdmin"
-                      element={
-                        <DashBoardLayout>
-                          <ProfilAdmin />
-                        </DashBoardLayout>
-                      }
+                      path="*"
+                      element={<Navigate to="/connexion/login" />}
                     />
-                    <Route
-                      path="/contactAdmin"
-                      element={
-                        <DashBoardLayout>
-                          <ContactAdmin />
-                        </DashBoardLayout>
-                      }
-                    />
-                    <Route
-                      path="/settings"
-                      element={
-                        <DashBoardLayout>
-                          <Settings />
-                        </DashBoardLayout>
-                      }
-                    />
-                  </Route>
-                  {/* Route pour les users */}
-                  <Route element={<PrivateRoute exceptedRoutes="user" />}>
-                    <Route
-                      path="/home"
-                      element={
-                        <MainLayout>
-                          <Home />
-                        </MainLayout>
-                      }
-                    />
-                    <Route
-                      path="/profil"
-                      element={
-                        <MainLayout>
-                          <Profil />
-                        </MainLayout>
-                      }
-                    />
-                    <Route
-                      path="/profilUser"
-                      element={
-                        <MainLayout>
-                          <ProfilUser />
-                        </MainLayout>
-                      }
-                    />
-                    <Route
-                      path="/contact"
-                      element={
-                        <MainLayout>
-                          <Contact />
-                        </MainLayout>
-                      }
-                    />
-                    <Route
-                      path="/notification"
-                      element={
-                        <MainLayout>
-                          <Notification />
-                        </MainLayout>
-                      }
-                    />
-                    <Route
-                      path="/message"
-                      element={
-                        <MainLayout>
-                          <Message />
-                        </MainLayout>
-                      }
-                    />
-                  </Route>
-                  <Route
-                    path="*"
-                    element={<Navigate to="/connexion/login" />}
-                  />
-                </Routes>
-              </MessageProvider>
+                  </Routes>
+                </MessageProvider>
+              </PostAddProvider>
             </NotificationProvider>
           </UserProvider>
         </AuthProvider>

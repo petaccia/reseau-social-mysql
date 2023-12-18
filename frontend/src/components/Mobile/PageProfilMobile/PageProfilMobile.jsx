@@ -1,52 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import CarouselHomeStory from "../../carousel/CarouselHomeStory/CarouselHomeStory.jsx";
 import ListUser from "../../Lists/listUser/ListUser.jsx";
 import oceane from "../../../assets/users/oceane.jpg";
 import profil from "../../../assets/illustration/profil_test.jpg";
 
-import cheval from "../../../assets/post/cheval.jpg";
-import requin from "../../../assets/post/requin.jpg";
-import maldive from "../../../assets/post/maldives.jpg";
-import noel from "../../../assets/post/noel.jpg";
 import CardPost from "../../Cards/cardPost/CardPost.jsx";
+import CreatePostForm from "../../Post/CreatePostForm.jsx";
+import PostAddContext from "../../../contexts/postAddContext/PostAddContext.jsx";
 
 const PageProfilMobile = () => {
+  const { posts, addPosts } = useContext(PostAddContext);
+  const [showCreatePostForm, setShowCreatePostForm] = useState(false);
 
-  const posts = [
-    {
-      id: 1,
-      title: "balade en cheval",
-      content: "la balade en cheval au pays des chevaux",
-      image: cheval,
-      user: "Oceane",
-      date: "12/12/2022",
-    },
-    {
-      id: 2,
-      title: "balade en mer",
-      content: "la balade en mer au pays des requins",
-      image: requin,
-      user: "Oceane",
-      date: "12/12/2022",
-    },
-    {
-      id: 3,
-      title: "Les vacances aux Maldives",
-      content: "Super vacances aux Maldives",
-      image: maldive,
-      user: "Oceane",
-      date: "12/12/2022",
-    },
-    {
-      id: 4,
-      title: "Joyeux Noël à tous!",
-      content: "C'est bon c'est parfait le Noël en famille",
-      image: noel,
-      user: "Oceane",
-      date: "12/12/2022",
-    },
-  ];
-
+  const toggleAddPost = () => {
+    setShowCreatePostForm(!showCreatePostForm);
+  };
 
   const users = [
     {
@@ -108,13 +76,33 @@ const PageProfilMobile = () => {
 
   // Etat pour savoir si l'utilisateur est connecté ou non
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+
   return (
     <div className="page-profil-mobile d-flex w-100 justify-content-center flex-column align-items-center mb-5">
-        <div className="w-100 d-flex justify-content-center">
+      <div className="w-100 d-flex justify-content-center ">
         <img className=" profil w-100" src={profil} alt="profil" />
       </div>
+
       <CarouselHomeStory />
-      {isLoggedIn && <ListUser users={users} />}
+      <div className="w-75  mt-5 mb-5 rounded-3 bg-dark border border-white  ">
+        {/* boutons pour afficher le formulaire de création d'un post */}
+        <button
+          className="button-add-post d-flex justify-content-center align-items-center w-100 bg-dark border-0 text-white rounded-3 mt-3"
+          onClick={toggleAddPost}
+        >
+          {showCreatePostForm ? (
+            <p className="text-white">Annuler</p>
+          ) : (
+            <p className="text-white  ">Ajouter un post</p>
+          )}
+        </button>
+
+        {/* Formulaire de création d'un post */}
+        {showCreatePostForm && <CreatePostForm onAddPost={addPosts} />}
+      </div>
+      {/* Liste des utilisateurs */}
+      {isLoggedIn && <ListUser key={users.id} users={users} />}
+      {/* Card de chaque post */}
       <div className="card-post-container-mobile w-100 d-flex flex-column align-items-center justify-content-center">
         {posts.map((post) => (
           <CardPost key={post.id} post={post} showShareButton={true}/>
