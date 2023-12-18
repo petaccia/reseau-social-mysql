@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const CreatePostForm = ({ onAddpost }) => {
+const CreatePostForm = ({ onAddPost }) => {
   const [newPost, setNewPost] = useState({
     title: "",
     description: "",
@@ -11,7 +11,7 @@ const CreatePostForm = ({ onAddpost }) => {
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    onAddpost(newPost);
+    onAddPost(newPost);
     setNewPost({
       title: "",
       description: "",

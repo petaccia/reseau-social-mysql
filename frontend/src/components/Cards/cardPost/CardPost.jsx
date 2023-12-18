@@ -23,6 +23,8 @@ const CardPost = ({ post, showShareButton }) => {
     setIsOpen(false);
   };
 
+  
+
 
   return (
     <CardContainerPost className="cardPost-container  rounded-4 mb-5">
